@@ -1,0 +1,136 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using LexAbogadosWeb.Models;
+
+namespace LexAbogadosWeb.Controllers
+{
+    public class PRESUPUESTOController : Controller
+    {
+        private ODAO db = new ODAO();
+
+        // GET: PRESUPUESTO
+        public ActionResult Index()
+        {
+            var pRESUPUESTO = db.PRESUPUESTO.Include(p => p.CAUSALES).Include(p => p.USUARIOS);
+            return View(pRESUPUESTO.ToList());
+        }
+
+        // GET: PRESUPUESTO/Details/5
+        public ActionResult Details(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Find(id);
+            if (pRESUPUESTO == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pRESUPUESTO);
+        }
+
+        // GET: PRESUPUESTO/Create
+        public ActionResult Create()
+        {
+            ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE");
+            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER");
+            return View();
+        }
+
+        // POST: PRESUPUESTO/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID_PRESUPUESTO,COD_SOLICITUD,FECHA,ESTADO_AVANCE,CONTRATADO,OBSERVACIONES,ID_ASISTENTE,ID_CAUSAL,ID_USUARIO")] PRESUPUESTO pRESUPUESTO)
+        {
+            if (ModelState.IsValid)
+            {
+                db.PRESUPUESTO.Add(pRESUPUESTO);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
+            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
+            return View(pRESUPUESTO);
+        }
+
+        // GET: PRESUPUESTO/Edit/5
+        public ActionResult Edit(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Find(id);
+            if (pRESUPUESTO == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
+            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
+            return View(pRESUPUESTO);
+        }
+
+        // POST: PRESUPUESTO/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ID_PRESUPUESTO,COD_SOLICITUD,FECHA,ESTADO_AVANCE,CONTRATADO,OBSERVACIONES,ID_ASISTENTE,ID_CAUSAL,ID_USUARIO")] PRESUPUESTO pRESUPUESTO)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(pRESUPUESTO).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
+            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
+            return View(pRESUPUESTO);
+        }
+
+        // GET: PRESUPUESTO/Delete/5
+        public ActionResult Delete(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Find(id);
+            if (pRESUPUESTO == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pRESUPUESTO);
+        }
+
+        // POST: PRESUPUESTO/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(long id)
+        {
+            PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Find(id);
+            db.PRESUPUESTO.Remove(pRESUPUESTO);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}

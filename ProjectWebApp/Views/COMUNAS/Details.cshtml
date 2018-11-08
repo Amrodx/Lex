@@ -1,0 +1,35 @@
+﻿@model LexAbogadosWeb.Models.COMUNAS
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>COMUNAS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.COMUNA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMUNA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REGIONES.NOMBRE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REGIONES.NOMBRE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_COMUNA }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

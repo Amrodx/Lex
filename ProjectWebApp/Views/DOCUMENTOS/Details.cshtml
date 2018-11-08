@@ -1,0 +1,59 @@
+﻿@model LexAbogadosWeb.Models.DOCUMENTOS
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DOCUMENTOS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHA_INGRESO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHA_INGRESO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOCUMENTO_DIGITAL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOCUMENTO_DIGITAL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PATH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PATH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PRESUPUESTO.COD_SOLICITUD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PRESUPUESTO.COD_SOLICITUD)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_DOCUMENTO }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,76 @@
+﻿@model IEnumerable<LexAbogadosWeb.Models.DETALLE_TRAMITES>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ID_SOLICITUD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CODIGO_TRAMITE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NOMBRE_TRAMITE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COSTO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATUS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TIMESTAMP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID_SOLICITUD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CODIGO_TRAMITE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NOMBRE_TRAMITE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COSTO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATUS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TIMESTAMP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CONTRATOS.DOCUMENTO_GENERADO)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_TRAMITES }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_TRAMITES }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_TRAMITES })
+        </td>
+    </tr>
+}
+
+</table>

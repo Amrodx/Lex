@@ -1,0 +1,83 @@
+﻿@model LexAbogadosWeb.Models.PRESUPUESTO
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PRESUPUESTO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.COD_SOLICITUD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COD_SOLICITUD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ESTADO_AVANCE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ESTADO_AVANCE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTRATADO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTRATADO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OBSERVACIONES)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OBSERVACIONES)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_ASISTENTE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_ASISTENTE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CAUSALES.NOMBRE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CAUSALES.NOMBRE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USUARIOS.USER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USUARIOS.USER)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_PRESUPUESTO }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

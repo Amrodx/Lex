@@ -1,0 +1,205 @@
+﻿@model ProjectWebApp.Models.USUARIOS
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LEX Abogados | Portal</title>
+    <!-- Bootstrap -->
+    <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="../assets/vendors/animate.css/animate.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../assets/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- iCheck -->
+    <link href="../assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="../assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="../assets/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="../assets/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="../assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../assets/build/css/custom.min.css" rel="stylesheet">
+
+</head>
+<body class="login">
+
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    @using (Html.BeginForm("Login", "Usuarios", FormMethod.Post, new { id = "formname" }))
+                    {
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <h1>Ingreso de Usuario</h1>
+
+                        <div>
+                            <input name="user" type="text" class="form-control" placeholder="Usuario" required="required" data-validate-length-range="6" data-validate-words="2" />
+                            <input type="hidden" value="Login" name="LoginType" />
+                            @*@Html.EditorFor(model => model.USER, new { htmlAttributes = new { @class = "form-control", @requiered = "requiered", name = "user" } })
+                                @Html.ValidationMessageFor(model => model.USER, "", new { @class = "text-danger" })*@
+                        </div>
+                        <div>
+                            <input name="pass" type="password" class="form-control" placeholder="Contraseña" required="required" />
+                            @*@Html.EditorFor(model => model.PASS, new { htmlAttributes = new { @class = "form-control", type = "password", @requiered = "requiered", name = "password" } })
+                                @Html.ValidationMessageFor(model => model.PASS, "", new { @class = "text-danger" })*@
+                        </div>
+                        <div>
+                            @*<a class="btn btn-default submit" href="index.html">Ingreso a Portal</a>*@
+                            <button id="send" type="submit" class="btn btn-default submit">Ingresar</button>
+
+                        </div><a class="reset_pass" href="#">No Recuerda su Contraseña?</a>
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                            <p class="change_link">
+                                Desea Registrarse?
+                                <a href="#signup" class="to_register"> Crear Cuenta </a>
+                            </p>
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+                                <h1><i class="fa fa-bank"></i> LEX Abogados</h1>
+                                <p>©2018 All Rights Reserved. LEX Abogados. <br />Privacy and Terms</p>
+                            </div>
+                        </div>
+                    }
+                </section>
+            </div>
+            <div id="register" class="animate form registration_form">
+                <section class="login_content">
+                    @using (Html.BeginForm("Login", "Usuarios", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <h1>Crear Cuenta</h1>
+                        <div>
+                            @Html.DropDownList("ID_ROL", (IEnumerable<SelectListItem>)ViewBag.Rol, "-- Seleccione Tipo de Usuario --", new { id = "ID_ROL", @class = "form-control", required = "required", name = "Rol" })
+                        </div><br />
+                        <div>
+                            <input type="text" class="form-control" placeholder="Usuario" required="required" name="user" />
+                            <input type="hidden" value="Register" name="LoginType" />
+                        </div>
+                        <div>
+                            <input type="email" id="email" name="correo" placeholder="Email" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                        <div>
+                            <input type="email" id="email2" name="correo_sec" placeholder="Confirmar Email" data-validate-linked="email" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                        <div>
+                            <input type="password" class="form-control" placeholder="Contraseña" required="required" name="pass" />
+                        </div>
+                        <div>
+                            <button class="btn btn-default submit">Registrar</button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                            <p class="change_link">
+                                Ya tiene Cuenta?
+                                <a href="#signin" class="to_register"> Ingreso a Portal </a>
+                            </p>
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+                                <h1><i class="fa fa-bank"></i> LEX Abogados</h1>
+                                <p>©2018 All Rights Reserved. LEX Abogados. <br />Privacy and Terms</p>
+                            </div>
+                        </div>
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="../assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../assets/vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="../assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="../assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- PNotify -->
+    <script src="../assets/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="../assets/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="../assets/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="../assets/build/js/custom.min.js"></script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script>
+        $(document).ready(function () {
+                new PNotify({
+                title: "Notificacion",
+                type: "warning",
+                text: "@ViewBag.Message",
+                nonblock: {
+                nonblock: true
+                },
+                styling: 'bootstrap3',
+                hide: false,
+                    before_close: function (PNotify) {
+                        PNotify.update({
+                            title: PNotify.options.title + " - Enjoy your Stay",
+                            before_close: null
+                        });
+
+                        PNotify.queueRemove();
+
+                        return false;
+                    }
+                });
+
+        });
+        </script>
+    }
+    else if (ViewBag.Error != null)
+    {
+        <script>
+        $(document).ready(function () {
+                new PNotify({
+                title: "Notificacion",
+                type: "error",
+                text: "@ViewBag.Error",
+                nonblock: {
+                nonblock: true
+                },
+                styling: 'bootstrap3',
+                hide: false,
+                    before_close: function (PNotify) {
+                        PNotify.update({
+                            title: PNotify.options.title + " - Enjoy your Stay",
+                            before_close: null
+                        });
+
+                        PNotify.queueRemove();
+
+                        return false;
+                    }
+                });
+
+        });
+        </script>
+    }
+
+</body>
+</html>

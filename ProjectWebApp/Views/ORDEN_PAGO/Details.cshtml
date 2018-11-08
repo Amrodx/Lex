@@ -1,0 +1,91 @@
+﻿@model LexAbogadosWeb.Models.ORDEN_PAGO
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ORDEN_PAGO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TIPO_PAGO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TIPO_PAGO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MONTO_TOTAL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MONTO_TOTAL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ESTADO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ESTADO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREATED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREATED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NUMERO_TRANSACCION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NUMERO_TRANSACCION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CUOTAS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CUOTAS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VALOR_CUOTA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VALOR_CUOTA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_ORDEN_PAGO }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,83 @@
+﻿@model LexAbogadosWeb.Models.CONTRATOS
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CONTRATOS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHA_INICIO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHA_INICIO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHA_TERMINO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHA_TERMINO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COSTO_ESTIMADO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COSTO_ESTIMADO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOCUMENTO_GENERADO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOCUMENTO_GENERADO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CORREO_ENVIADO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CORREO_ENVIADO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COMENTARIOS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMENTARIOS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ASISTENTES.RUT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ASISTENTES.RUT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PRESUPUESTO.COD_SOLICITUD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PRESUPUESTO.COD_SOLICITUD)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_CONTRATO }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

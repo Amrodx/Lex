@@ -1,0 +1,76 @@
+﻿@model IEnumerable<LexAbogadosWeb.Models.PRESUPUESTO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.COD_SOLICITUD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FECHA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ESTADO_AVANCE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONTRATADO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OBSERVACIONES)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ID_ASISTENTE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CAUSALES.NOMBRE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USUARIOS.USER)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.COD_SOLICITUD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FECHA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ESTADO_AVANCE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CONTRATADO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OBSERVACIONES)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID_ASISTENTE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CAUSALES.NOMBRE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USUARIOS.USER)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_PRESUPUESTO }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_PRESUPUESTO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_PRESUPUESTO })
+        </td>
+    </tr>
+}
+
+</table>

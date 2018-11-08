@@ -1,0 +1,82 @@
+﻿@model IEnumerable<LexAbogadosWeb.Models.ORDEN_PAGO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TIPO_PAGO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MONTO_TOTAL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ESTADO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NUMERO_TRANSACCION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CUOTAS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VALOR_CUOTA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TIPO_PAGO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MONTO_TOTAL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ESTADO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NUMERO_TRANSACCION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CUOTAS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VALOR_CUOTA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CONTRATOS.DOCUMENTO_GENERADO)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_ORDEN_PAGO }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_ORDEN_PAGO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_ORDEN_PAGO })
+        </td>
+    </tr>
+}
+
+</table>

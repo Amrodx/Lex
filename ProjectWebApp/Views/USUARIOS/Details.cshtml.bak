@@ -1,0 +1,67 @@
+﻿@model ProjectWebApp.Models.USUARIOS
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>USUARIOS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.USER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PASS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PASS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TIMESTAMP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TIMESTAMP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ASISTENTES.NOMBRES)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ASISTENTES.NOMBRES)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CLIENTES.NOMBRE_RAZON_SOCIAL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CLIENTES.NOMBRE_RAZON_SOCIAL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TIPO_ROL.NOMBRE_ROL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TIPO_ROL.NOMBRE_ROL)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_USER }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

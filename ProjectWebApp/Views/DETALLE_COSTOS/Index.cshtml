@@ -1,0 +1,82 @@
+﻿@model IEnumerable<LexAbogadosWeb.Models.DETALLE_COSTOS>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TIPO_GASTO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MONTO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BOLETA_DIGITALIZADA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FECHA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AUTORIZADA_REEMBOLZO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ASISTENTE_RESPONZABLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NOMBRE_NOTARIA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DIRECCION_NOTARIA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TIPO_GASTO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MONTO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BOLETA_DIGITALIZADA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FECHA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AUTORIZADA_REEMBOLZO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ASISTENTE_RESPONZABLE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NOMBRE_NOTARIA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DIRECCION_NOTARIA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CONTRATOS.DOCUMENTO_GENERADO)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_DETALLE_COSTO }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_DETALLE_COSTO }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_DETALLE_COSTO })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,91 @@
+﻿@model LexAbogadosWeb.Models.DETALLE_COSTOS
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DETALLE_COSTOS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TIPO_GASTO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TIPO_GASTO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MONTO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MONTO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BOLETA_DIGITALIZADA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BOLETA_DIGITALIZADA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTORIZADA_REEMBOLZO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AUTORIZADA_REEMBOLZO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ASISTENTE_RESPONZABLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ASISTENTE_RESPONZABLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NOMBRE_NOTARIA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOMBRE_NOTARIA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DIRECCION_NOTARIA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIRECCION_NOTARIA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_DETALLE_COSTO }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

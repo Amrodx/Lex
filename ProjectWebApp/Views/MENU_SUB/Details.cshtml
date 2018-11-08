@@ -1,0 +1,75 @@
+﻿@model LexAbogadosWeb.Models.MENU_SUB
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MENU_SUB</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TEXTO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEXTO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REFERENCIA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REFERENCIA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CRUD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CRUD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTROLLER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTROLLER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ACTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MENU.TEXTO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MENU.TEXTO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TIPO_ROL.NOMBRE_ROL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TIPO_ROL.NOMBRE_ROL)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MENU_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

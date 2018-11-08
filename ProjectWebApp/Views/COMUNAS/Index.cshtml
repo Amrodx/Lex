@@ -1,0 +1,40 @@
+﻿@model IEnumerable<LexAbogadosWeb.Models.COMUNAS>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.COMUNA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REGIONES.NOMBRE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.COMUNA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.REGIONES.NOMBRE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_COMUNA }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_COMUNA }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_COMUNA })
+        </td>
+    </tr>
+}
+
+</table>
