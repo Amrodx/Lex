@@ -206,7 +206,6 @@
     <Compile Include="Controllers\Servicio\UtilCorreos.cs" />
     <Compile Include="Controllers\TIPO_CLIENTEController.cs" />
     <Compile Include="Controllers\TIPO_ROLController.cs" />
-    <Compile Include="Controllers\TRIBUNAL_JUSTICIAController.cs" />
     <Compile Include="Controllers\USUARIOSController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -272,9 +271,6 @@
       <DependentUpon>EDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_ROL.cs">
-      <DependentUpon>EDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TRIBUNAL_JUSTICIA.cs">
       <DependentUpon>EDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USUARIOS.cs">
@@ -4637,6 +4633,8 @@
     <Content Include="Views\ASISTENTES\Edit.cshtml" />
     <Content Include="Views\ASISTENTES\Index.cshtml" />
     <Content Include="Views\DOCUMENTOS\SubidaDocumentos.cshtml" />
+    <Content Include="Views\DOCUMENTOS\BajadaDocumentos.cshtml" />
+    <Content Include="Views\CLIENTES\Perfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

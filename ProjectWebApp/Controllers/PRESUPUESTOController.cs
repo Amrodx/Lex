@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using LexAbogadosWeb.Models;
+using ProjectWebApp.Models;
 
-namespace LexAbogadosWeb.Controllers
+namespace ProjectWebApp.Controllers
 {
     public class PRESUPUESTOController : Controller
     {
@@ -17,7 +17,7 @@ namespace LexAbogadosWeb.Controllers
         // GET: PRESUPUESTO
         public ActionResult Index()
         {
-            var pRESUPUESTO = db.PRESUPUESTO.Include(p => p.CAUSALES).Include(p => p.USUARIOS);
+            var pRESUPUESTO = db.PRESUPUESTO.Include(p => p.CAUSALES).Include(p => p.CLIENTES);
             return View(pRESUPUESTO.ToList());
         }
 
@@ -59,7 +59,7 @@ namespace LexAbogadosWeb.Controllers
             }
 
             ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
+            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.CLIENTES);
             return View(pRESUPUESTO);
         }
 
@@ -76,7 +76,7 @@ namespace LexAbogadosWeb.Controllers
                 return HttpNotFound();
             }
             ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
+            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.CLIENTES);
             return View(pRESUPUESTO);
         }
 
@@ -94,7 +94,7 @@ namespace LexAbogadosWeb.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
+            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.CLIENTES);
             return View(pRESUPUESTO);
         }
 

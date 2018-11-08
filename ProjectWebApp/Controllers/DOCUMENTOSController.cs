@@ -7,9 +7,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using LexAbogadosWeb.Models;
+using ProjectWebApp.Models;
 
-namespace LexAbogadosWeb.Controllers
+namespace ProjectWebApp.Controllers
 {
     public class DOCUMENTOSController : Controller
     {
@@ -133,8 +133,9 @@ namespace LexAbogadosWeb.Controllers
                 HttpPostedFileBase File = Request.Files["IMG_PROFILE"];
 
                 if (Request.Files[f].ContentLength > 0)
-                { 
-                    //_pdocumentos.PATH = File.FileName;
+                {
+                    _pdocumentos.NOMBRE_ARCHIVO = Request.Files[f].FileName;
+                    _pdocumentos.MIME_TYPE = Request.Files[f].ContentType;
                     _pdocumentos.DOCUMENTO_DIGITAL = ConvertToByte(Request.Files[f]);
                 }
                 db.DOCUMENTOS.Add(_pdocumentos);
@@ -145,6 +146,17 @@ namespace LexAbogadosWeb.Controllers
             }
             return View();
         }
+
+        public ActionResult BajadaDocumentos(DOCUMENTOS _pdocumentos)
+        {
+
+            {
+                var dOCUMENTOS = db.DOCUMENTOS.Include(d => d.CONTRATOS).Include(d => d.PRESUPUESTO);
+                return View(dOCUMENTOS.ToList());
+            }
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

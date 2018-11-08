@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace LexAbogadosWeb
+namespace ProjectWebApp
 {
     public class FilterConfig
     {
