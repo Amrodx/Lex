@@ -4635,9 +4635,14 @@
     <Content Include="Views\DOCUMENTOS\SubidaDocumentos.cshtml" />
     <Content Include="Views\DOCUMENTOS\BajadaDocumentos.cshtml" />
     <Content Include="Views\CLIENTES\Perfil.cshtml" />
+    <None Include="Views\PRESUPUESTO\Contrato.cshtml" />
+    <None Include="Views\PRESUPUESTO\OrdenPago.cshtml" />
+    <None Include="Views\PRESUPUESTO\Presupuesto.cshtml" />
+    <None Include="Views\PRESUPUESTO\Recepcion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

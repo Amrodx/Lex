@@ -123,6 +123,24 @@ namespace ProjectWebApp.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult Presupuesto()
+        {
+            return View();
+        }
+        public ActionResult Contrato()
+        {
+            return View();
+        }
+        public ActionResult OrdenPago()
+        {
+            return View();
+        }
+        public ActionResult Recepcion()
+        {
+            return View();
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {
