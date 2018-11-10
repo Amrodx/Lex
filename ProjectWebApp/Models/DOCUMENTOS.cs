@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LexAbogadosWeb.Models
+namespace ProjectWebApp.Models
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +20,8 @@ namespace LexAbogadosWeb.Models
         public System.DateTime FECHA_INGRESO { get; set; }
         public byte[] DOCUMENTO_DIGITAL { get; set; }
         public string PATH { get; set; }
+        public string MIME_TYPE { get; set; }
+        public string NOMBRE_ARCHIVO { get; set; }
     
         public virtual CONTRATOS CONTRATOS { get; set; }
         public virtual PRESUPUESTO PRESUPUESTO { get; set; }

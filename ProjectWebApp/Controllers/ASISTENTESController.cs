@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using LexAbogadosWeb.Models;
+using ProjectWebApp.Models;
 
-namespace LexAbogadosWeb.Controllers
+namespace ProjectWebApp.Controllers
 {
     public class ASISTENTESController : Controller
     {
@@ -118,6 +118,31 @@ namespace LexAbogadosWeb.Controllers
             db.ASISTENTES.Remove(aSISTENTES);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Perfil()
+        {
+            USUARIOS _UsuarioLogued = (USUARIOS)Session["LoginCredentials"];
+
+            if (_UsuarioLogued.CLIENTES.Count() == 0)
+            {
+                ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA");
+                ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO");
+                ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN");
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER");
+                return View();
+            }
+
+            ASISTENTES cLIENTES = db.ASISTENTES.Find(_UsuarioLogued.CLIENTES.Where(w => w.ID_USUARIO == _UsuarioLogued.ID_USUARIO));
+            if (cLIENTES == null)
+            {
+                return HttpNotFound();
+            }
+            //ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+            //ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+            //ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+            //ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+            return View(cLIENTES);
         }
 
         protected override void Dispose(bool disposing)

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LexAbogadosWeb.Models.DOCUMENTOS>
+﻿@model IEnumerable<ProjectWebApp.Models.DOCUMENTOS>
 
 @{
     ViewBag.Title = "Index";
@@ -36,7 +36,9 @@
             @Html.DisplayFor(modelItem => item.FECHA_INGRESO)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DOCUMENTO_DIGITAL)
+
+            <a href="#" src="data:@item.MIME_TYPE;base64,@System.Convert.ToBase64String(item.DOCUMENTO_DIGITAL)">@item.NOMBRE_ARCHIVO</a>
+
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PATH)

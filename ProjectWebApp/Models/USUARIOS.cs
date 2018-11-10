@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LexAbogadosWeb.Models
+namespace ProjectWebApp.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,7 +18,6 @@ namespace LexAbogadosWeb.Models
         {
             this.ASISTENTES = new HashSet<ASISTENTES>();
             this.CLIENTES = new HashSet<CLIENTES>();
-            this.PRESUPUESTO = new HashSet<PRESUPUESTO>();
         }
     
         public string USER { get; set; }
@@ -35,6 +34,5 @@ namespace LexAbogadosWeb.Models
         public virtual ICollection<ASISTENTES> ASISTENTES { get; set; }
         public virtual ICollection<CLIENTES> CLIENTES { get; set; }
         public virtual TIPO_ROL TIPO_ROL { get; set; }
-        public virtual ICollection<PRESUPUESTO> PRESUPUESTO { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace LexAbogadosWeb.Controllers.Servicio
+namespace ProjectWebApp.Controllers.Servicio
 {
     //textBoxString.Text = Encrypt.DecryptString(textBoxEncrypted.Text, textBoxPassword.Text);
     public static class Encrypt

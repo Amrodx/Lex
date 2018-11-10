@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LexAbogadosWeb.Models
+namespace ProjectWebApp.Models
 {
     using System;
     using System.Collections.Generic;
@@ -33,10 +33,10 @@ namespace LexAbogadosWeb.Models
         public long ID_ASISTENTE { get; set; }
     
         public virtual ASISTENTES ASISTENTES { get; set; }
-        public virtual PRESUPUESTO PRESUPUESTO { get; set; }
         public virtual ICollection<DETALLE_COSTOS> DETALLE_COSTOS { get; set; }
         public virtual ICollection<DETALLE_TRAMITES> DETALLE_TRAMITES { get; set; }
         public virtual ICollection<DOCUMENTOS> DOCUMENTOS { get; set; }
         public virtual ICollection<ORDEN_PAGO> ORDEN_PAGO { get; set; }
+        public virtual PRESUPUESTO PRESUPUESTO { get; set; }
     }
 }

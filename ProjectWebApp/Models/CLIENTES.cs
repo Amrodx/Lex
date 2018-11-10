@@ -7,13 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LexAbogadosWeb.Models
+namespace ProjectWebApp.Models
 {
     using System;
     using System.Collections.Generic;
     
     public partial class CLIENTES
     {
+        public CLIENTES()
+        {
+            this.PRESUPUESTO = new HashSet<PRESUPUESTO>();
+        }
+    
         public long ID_CLIENTE { get; set; }
         public string RUT { get; set; }
         public string NOMBRE_RAZON_SOCIAL { get; set; }
@@ -34,5 +39,6 @@ namespace LexAbogadosWeb.Models
         public virtual TIPO_CLIENTE TIPO_CLIENTE { get; set; }
         public virtual PLAN_PAGO PLAN_PAGO { get; set; }
         public virtual USUARIOS USUARIOS { get; set; }
+        public virtual ICollection<PRESUPUESTO> PRESUPUESTO { get; set; }
     }
 }

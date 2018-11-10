@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Http;
 
 
-namespace LexAbogadosWeb
+namespace ProjectWebApp
 {
     public static class WebApiConfig
     {

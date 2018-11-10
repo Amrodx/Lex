@@ -1,4 +1,4 @@
-﻿using LexAbogadosWeb.Models;
+﻿using ProjectWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Web;
 
 
-namespace LexAbogadosWeb.Controllers.Servicio
+namespace ProjectWebApp.Controllers.Servicio
 {
     public class UtilCorreos
     {

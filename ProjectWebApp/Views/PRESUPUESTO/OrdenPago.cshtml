@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ProjectWebApp.Models.USUARIOS>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+@*PASO 4*@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+
+        <div class="x_content">
+
+            <!-- Smart Wizard -->
+            <p>Estado de su Solicitud</p>
+            <div id="wizard" class="form_wizard wizard_horizontal">
+                <ul class="wizard_steps">
+                    <li>
+                        <a href="#step-1" class="selected" isdone="1" rel="1" >
+                            <span class="step_no">1</span>
+                            <span class="step_descr">
+                                Paso 1<br>
+                                <small>Enviar solicitud</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#step-2" class="selected" isdone="2" rel="2" >
+                            <span class="step_no">2</span>
+                            <span class="step_descr">
+                                Paso 2<br />
+                                <small>Recepción Solicitud</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#step-3" class="selected" isdone="3" rel="3">
+                            <span class="step_no">3</span>
+                            <span class="step_descr">
+                                Paso 3<br />
+                                <small>Generar Presupuesto</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#step-4" class="selected" isdone="4" rel="4">
+                            <span class="step_no">4</span>
+                            <span class="step_descr">
+                                Paso 4<br />
+                                <small>Generar Contrato</small>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+
+
+            </div>
+            <div class="container">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+
+                        <form name="form1" id="form1" method="post" action="guarda.php" enctype="multipart/form-data">
+
+                            <h4 class="text-center">Carga de Archivos</h4>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Subir Documentos Solicitados</label>
+                                <div class="col-sm-8">
+                                    <input type="file" class="form-control" id="archivo[]" name="archivo[]" multiple="">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Cargar</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

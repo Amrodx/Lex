@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LexAbogadosWeb.Models
+namespace ProjectWebApp.Models
 {
     using System;
     using System.Collections.Generic;
@@ -26,13 +26,14 @@ namespace LexAbogadosWeb.Models
         public string ESTADO_AVANCE { get; set; }
         public string CONTRATADO { get; set; }
         public string OBSERVACIONES { get; set; }
-        public long ID_ASISTENTE { get; set; }
+        public Nullable<long> ID_ASISTENTE { get; set; }
         public long ID_CAUSAL { get; set; }
-        public Nullable<long> ID_USUARIO { get; set; }
+        public Nullable<long> ID_CLIENTE { get; set; }
     
         public virtual CAUSALES CAUSALES { get; set; }
+        public virtual CLIENTES CLIENTES { get; set; }
         public virtual ICollection<CONTRATOS> CONTRATOS { get; set; }
         public virtual ICollection<DOCUMENTOS> DOCUMENTOS { get; set; }
-        public virtual USUARIOS USUARIOS { get; set; }
+        public virtual ASISTENTES ASISTENTES { get; set; }
     }
 }

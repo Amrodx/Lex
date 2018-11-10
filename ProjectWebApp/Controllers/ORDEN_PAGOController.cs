@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using LexAbogadosWeb.Models;
+using ProjectWebApp.Models;
 
-namespace LexAbogadosWeb.Controllers
+namespace ProjectWebApp.Controllers
 {
     public class ORDEN_PAGOController : Controller
     {

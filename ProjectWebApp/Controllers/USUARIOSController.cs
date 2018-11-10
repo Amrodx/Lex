@@ -7,13 +7,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using LexAbogadosWeb.Models;
+using ProjectWebApp.Models;
 using System.Security.Cryptography;
-using LexAbogadosWeb.Controllers.Servicio;
+using ProjectWebApp.Controllers.Servicio;
 using System.Configuration;
 using System.IO;
 
-namespace LexAbogadosWeb.Controllers
+namespace ProjectWebApp.Controllers
 { 
 
     public class USUARIOSController : Controller
@@ -53,7 +53,11 @@ namespace LexAbogadosWeb.Controllers
                                     isExist = _entity.USUARIOS.Where(x => x.USER.Trim().ToLower() == _login.USER.Trim().ToLower() && x.PASS.ToString() == passEncriptado.ToString()).Any(); //validating the user name in tblLogin table whether the user name is exist or not  
                                     if (isExist)
                                     {
-                                        USUARIOS _loginCredentials = _entity.USUARIOS.Where(x => x.USER.Trim().ToLower() == _login.USER.Trim().ToLower()).FirstOrDefault();  // Get the login user details and bind it to LoginModels class  
+                                        USUARIOS _loginCredentials = _entity.USUARIOS
+                                            .Include("TIPO_ROL")
+                                            .Include("CLIENTES")
+                                            .Include("ASISTENTES")
+                                                                                                .Where(x => x.USER.Trim().ToLower() == _login.USER.Trim().ToLower()).FirstOrDefault();  // Get the login user details and bind it to LoginModels class  
 
                                         FormsAuthentication.SetAuthCookie(_loginCredentials.USER, false); // set the formauthentication cookie  
                                         Session["LoginCredentials"] = _loginCredentials; // Bind the _logincredentials details to "LoginCredentials" session  
@@ -62,7 +66,28 @@ namespace LexAbogadosWeb.Controllers
                                         Session["Binary_File"] = _login.BINARY_IMAGE;
 
                                         ViewBag.USUARIO_LOG = _loginCredentials;
-                                        return RedirectToAction("Index", "USUARIOS");
+
+                                        if (_loginCredentials.TIPO_ROL.CATEGORIA == "Cliente")
+                                        {
+                                            if (_loginCredentials.CLIENTES.Count() == 0 && _loginCredentials.TIPO_ROL.NOMBRE_ROL == "Persona")
+                                            {
+                                                ViewBag.Message = "Debe Competar Su Perfil de Cliente Persona";
+                                                return RedirectToAction("Perfil", "CLIENTES");
+                                            }
+                                            else if (_loginCredentials.CLIENTES.Count() == 0 && _loginCredentials.TIPO_ROL.NOMBRE_ROL == "Empresa")
+                                            {
+                                                ViewBag.Message = "Debe Competar Su Perfil de Empresa";
+                                                return View("Perfil", "CLIENTES");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ViewBag.Message = "Debe Competar Su Perfil de Empresa";
+                                            return View("Perfil", "ASISTENTES");
+                                        }
+                                        
+                                        return View("Historial","SOLICITUDES");
+
                                     }
                                     else
                                     {
@@ -107,6 +132,25 @@ namespace LexAbogadosWeb.Controllers
                 return View();
             }
             
+        }
+
+        public ActionResult Perfil(USUARIOS _Usuario)
+        {
+
+            if (((USUARIOS)Session["LoginCredentials"]).ID_USUARIO != 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            USUARIOS uSUARIOS = db.USUARIOS.Find(((USUARIOS)Session["LoginCredentials"]).ID_USUARIO);
+            if (uSUARIOS == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.RUT = new SelectList(db.ASISTENTES, "RUT", "NOMBRES", uSUARIOS.ASISTENTES);
+            ViewBag.RUT = new SelectList(db.CLIENTES, "RUT", "NOMBRE_RAZON_SOCIAL", uSUARIOS.CLIENTES);
+            ViewBag.ID_ROL = new SelectList(db.TIPO_ROL, "ID_ROL", "NOMBRE_ROL", uSUARIOS.ID_ROL);
+            return View(uSUARIOS);
+
         }
         public ActionResult Subir(USUARIOS _usuarioSubir)
         {
@@ -198,7 +242,6 @@ namespace LexAbogadosWeb.Controllers
         // GET: USUARIOS/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (Session["LoginCredentials"] == null) { Response.Redirect("/USUARIOS/Login"); };
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

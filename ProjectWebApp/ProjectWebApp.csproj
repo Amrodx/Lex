@@ -206,7 +206,6 @@
     <Compile Include="Controllers\Servicio\UtilCorreos.cs" />
     <Compile Include="Controllers\TIPO_CLIENTEController.cs" />
     <Compile Include="Controllers\TIPO_ROLController.cs" />
-    <Compile Include="Controllers\TRIBUNAL_JUSTICIAController.cs" />
     <Compile Include="Controllers\USUARIOSController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -272,9 +271,6 @@
       <DependentUpon>EDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_ROL.cs">
-      <DependentUpon>EDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TRIBUNAL_JUSTICIA.cs">
       <DependentUpon>EDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USUARIOS.cs">
@@ -3663,6 +3659,7 @@
     <Content Include="assets\vendors\validator\fv.css" />
     <Content Include="assets\vendors\validator\index.html" />
     <Content Include="assets\vendors\validator\multifield.js" />
+    <Content Include="assets\vendors\validator\validarut.js" />
     <Content Include="assets\vendors\validator\validator.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -4536,6 +4533,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\validarut.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -4637,9 +4635,17 @@
     <Content Include="Views\ASISTENTES\Edit.cshtml" />
     <Content Include="Views\ASISTENTES\Index.cshtml" />
     <Content Include="Views\DOCUMENTOS\SubidaDocumentos.cshtml" />
+    <Content Include="Views\DOCUMENTOS\BajadaDocumentos.cshtml" />
+    <Content Include="Views\CLIENTES\Perfil.cshtml" />
+    <Content Include="Views\ASISTENTES\Perfil.cshtml" />
+    <None Include="Views\PRESUPUESTO\Contrato.cshtml" />
+    <None Include="Views\PRESUPUESTO\OrdenPago.cshtml" />
+    <None Include="Views\PRESUPUESTO\Presupuesto.cshtml" />
+    <None Include="Views\PRESUPUESTO\Recepcion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

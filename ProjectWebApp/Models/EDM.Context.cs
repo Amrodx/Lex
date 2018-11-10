@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LexAbogadosWeb.Models
+namespace ProjectWebApp.Models
 {
     using System;
     using System.Data.Entity;
@@ -39,7 +39,6 @@ namespace LexAbogadosWeb.Models
         public DbSet<REGIONES> REGIONES { get; set; }
         public DbSet<TIPO_CLIENTE> TIPO_CLIENTE { get; set; }
         public DbSet<TIPO_ROL> TIPO_ROL { get; set; }
-        public DbSet<TRIBUNAL_JUSTICIA> TRIBUNAL_JUSTICIA { get; set; }
         public DbSet<USUARIOS> USUARIOS { get; set; }
         public DbSet<CONTRATOS> CONTRATOS { get; set; }
         public DbSet<DOCUMENTOS> DOCUMENTOS { get; set; }
