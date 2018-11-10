@@ -5,79 +5,195 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>Details</h2>
+@*<h2>Details</h2>
 
-<div>
-    <h4>ASISTENTES</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RUT)
-        </dt>
+    <div>
+        <h4>ASISTENTES</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.RUT)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.RUT)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.RUT)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NOMBRES)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.NOMBRES)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.NOMBRES)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.NOMBRES)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.APELLIDO_PATERNO)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.APELLIDO_PATERNO)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.APELLIDO_PATERNO)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.APELLIDO_PATERNO)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.APELLIDO_MATERNO)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.APELLIDO_MATERNO)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.APELLIDO_MATERNO)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.APELLIDO_MATERNO)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CARGO)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CARGO)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CARGO)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CARGO)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TITULO_ACADEMICO)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.TITULO_ACADEMICO)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TITULO_ACADEMICO)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.TITULO_ACADEMICO)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TIMESTAMP)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.TIMESTAMP)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TIMESTAMP)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.TIMESTAMP)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.USUARIOS.USER)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.USUARIOS.USER)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.USUARIOS.USER)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.USUARIOS.USER)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID_ASISTENTE }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Detalle <small></small></h2>
+                @*<ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>*@
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <label for="name">
+                                Usuarios:
+                            </label> @Model.ID_USUARIO @*Capturar user de tabla Usuarios*@
+                        </li>
+                        <li>
+                            <label for="name">
+                                Rut:
+                            </label>  @Model.RUT
+                        </li>
+                        <li>
+                            <label for="name">
+                                Nombres:
+                            </label>  @Model.NOMBRES
+                        </li>
+                        <li>
+                            <label for="name">
+                                Apellido Paterno:
+                            </label>  @Model.APELLIDO_PATERNO
+                        </li>
+                        <li>
+                            <label for="name">
+                                Apellido Materno:
+                            </label>  @Model.APELLIDO_MATERNO
+                        </li>
+                        <li>
+                            <label for="name">
+                                Título Acádemico:
+                            </label>  @Model.TITULO_ACADEMICO @*Capturar comuna de tabla Comunas*@
+                        </li>
+                        <li>
+                            <label for="name">
+                                Cargo:
+                            </label>  @Model.CARGO
+                        </li>
+                        <li>
+                            <label for="name">
+                                Fecha de Creación:
+                            </label>  @Model.TIMESTAMP @*Mostrar valor en tipo fecha*@
+                        </li>
+                    </ul>
+
+                    <a href="/ASISTENTES/Edit/@Model.ID_ASISTENTE" class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Editar Asistente</a>
+                    <br>
+
+                    <!-- start skills -->
+                    @*<h4>Skills</h4>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <p>Web Applications</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50" aria-valuenow="50" style="width: 50%;"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>Website Design</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70" aria-valuenow="69" style="width: 70%;"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>Automation &amp; Testing</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30" aria-valuenow="29" style="width: 30%;"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>UI / UX</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50" aria-valuenow="50" style="width: 50%;"></div>
+                                </div>
+                            </li>
+                        </ul>*@
+                    <!-- end of skills -->
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_ASISTENTE }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+

@@ -28,7 +28,7 @@ namespace LexAbogadosWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CLIENTES cLIENTES = db.CLIENTES.Find(id);
+            CLIENTES cLIENTES = db.CLIENTES.Include("USUARIOS").Where(w => w.ID_CLIENTE == id).FirstOrDefault();
             if (cLIENTES == null)
             {
                 return HttpNotFound();

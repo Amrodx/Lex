@@ -5,31 +5,117 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>Details</h2>
+@*<h2>Details</h2>
 
-<div>
-    <h4>COMUNAS</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.COMUNA)
-        </dt>
+    <div>
+        <h4>COMUNAS</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.COMUNA)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.COMUNA)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.COMUNA)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.REGIONES.NOMBRE)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.REGIONES.NOMBRE)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.REGIONES.NOMBRE)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.REGIONES.NOMBRE)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID_COMUNA }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Detalle <small></small></h2>
+                @*<ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>*@
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <label for="name">
+                                Nombre comuna:
+                            </label> @Model.COMUNA
+                        </li>
+
+                        <li>
+                            <label for="name">
+                                Región:
+                            </label>  @Model.ID_REGION @*Capturar nombre_region de tabla regiones*@
+                        </li>
+
+                    </ul>
+
+                    <a href="/COMUNAS/Edit/@Model.ID_COMUNA" class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Editar Comuna</a>
+                    <br>
+
+                    <!-- start skills -->
+                    @*<h4>Skills</h4>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <p>Web Applications</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50" aria-valuenow="50" style="width: 50%;"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>Website Design</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70" aria-valuenow="69" style="width: 70%;"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>Automation &amp; Testing</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30" aria-valuenow="29" style="width: 30%;"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>UI / UX</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50" aria-valuenow="50" style="width: 50%;"></div>
+                                </div>
+                            </li>
+                        </ul>*@
+                    <!-- end of skills -->
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_COMUNA }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
