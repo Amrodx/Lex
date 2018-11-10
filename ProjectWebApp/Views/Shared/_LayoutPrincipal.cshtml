@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LEx Abogados | Portal </title>
+    <title>Lex Abogados | Portal </title>
     <!-- Bootstrap -->
 
     <link href="~/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -38,6 +38,12 @@
     <link href="~/assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
     <link href="~/assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet" />
 
+    @if (User.Identity.IsAuthenticated == false || Session["LoginCredentials"] == null)
+    {
+        Session.Abandon();
+
+        Response.Redirect("~/USUARIOS/Login");
+    }
 
 
     @{USUARIOS uProfile = (USUARIOS)Session["LoginCredentials"];}
@@ -217,9 +223,28 @@
             </div>
             <!-- /top navigation -->
             <!-- page content -->
+
+
+
+
+
+
+
+
+
+
+
             <div class="right_col" role="main">
                 @RenderBody()
             </div>
+
+
+
+
+
+
+
+
             <!-- /page content -->
             <!-- footer content -->
             <footer>
@@ -239,6 +264,9 @@
     <script src="~/assets/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
     <script src="~/assets/vendors/nprogress/nprogress.js"></script>
+    <!-- jQuery Smart Wizard -->
+    <script src="~/assets/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
+
     <!-- bootstrap-progressbar -->
     <script src="~/assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
     <!-- iCheck -->
@@ -564,8 +592,24 @@
 
             TableManageButtons.init();
         });
-    </script>
+    </script>}
+
     <!--DataTables-->
+    <!-- jQuery Smart Wizard -->
+    <script>
+        $(document).ready(function () {
+            $('#wizard').smartWizard();
+
+            $('#wizard_verticle').smartWizard({
+                transitionEffect: 'slide'
+            });
+
+            $('.buttonNext').addClass('btn btn-success');
+            $('.buttonPrevious').addClass('btn btn-primary');
+            $('.buttonFinish').addClass('btn btn-default');
+        });
+    </script>
+    <!-- /jQuery Smart Wizard -->
 </body>
 </html>
 

@@ -9,6 +9,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Description = Desarrollo De Plataforma Web de Gestion de Casos y Denuncias de Empresa de Abogados LexAbogados
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D5291527-4C7D-40AD-BBE7-A7BA84F17DE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
