@@ -66,16 +66,26 @@ namespace ProjectWebApp.Controllers
                                         Session["Binary_File"] = _login.BINARY_IMAGE;
 
                                         ViewBag.USUARIO_LOG = _loginCredentials;
-                                        if (_loginCredentials.CLIENTES.Count() == 0 && _loginCredentials.TIPO_ROL.NOMBRE_ROL == "Persona")
+
+                                        if (_loginCredentials.TIPO_ROL.CATEGORIA == "Cliente")
                                         {
-                                            ViewBag.Message = "Debe Competar Su Perfil de Cliente Persona";
-                                            return RedirectToAction("Perfil", "CLIENTES");
+                                            if (_loginCredentials.CLIENTES.Count() == 0 && _loginCredentials.TIPO_ROL.NOMBRE_ROL == "Persona")
+                                            {
+                                                ViewBag.Message = "Debe Competar Su Perfil de Cliente Persona";
+                                                return RedirectToAction("Perfil", "CLIENTES");
+                                            }
+                                            else if (_loginCredentials.CLIENTES.Count() == 0 && _loginCredentials.TIPO_ROL.NOMBRE_ROL == "Empresa")
+                                            {
+                                                ViewBag.Message = "Debe Competar Su Perfil de Empresa";
+                                                return View("Perfil", "CLIENTES");
+                                            }
                                         }
-                                        else if (_loginCredentials.CLIENTES.Count() == 0 && _loginCredentials.TIPO_ROL.NOMBRE_ROL == "Empresa")
+                                        else
                                         {
                                             ViewBag.Message = "Debe Competar Su Perfil de Empresa";
-                                            return View("Perfil", "CLIENTES");
+                                            return View("Perfil", "ASISTENTES");
                                         }
+                                        
                                         return View("Historial","SOLICITUDES");
 
                                     }

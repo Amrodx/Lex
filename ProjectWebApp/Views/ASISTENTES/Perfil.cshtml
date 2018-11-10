@@ -1,8 +1,6 @@
-﻿@model ProjectWebApp.Models.CLIENTES
-
+﻿@model ProjectWebApp.Models.ASISTENTES
 @{
     ViewBag.Title = "Perfil";
-    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
 <h2>Perfil</h2>
@@ -13,19 +11,19 @@
                 <div class="x_content">
                     <form class="form-horizontal form-label-left">
                         @*<p>
-                            For alternative validation library <code>parsleyJS</code> check out in the <a href="form.html">form page</a>
-                        </p>*@
+                                For alternative validation library <code>parsleyJS</code> check out in the <a href="form.html">form page</a>
+                            </p>*@
                         <span class="section">Modificacion de Campos</span>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                                 RUT <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="RUT" placeholder="" required="required" type="text" onblur="formateaRut(this)">
+                                <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="RUT" placeholder="" required="required" type="text">
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">x
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                                 Razon Social <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -33,13 +31,13 @@
                             </div>
                         </div>
                         @*<div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                Comuna <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.DropDownList("ID_TIPO", null, "-- Seleccione Tipo de Cliente --", htmlAttributes: new { @class = "form-control" })
-                            </div>
-                        </div>*@
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                    Comuna <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.DropDownList("ID_TIPO", null, "-- Seleccione Tipo de Cliente --", htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>*@
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                                 cOMUNA <span class="required">*</span>
@@ -107,7 +105,7 @@
                                 <button id="send" type="submit" class="btn btn-success">Guardar</button>
                             </div>
                         </div>
-                    </form>                      
+                    </form>
                     <div class="actionBar">
                         @*<a href="#" class="buttonFinish buttonDisabled btn btn-default">Finish</a>
                             <a href="#" class="buttonNext btn btn-success">Next</a>*@
@@ -118,5 +116,4 @@
         </div>
     </div>
 </div>
-
 

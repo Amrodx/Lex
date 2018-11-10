@@ -3659,6 +3659,7 @@
     <Content Include="assets\vendors\validator\fv.css" />
     <Content Include="assets\vendors\validator\index.html" />
     <Content Include="assets\vendors\validator\multifield.js" />
+    <Content Include="assets\vendors\validator\validarut.js" />
     <Content Include="assets\vendors\validator\validator.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -4532,6 +4533,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\validarut.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -4635,6 +4637,7 @@
     <Content Include="Views\DOCUMENTOS\SubidaDocumentos.cshtml" />
     <Content Include="Views\DOCUMENTOS\BajadaDocumentos.cshtml" />
     <Content Include="Views\CLIENTES\Perfil.cshtml" />
+    <Content Include="Views\ASISTENTES\Perfil.cshtml" />
     <None Include="Views\PRESUPUESTO\Contrato.cshtml" />
     <None Include="Views\PRESUPUESTO\OrdenPago.cshtml" />
     <None Include="Views\PRESUPUESTO\Presupuesto.cshtml" />
