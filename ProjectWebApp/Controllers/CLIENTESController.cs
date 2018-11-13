@@ -132,6 +132,73 @@ namespace LexAbogadosWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult CompletarPerfil()
+        {
+            USUARIOS _UsuarioLogued = (USUARIOS)Session["LoginCredentials"];
+
+            if (_UsuarioLogued.CLIENTES.Count() == 0)
+            {
+                ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA");
+                ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO");
+                ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN");
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER");
+                return View();
+            }
+
+            CLIENTES cLIENTES = db.CLIENTES.Find(_UsuarioLogued.CLIENTES.Where(w => w.ID_USUARIO == _UsuarioLogued.ID_USUARIO));
+            if (cLIENTES == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+            ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+            ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+            return View(cLIENTES);
+        }
+
+        public ActionResult Perfil()
+        {
+            USUARIOS perfil = (USUARIOS)Session["LoginCredentials"];
+
+            CLIENTES cli = db.CLIENTES.Where(X => X.ID_USUARIO == perfil.ID_USUARIO).FirstOrDefault();
+            if (cli == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cli);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CompletarPerfil([Bind(Include = "RUT,NOMBRE_RAZON_SOCIAL,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES,ID_PLAN")] CLIENTES cLIENTES)
+        {
+            USUARIOS _UsuarioLogued = (USUARIOS)Session["LoginCredentials"];
+
+            cLIENTES.ID_USUARIO = _UsuarioLogued.ID_USUARIO;
+            cLIENTES.ID_TIPO = _UsuarioLogued.ID_ROL == 41?41:21;
+            cLIENTES.ID_CLIENTE = 1;
+            cLIENTES.TIMESTAMP = DateTime.Now.ToString();
+            cLIENTES.STATUS_ACTIVACION = "Activo";
+            if (ModelState.IsValid)
+            {
+                db.CLIENTES.Add(cLIENTES);
+                db.SaveChanges();
+                Session["PerfilCliente"] = db.CLIENTES.Where(x => x.RUT == cLIENTES.RUT);
+                return RedirectToAction("Perfil");
+
+                //db.Entry(cLIENTES).State = EntityState.Modified;
+                //db.SaveChanges();
+
+                //return RedirectToAction("Perfil");
+            }
+            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+            ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+            ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+            return View(cLIENTES);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

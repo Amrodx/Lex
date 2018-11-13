@@ -60,9 +60,28 @@ namespace LexAbogadosWeb.Controllers
                                         Session["MenuMaster"] = db.MENU.Include("MENU_SUB").Where(w => w.ID_ROL == _loginCredentials.ID_ROL).ToList(); //Bind the _menus list to MenuMaster session  
                                         Session["UserName"] = _loginCredentials.USER;
                                         Session["Binary_File"] = _login.BINARY_IMAGE;
-
                                         ViewBag.USUARIO_LOG = _loginCredentials;
-                                        return RedirectToAction("Index", "USUARIOS");
+
+                                        if (_loginCredentials.CLIENTES.Count() == 0 && _loginCredentials.ID_ROL == 41 | _loginCredentials.CLIENTES.Count() == 0 && _loginCredentials.ID_ROL == 61)
+                                        {
+                                            ViewBag.Message = "Debe Competar Su Perfil de Cliente";
+                                            return RedirectToAction("CompletarPerfil", "CLIENTES");
+                                        }
+                                        else
+                                        {
+                                            if (_loginCredentials.ID_ROL == 41 | _loginCredentials.ID_ROL == 61)
+                                            {
+                                                Session["PerfilCliente"] = _entity.CLIENTES.Where(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).FirstOrDefault();
+                                                return RedirectToAction("Index", "CLIENTES");
+                                            }
+                                            else
+                                            {
+                                                return RedirectToAction("Index", "ASISTENTES");
+                                            }
+                                        }
+
+
+                                        
                                     }
                                     else
                                     {
@@ -108,6 +127,9 @@ namespace LexAbogadosWeb.Controllers
             }
             
         }
+
+        
+
         public ActionResult Subir(USUARIOS _usuarioSubir)
         {
             HttpPostedFileBase File = Request.Files["IMG_PROFILE"];

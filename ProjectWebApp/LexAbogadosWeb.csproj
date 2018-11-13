@@ -4637,6 +4637,8 @@
     <Content Include="Views\ASISTENTES\Edit.cshtml" />
     <Content Include="Views\ASISTENTES\Index.cshtml" />
     <Content Include="Views\DOCUMENTOS\SubidaDocumentos.cshtml" />
+    <Content Include="Views\CLIENTES\CompletarPerfil.cshtml" />
+    <Content Include="Views\CLIENTES\Perfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
