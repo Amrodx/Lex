@@ -62,10 +62,23 @@ namespace LexAbogadosWeb.Controllers
                                         Session["Binary_File"] = _login.BINARY_IMAGE;
                                         ViewBag.USUARIO_LOG = _loginCredentials;
 
-                                        if (_loginCredentials.CLIENTES.Count() == 0 && _loginCredentials.ID_ROL == 41 | _loginCredentials.CLIENTES.Count() == 0 && _loginCredentials.ID_ROL == 61)
+
+                                        var asd = _entity.ASISTENTES.Where(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).FirstOrDefault();
+
+                                        if (_entity.CLIENTES.Select(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).Count() <1 && _loginCredentials.ID_ROL == 41 )
                                         {
-                                            ViewBag.Message = "Debe Competar Su Perfil de Cliente";
+                                            ViewBag.Message = "Debe Competar Su Perfil de Cliente"; // personas
                                             return RedirectToAction("CompletarPerfil", "CLIENTES");
+                                        }
+                                        else if (_entity.CLIENTES.Select(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).Count() <1 && _loginCredentials.ID_ROL == 61)
+                                        {
+                                            ViewBag.Message = "Debe Competar Su Perfil de Cliente";// empresas
+                                            return RedirectToAction("CompletarPerfil", "CLIENTES");
+                                        }
+                                        else if (_entity.ASISTENTES.Where(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).FirstOrDefault() == null )
+                                        {
+                                            ViewBag.Message = "Debe Competar Su Perfil de ASISTENTE";// ASISTENTE
+                                            return RedirectToAction("CompletarPerfil", "ASISTENTES");
                                         }
                                         else
                                         {
@@ -79,9 +92,6 @@ namespace LexAbogadosWeb.Controllers
                                                 return RedirectToAction("Index", "ASISTENTES");
                                             }
                                         }
-
-
-                                        
                                     }
                                     else
                                     {
