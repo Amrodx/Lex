@@ -143,6 +143,7 @@ function SmartWizard(target, options) {
             if ($this.options.contentCache && hasContent) {
                 _showStep($this, stepIdx);
             } else {
+                debugger;
                 var ajax_args = {
                     url: ajaxurl,
                     type: "POST",

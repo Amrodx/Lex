@@ -16,7 +16,8 @@ namespace ProjectWebApp
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Usuarios", action = "Login", id = UrlParameter.Optional }
+                defaults: new { controller = "Usuarios", action = "Login", id = UrlParameter.Optional },
+                namespaces: new[] { "ProjectWebApp.Controllers" }
             );
         }
     }

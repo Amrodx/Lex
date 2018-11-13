@@ -137,6 +137,9 @@ namespace ProjectWebApp.Controllers
         }
         public ActionResult Recepcion()
         {
+            ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES.ToList(), "ID_CAUSAL", "NOMBRE");
+            ViewBag.Documento = db.DOCUMENTOS.Where(w => w.MIME_TYPE.Contains("pdf") && w.NOMBRE_ARCHIVO.Contains("SOLICITUD")).FirstOrDefault();
+
             return View();
         }
 

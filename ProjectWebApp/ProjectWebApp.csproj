@@ -284,7 +284,12 @@
     <Content Include="assets\build\css\prettify.min.css" />
     <Content Include="assets\build\js\custom.js" />
     <Content Include="assets\build\js\custom.min.js" />
+    <Content Include="assets\img\excel.png" />
     <Content Include="assets\img\FotoCarne.jpg" />
+    <Content Include="assets\img\pdf.png" />
+    <Content Include="assets\img\perfilAbogado.jpg" />
+    <Content Include="assets\img\powerpoint.png" />
+    <Content Include="assets\img\word.png" />
     <Content Include="assets\vendors\animate.css\animate.css" />
     <Content Include="assets\vendors\animate.css\animate.min.css" />
     <Content Include="assets\vendors\animate.css\gulpfile.js" />
