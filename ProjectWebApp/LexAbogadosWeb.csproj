@@ -208,6 +208,8 @@
     <Compile Include="Controllers\TIPO_ROLController.cs" />
     <Compile Include="Controllers\TRIBUNAL_JUSTICIAController.cs" />
     <Compile Include="Controllers\USUARIOSController.cs" />
+    <Compile Include="DataNotation\AssistantModel.cs" />
+    <Compile Include="DataNotation\ClientModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

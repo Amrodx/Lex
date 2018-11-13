@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LexAbogadosWeb.Models;
+using ProjectWebApp.DataNotation;
 
 namespace LexAbogadosWeb.Controllers
 {
@@ -177,6 +178,24 @@ namespace LexAbogadosWeb.Controllers
             USUARIOS perfil = (USUARIOS)Session["LoginCredentials"];
 
             CLIENTES cLIENTES = db.CLIENTES.Where( x=> x.ID_USUARIO == perfil.ID_USUARIO).FirstOrDefault();
+            ClientModel clientModel = new ClientModel()
+            {
+                ID_CLIENTE = cLIENTES.ID_CLIENTE,
+                ID_USUARIO = cLIENTES.ID_USUARIO,
+                CONTACTO = cLIENTES.CONTACTO,
+                CORREO = cLIENTES.CORREO,
+                DIRECCION = cLIENTES.DIRECCION,
+                FONO1 = cLIENTES.FONO1,
+                FONO2 = cLIENTES.FONO2,
+                ID_COMUNA = cLIENTES.ID_COMUNA,
+                ID_PLAN = cLIENTES.ID_PLAN,
+                ID_TIPO = cLIENTES.ID_TIPO,
+                NOMBRE_RAZON_SOCIAL = cLIENTES.NOMBRE_RAZON_SOCIAL,
+                OBSERVACIONES = cLIENTES.OBSERVACIONES,
+                RUT = cLIENTES.RUT,
+                STATUS_ACTIVACION = cLIENTES.STATUS_ACTIVACION,
+                TIMESTAMP = cLIENTES.TIMESTAMP
+            };
             //if (cLIENTES == null)
             //{
             //    return HttpNotFound();
@@ -185,16 +204,35 @@ namespace LexAbogadosWeb.Controllers
             ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
             ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
             ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
-            return View(cLIENTES);
+            return View(clientModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DataContact([Bind(Include = "ID_CLIENTE,RUT,NOMBRE_RAZON_SOCIAL,ID_TIPO,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES,TIMESTAMP,STATUS_ACTIVACION,ID_PLAN,ID_USUARIO")] CLIENTES cLIENTES)
+        public ActionResult DataContact([Bind(Include = "ID_CLIENTE,RUT,NOMBRE_RAZON_SOCIAL,ID_TIPO,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES,TIMESTAMP,STATUS_ACTIVACION,ID_PLAN,ID_USUARIO")] ClientModel cLIENTES)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cLIENTES).State = EntityState.Modified;
+                CLIENTES clienInsert = new CLIENTES()
+                {
+                    ID_CLIENTE = cLIENTES.ID_CLIENTE,
+                    ID_USUARIO = cLIENTES.ID_USUARIO,
+                    CONTACTO = cLIENTES.CONTACTO,
+                    CORREO = cLIENTES.CORREO,
+                    DIRECCION = cLIENTES.DIRECCION,
+                    FONO1 = cLIENTES.FONO1,
+                    FONO2 = cLIENTES.FONO2,
+                    ID_COMUNA = cLIENTES.ID_COMUNA,
+                    ID_PLAN = cLIENTES.ID_PLAN,
+                    ID_TIPO = cLIENTES.ID_TIPO,
+                    NOMBRE_RAZON_SOCIAL = cLIENTES.NOMBRE_RAZON_SOCIAL,
+                    OBSERVACIONES = cLIENTES.OBSERVACIONES,
+                    RUT = cLIENTES.RUT,
+                    STATUS_ACTIVACION = cLIENTES.STATUS_ACTIVACION,
+                    TIMESTAMP = cLIENTES.TIMESTAMP
+                };
+
+                db.Entry(clienInsert).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

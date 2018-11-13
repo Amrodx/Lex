@@ -65,17 +65,17 @@ namespace LexAbogadosWeb.Controllers
 
                                         var asd = _entity.ASISTENTES.Where(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).FirstOrDefault();
 
-                                        if (_entity.CLIENTES.Select(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).Count() <1 && _loginCredentials.ID_ROL == 41 )
+                                        if (_entity.CLIENTES.Where(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).FirstOrDefault() == null && _loginCredentials.ID_ROL == 41 )
                                         {
                                             ViewBag.Message = "Debe Competar Su Perfil de Cliente"; // personas
                                             return RedirectToAction("CompletarPerfil", "CLIENTES");
                                         }
-                                        else if (_entity.CLIENTES.Select(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).Count() <1 && _loginCredentials.ID_ROL == 61)
+                                        else if (_entity.CLIENTES.Where(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).FirstOrDefault() == null && _loginCredentials.ID_ROL == 61)
                                         {
                                             ViewBag.Message = "Debe Competar Su Perfil de Cliente";// empresas
                                             return RedirectToAction("CompletarPerfil", "CLIENTES");
                                         }
-                                        else if (_entity.ASISTENTES.Where(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).FirstOrDefault() == null )
+                                        else if (_entity.ASISTENTES.Where(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).FirstOrDefault() == null && _loginCredentials.ID_ROL != 41 && _loginCredentials.ID_ROL != 61)
                                         {
                                             ViewBag.Message = "Debe Competar Su Perfil de ASISTENTE";// ASISTENTE
                                             return RedirectToAction("CompletarPerfil", "ASISTENTES");
