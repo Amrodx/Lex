@@ -210,6 +210,7 @@
     <Compile Include="Controllers\USUARIOSController.cs" />
     <Compile Include="DataNotation\AssistantModel.cs" />
     <Compile Include="DataNotation\ClientModel.cs" />
+    <Compile Include="DataNotation\RutValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

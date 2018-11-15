@@ -245,10 +245,10 @@ namespace LexAbogadosWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CompletarPerfil([Bind(Include = "RUT,NOMBRE_RAZON_SOCIAL,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES,ID_PLAN")] CLIENTES cLIENTES)
+        public ActionResult CompletarPerfil([Bind(Include = "RUT,NOMBRE_RAZON_SOCIAL,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES,ID_PLAN")] ClientModel cLIENTES)
         {
             USUARIOS _UsuarioLogued = (USUARIOS)Session["LoginCredentials"];
-
+            
             cLIENTES.ID_USUARIO = _UsuarioLogued.ID_USUARIO;
             cLIENTES.ID_TIPO = _UsuarioLogued.ID_ROL == 41?41:21;
             cLIENTES.ID_CLIENTE = 1;
@@ -256,7 +256,28 @@ namespace LexAbogadosWeb.Controllers
             cLIENTES.STATUS_ACTIVACION = "Activo";
             if (ModelState.IsValid)
             {
-                db.CLIENTES.Add(cLIENTES);
+                cLIENTES.RUT = cLIENTES.RUT.Replace(".", "").Replace("-", "");
+                CLIENTES clienInsert = new CLIENTES()
+                {
+                    ID_CLIENTE = cLIENTES.ID_CLIENTE,
+                    ID_USUARIO = cLIENTES.ID_USUARIO,
+                    CONTACTO = cLIENTES.CONTACTO,
+                    CORREO = cLIENTES.CORREO,
+                    DIRECCION = cLIENTES.DIRECCION,
+                    FONO1 = cLIENTES.FONO1,
+                    FONO2 = cLIENTES.FONO2,
+                    ID_COMUNA = cLIENTES.ID_COMUNA,
+                    ID_PLAN = cLIENTES.ID_PLAN,
+                    ID_TIPO = cLIENTES.ID_TIPO,
+                    NOMBRE_RAZON_SOCIAL = cLIENTES.NOMBRE_RAZON_SOCIAL,
+                    OBSERVACIONES = cLIENTES.OBSERVACIONES,
+                    RUT = cLIENTES.RUT,
+                    STATUS_ACTIVACION = cLIENTES.STATUS_ACTIVACION,
+                    TIMESTAMP = cLIENTES.TIMESTAMP
+                };
+
+
+                db.CLIENTES.Add(clienInsert);
                 db.SaveChanges();
                 Session["PerfilCliente"] = db.CLIENTES.Where(x => x.RUT == cLIENTES.RUT);
                 return RedirectToAction("Perfil");

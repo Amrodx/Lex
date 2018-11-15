@@ -8,7 +8,7 @@ namespace ProjectWebApp.DataNotation
 {
     public class AssistantModel
     {
-        [Required(ErrorMessage = "El campo es obligatorio.")]
+        //[Required(ErrorMessage = "El campo es obligatorio.")]
         public long ID_ASISTENTE { get; set; }
         [Required(ErrorMessage = "El campo es obligatorio.")]
         public string RUT { get; set; }
@@ -22,9 +22,9 @@ namespace ProjectWebApp.DataNotation
         public string CARGO { get; set; }
         [Required(ErrorMessage = "El campo es obligatorio.")]
         public string TITULO_ACADEMICO { get; set; }
-        [Required(ErrorMessage = "El campo es obligatorio.")]
+        //[Required(ErrorMessage = "El campo es obligatorio.")]
         public Nullable<System.DateTime> TIMESTAMP { get; set; }
-        [Required(ErrorMessage = "El campo es obligatorio.")]
+        //[Required(ErrorMessage = "El campo es obligatorio.")]
         public Nullable<long> ID_USUARIO { get; set; }
     }
 }

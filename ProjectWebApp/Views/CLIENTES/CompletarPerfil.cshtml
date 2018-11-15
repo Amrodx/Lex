@@ -1,4 +1,4 @@
-﻿@model LexAbogadosWeb.Models.CLIENTES
+﻿@model ProjectWebApp.DataNotation.ClientModel
 
 @{
     ViewBag.Title = "CompletarPerfil";
@@ -24,14 +24,14 @@
             </div>
         </div>*@
 
-    <div class="item form-group">
+    @*<div class="item form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rut">
             Rut <span class="required">*</span>
         </label>
         <div class="col-md-6 col-sm-6 col-xs-12">
             <input id="rut" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="rut" placeholder="Ej: 12345678-1" required="required" type="text">
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.RUT, htmlAttributes: new { @class = "control-label col-md-2" })
