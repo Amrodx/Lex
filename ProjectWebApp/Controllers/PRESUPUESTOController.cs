@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using System.Xml.Linq;
 using ProjectWebApp.Models;
 
 namespace ProjectWebApp.Controllers
@@ -125,6 +128,13 @@ namespace ProjectWebApp.Controllers
         }
         public ActionResult Presupuesto()
         {
+            using (var client = new WebClient())
+            {
+                var json = client.DownloadString("http://dev-epsilon.cl/api/TRIBUNAL_JUSTICIA/12");
+                var serializer = new JavaScriptSerializer();
+                List<string> model = serializer.Deserialize<List<string>>(json);
+                // TODO: do something with the model
+            }
             return View();
         }
         public ActionResult Contrato()

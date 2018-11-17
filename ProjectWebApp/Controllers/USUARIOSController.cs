@@ -26,7 +26,7 @@ namespace ProjectWebApp.Controllers
 
             try
             {
-                TIPO_ROL Rol = new TIPO_ROL();
+            TIPO_ROL Rol = new TIPO_ROL();
                 using (ODAO Menu = new ODAO())
                 {
                     ViewBag.Rol = new SelectList(Menu.TIPO_ROL.ToList(), "ID_ROL", "NOMBRE_ROL", "CATEGORIA", 1);
