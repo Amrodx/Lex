@@ -1,0 +1,139 @@
+﻿@model LexAbogadosWeb.Models.CLIENTES
+
+@{
+    ViewBag.Title = "Perfil";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Perfil</h2>
+
+<div>
+    <h4>CLIENTES</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_CLIENTE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_CLIENTE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RUT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RUT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NOMBRE_RAZON_SOCIAL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOMBRE_RAZON_SOCIAL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_TIPO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_TIPO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DIRECCION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIRECCION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CORREO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CORREO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTACTO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTACTO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FONO1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FONO1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FONO2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FONO2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_COMUNA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_COMUNA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OBSERVACIONES)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OBSERVACIONES)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TIMESTAMP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TIMESTAMP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATUS_ACTIVACION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATUS_ACTIVACION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_PLAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_PLAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_USUARIO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_USUARIO)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modificar Contactos", "DataContact", new {  id = Model.ID_CLIENTE  }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
