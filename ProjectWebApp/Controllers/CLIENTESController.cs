@@ -137,39 +137,63 @@ namespace LexAbogadosWeb.Controllers
 
         public ActionResult CompletarPerfil()
         {
-            USUARIOS _UsuarioLogued = (USUARIOS)Session["LoginCredentials"];
-
-            if (_UsuarioLogued.CLIENTES.Count() == 0)
+            CLIENTES cLIENTES = new CLIENTES();
+            try
             {
-                ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA");
-                ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO");
-                ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN");
-                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER");
-                return View();
-            }
+                USUARIOS _UsuarioLogued = (USUARIOS)Session["LoginCredentials"];
 
-            CLIENTES cLIENTES = db.CLIENTES.Find(_UsuarioLogued.CLIENTES.Where(w => w.ID_USUARIO == _UsuarioLogued.ID_USUARIO));
-            if (cLIENTES == null)
-            {
-                return HttpNotFound();
+                if (_UsuarioLogued.CLIENTES.Count() == 0)
+                {
+                    ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA");
+                    ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO");
+                    ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN");
+                    ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER");
+                    return View();
+                }
+
+                cLIENTES = db.CLIENTES.Find(_UsuarioLogued.CLIENTES.Where(w => w.ID_USUARIO == _UsuarioLogued.ID_USUARIO));
+                if (cLIENTES == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+                ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+                ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
             }
-            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
-            ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
-            ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+            catch (Exception)
+            {
+                return View(cLIENTES);
+            }
             return View(cLIENTES);
+
         }
 
         public ActionResult Perfil()
         {
-            USUARIOS perfil = (USUARIOS)Session["LoginCredentials"];
-
-            CLIENTES cli = db.CLIENTES.Where(X => X.ID_USUARIO == perfil.ID_USUARIO).FirstOrDefault();
-            if (cli == null)
+            CLIENTES cli = new CLIENTES();
+            try
             {
-                return HttpNotFound();
+                USUARIOS perfil = (USUARIOS)Session["LoginCredentials"];
+
+                cli = db.CLIENTES.Where(X => X.ID_USUARIO == perfil.ID_USUARIO).FirstOrDefault();
+                ViewBag.Comuna = db.COMUNAS.Where(X => X.ID_COMUNA == cli.ID_COMUNA).FirstOrDefault().COMUNA;
+                ViewBag.Region = db.REGIONES.Where(X => X.ID_REGION == cli.COMUNAS.ID_REGION).FirstOrDefault().NOMBRE;
+                var format = cli.TIMESTAMP.Split(' ');
+                cli.TIMESTAMP = format[0].Replace('-', '/');
+                var plan = db.PLAN_PAGO.Where(x => x.ID_PAGO == cli.ID_PLAN).FirstOrDefault();
+                ViewBag.DescPlan = plan.PLAN;
+                ViewBag.ValPlan = plan.VALOR;
+                if (cli == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cli);
             }
-            return View(cli);
+            catch (Exception)
+            {
+                return View(cli);
+            }
         }
 
 
@@ -234,7 +258,7 @@ namespace LexAbogadosWeb.Controllers
 
                 db.Entry(clienInsert).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Inicio");
             }
             ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
             ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
@@ -245,7 +269,7 @@ namespace LexAbogadosWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CompletarPerfil([Bind(Include = "RUT,NOMBRE_RAZON_SOCIAL,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES,ID_PLAN")] ClientModel cLIENTES)
+        public ActionResult CompletarPerfil([Bind(Include = "RUT,NOMBRE_RAZON_SOCIAL,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES")] ClientModel cLIENTES)
         {
             USUARIOS _UsuarioLogued = (USUARIOS)Session["LoginCredentials"];
             
@@ -254,6 +278,7 @@ namespace LexAbogadosWeb.Controllers
             cLIENTES.ID_CLIENTE = 1;
             cLIENTES.TIMESTAMP = DateTime.Now.ToString();
             cLIENTES.STATUS_ACTIVACION = "Activo";
+            cLIENTES.ID_PLAN = 22;
             if (ModelState.IsValid)
             {
                 cLIENTES.RUT = cLIENTES.RUT.Replace(".", "").Replace("-", "");
@@ -292,6 +317,12 @@ namespace LexAbogadosWeb.Controllers
             ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
             ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
             return View(cLIENTES);
+        }
+
+        public ActionResult Inicio()
+        {
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)

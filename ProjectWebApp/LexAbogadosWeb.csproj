@@ -208,9 +208,9 @@
     <Compile Include="Controllers\TIPO_ROLController.cs" />
     <Compile Include="Controllers\TRIBUNAL_JUSTICIAController.cs" />
     <Compile Include="Controllers\USUARIOSController.cs" />
-    <Compile Include="DataNotation\AssistantModel.cs" />
-    <Compile Include="DataNotation\ClientModel.cs" />
-    <Compile Include="DataNotation\RutValidation.cs" />
+    <Compile Include="Models\DataNotation\AssistantModel.cs" />
+    <Compile Include="Models\DataNotation\ClientModel.cs" />
+    <Compile Include="Models\DataNotation\RutValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -291,7 +291,13 @@
     <Content Include="assets\build\css\prettify.min.css" />
     <Content Include="assets\build\js\custom.js" />
     <Content Include="assets\build\js\custom.min.js" />
+    <Content Include="assets\img\american-express.png" />
     <Content Include="assets\img\FotoCarne.jpg" />
+    <Content Include="assets\img\mastercard.png" />
+    <Content Include="assets\img\paypal.png" />
+    <Content Include="assets\img\user.png" />
+    <Content Include="assets\img\UserDefault.png" />
+    <Content Include="assets\img\visa.png" />
     <Content Include="assets\vendors\animate.css\animate.css" />
     <Content Include="assets\vendors\animate.css\animate.min.css" />
     <Content Include="assets\vendors\animate.css\gulpfile.js" />
@@ -4646,6 +4652,7 @@
     <Content Include="Views\ASISTENTES\CompletarPerfil.cshtml" />
     <Content Include="Views\ASISTENTES\Perfil.cshtml" />
     <Content Include="Views\ASISTENTES\DataContact.cshtml" />
+    <Content Include="Views\CLIENTES\Inicio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

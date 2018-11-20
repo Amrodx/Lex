@@ -29,7 +29,7 @@ namespace LexAbogadosWeb.Controllers
                 TIPO_ROL Rol = new TIPO_ROL();
                 using (ODAO Menu = new ODAO())
                 {
-                    ViewBag.Rol = new SelectList(Menu.TIPO_ROL.ToList(), "ID_ROL", "NOMBRE_ROL", "CATEGORIA", 1);
+                    ViewBag.Rol = new SelectList(Menu.TIPO_ROL.Where(x=>x.ID_ROL == 41).ToList(), "ID_ROL", "NOMBRE_ROL", "CATEGORIA", 1);
                 }
 
                 if (ModelState.IsValid) //validating the user inputs 
@@ -85,7 +85,7 @@ namespace LexAbogadosWeb.Controllers
                                             if (_loginCredentials.ID_ROL == 41 | _loginCredentials.ID_ROL == 61)
                                             {
                                                 Session["PerfilCliente"] = _entity.CLIENTES.Where(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).FirstOrDefault();
-                                                return RedirectToAction("Index", "CLIENTES");
+                                                return RedirectToAction("Inicio", "CLIENTES");
                                             }
                                             else
                                             {
@@ -148,7 +148,7 @@ namespace LexAbogadosWeb.Controllers
             db.USUARIOS.Add(_usuarioSubir);
             db.SaveChanges();
 
-            ViewBag.ID_ROL = new SelectList(db.TIPO_ROL, "ID_ROL", "NOMBRE_ROL");
+            ViewBag.ID_ROL = new SelectList(db.TIPO_ROL.ToList(), "ID_ROL", "NOMBRE_ROL");
             return View();
         }
         public byte[] ConvertToByte(HttpPostedFileBase file)

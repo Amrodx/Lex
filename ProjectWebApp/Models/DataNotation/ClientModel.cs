@@ -39,7 +39,7 @@ namespace ProjectWebApp.DataNotation
         public string TIMESTAMP { get; set; }
         //[Required(ErrorMessage = "El campo es obligatorio.")]
         public string STATUS_ACTIVACION { get; set; }
-        [Required(ErrorMessage = "El campo es obligatorio.")]
+        //[Required(ErrorMessage = "El campo es obligatorio.")]
         public Nullable<long> ID_PLAN { get; set; }
         //[Required(ErrorMessage = "El campo es obligatorio.")]
         public Nullable<long> ID_USUARIO { get; set; }
