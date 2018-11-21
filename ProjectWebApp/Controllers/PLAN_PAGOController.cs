@@ -10,6 +10,7 @@ using LexAbogadosWeb.Models;
 
 namespace LexAbogadosWeb.Controllers
 {
+    [Authorize]
     public class PLAN_PAGOController : Controller
     {
         private ODAO db = new ODAO();
@@ -17,7 +18,18 @@ namespace LexAbogadosWeb.Controllers
         // GET: PLAN_PAGO
         public ActionResult Index()
         {
-            return View(db.PLAN_PAGO.ToList());
+            List<PLAN_PAGO> plan = new List<PLAN_PAGO>();
+            try
+            {
+                plan = db.PLAN_PAGO.ToList();
+                return View(plan);
+
+            }
+            catch (Exception)
+            {
+
+                return View(plan);
+            }
         }
 
         // GET: PLAN_PAGO/Details/5

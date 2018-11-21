@@ -11,6 +11,7 @@ using ProjectWebApp.DataNotation;
 
 namespace LexAbogadosWeb.Controllers
 {
+    [Authorize]
     public class CLIENTESController : Controller
     {
         private ODAO db = new ODAO();
@@ -18,33 +19,63 @@ namespace LexAbogadosWeb.Controllers
         // GET: CLIENTES
         public ActionResult Index()
         {
-            var cLIENTES = db.CLIENTES.Include(c => c.COMUNAS).Include(c => c.TIPO_CLIENTE).Include(c => c.PLAN_PAGO).Include(c => c.USUARIOS);
-            return View(cLIENTES.ToList());
+            List<CLIENTES> cLIENTES = new List<CLIENTES>();
+            try
+            {
+                cLIENTES = db.CLIENTES.Include(c => c.COMUNAS).Include(c => c.TIPO_CLIENTE).Include(c => c.PLAN_PAGO).Include(c => c.USUARIOS).ToList();
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw;
+            }
+            return View(cLIENTES);
         }
 
         // GET: CLIENTES/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            CLIENTES cLIENTES = new CLIENTES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                cLIENTES = db.CLIENTES.Find(id);
+                if (cLIENTES == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cLIENTES);
             }
-            CLIENTES cLIENTES = db.CLIENTES.Find(id);
-            if (cLIENTES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                return View(cLIENTES);
             }
-            return View(cLIENTES);
+            
         }
 
         // GET: CLIENTES/Create
         public ActionResult Create()
         {
-            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA");
-            ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO");
-            ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN");
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER");
-            return View();
+            try
+            {
+                ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA");
+                ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO");
+                ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN");
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER");
+                return View();
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_COMUNA = new List<string>();
+                ViewBag.ID_TIPO = new List<string>();
+                ViewBag.ID_PLAN = new List<string>();
+                ViewBag.ID_USUARIO = new List<string>();
+                return View();
+            }
+            
         }
 
         // POST: CLIENTES/Create
@@ -54,18 +85,30 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_CLIENTE,RUT,NOMBRE_RAZON_SOCIAL,ID_TIPO,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES,TIMESTAMP,STATUS_ACTIVACION,ID_PLAN,ID_USUARIO")] CLIENTES cLIENTES)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.CLIENTES.Add(cLIENTES);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.CLIENTES.Add(cLIENTES);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
-            ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
-            ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
-            return View(cLIENTES);
+                ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+                ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+                ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+                return View(cLIENTES);
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_COMUNA = new List<string>();
+                ViewBag.ID_TIPO = new List<string>();
+                ViewBag.ID_PLAN = new List<string>();
+                ViewBag.ID_USUARIO = new List<string>();
+                return View(cLIENTES);
+            }
+            
         }
 
         // GET: CLIENTES/Edit/5
@@ -77,16 +120,29 @@ namespace LexAbogadosWeb.Controllers
             //{
             //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             //}
-            CLIENTES cLIENTES = db.CLIENTES.Find(perfil.ID_USUARIO);
-            if (cLIENTES == null)
+            CLIENTES cLIENTES = new CLIENTES();
+            try
             {
-                return HttpNotFound();
+                cLIENTES = db.CLIENTES.Find(perfil.ID_USUARIO);
+                if (cLIENTES == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+                ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+                ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+                return View(cLIENTES);
             }
-            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
-            ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
-            ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
-            return View(cLIENTES);
+            catch (Exception)
+            {
+                ViewBag.ID_COMUNA = new List<string>();
+                ViewBag.ID_TIPO = new List<string>();
+                ViewBag.ID_PLAN = new List<string>();
+                ViewBag.ID_USUARIO = new List<string>();
+                return View(cLIENTES);
+            }
+
         }
 
         // POST: CLIENTES/Edit/5
@@ -96,32 +152,53 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_CLIENTE,RUT,NOMBRE_RAZON_SOCIAL,ID_TIPO,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES,TIMESTAMP,STATUS_ACTIVACION,ID_PLAN,ID_USUARIO")] CLIENTES cLIENTES)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(cLIENTES).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(cLIENTES).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+                ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+                ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+                return View(cLIENTES);
             }
-            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
-            ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
-            ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
-            return View(cLIENTES);
+            catch (Exception)
+            {
+                ViewBag.ID_COMUNA = new List<string>();
+                ViewBag.ID_TIPO = new List<string>();
+                ViewBag.ID_PLAN = new List<string>();
+                ViewBag.ID_USUARIO = new List<string>();
+                return View(cLIENTES);
+            }
+
         }
 
         // GET: CLIENTES/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            CLIENTES cLIENTES = new CLIENTES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                cLIENTES = db.CLIENTES.Find(id);
+                if (cLIENTES == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cLIENTES);
             }
-            CLIENTES cLIENTES = db.CLIENTES.Find(id);
-            if (cLIENTES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                return View(cLIENTES);
             }
-            return View(cLIENTES);
+
         }
 
         // POST: CLIENTES/Delete/5
@@ -129,10 +206,18 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            CLIENTES cLIENTES = db.CLIENTES.Find(id);
-            db.CLIENTES.Remove(cLIENTES);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                CLIENTES cLIENTES = db.CLIENTES.Find(id);
+                db.CLIENTES.Remove(cLIENTES);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
+
         }
 
         public ActionResult CompletarPerfil()
@@ -163,6 +248,10 @@ namespace LexAbogadosWeb.Controllers
             }
             catch (Exception)
             {
+                ViewBag.ID_COMUNA = new List<string>();
+                ViewBag.ID_TIPO = new List<string>();
+                ViewBag.ID_PLAN = new List<string>();
+                ViewBag.ID_USUARIO = new List<string>();
                 return View(cLIENTES);
             }
             return View(cLIENTES);
@@ -200,71 +289,109 @@ namespace LexAbogadosWeb.Controllers
         public ActionResult DataContact(long? id)
         {
             USUARIOS perfil = (USUARIOS)Session["LoginCredentials"];
-
-            CLIENTES cLIENTES = db.CLIENTES.Where( x=> x.ID_USUARIO == perfil.ID_USUARIO).FirstOrDefault();
-            ClientModel clientModel = new ClientModel()
+            CLIENTES cLIENTES = new CLIENTES();
+            ClientModel clientModel = new ClientModel();
+            try
             {
-                ID_CLIENTE = cLIENTES.ID_CLIENTE,
-                ID_USUARIO = cLIENTES.ID_USUARIO,
-                CONTACTO = cLIENTES.CONTACTO,
-                CORREO = cLIENTES.CORREO,
-                DIRECCION = cLIENTES.DIRECCION,
-                FONO1 = cLIENTES.FONO1,
-                FONO2 = cLIENTES.FONO2,
-                ID_COMUNA = cLIENTES.ID_COMUNA,
-                ID_PLAN = cLIENTES.ID_PLAN,
-                ID_TIPO = cLIENTES.ID_TIPO,
-                NOMBRE_RAZON_SOCIAL = cLIENTES.NOMBRE_RAZON_SOCIAL,
-                OBSERVACIONES = cLIENTES.OBSERVACIONES,
-                RUT = cLIENTES.RUT,
-                STATUS_ACTIVACION = cLIENTES.STATUS_ACTIVACION,
-                TIMESTAMP = cLIENTES.TIMESTAMP
-            };
-            //if (cLIENTES == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
-            ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
-            ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
-            return View(clientModel);
+                if (perfil != null)
+                {
+                    cLIENTES = db.CLIENTES.Where(x => x.ID_USUARIO == perfil.ID_USUARIO).FirstOrDefault();
+                    clientModel = new ClientModel()
+                    {
+                        ID_CLIENTE = cLIENTES.ID_CLIENTE,
+                        ID_USUARIO = cLIENTES.ID_USUARIO,
+                        CONTACTO = cLIENTES.CONTACTO,
+                        CORREO = cLIENTES.CORREO,
+                        DIRECCION = cLIENTES.DIRECCION,
+                        FONO1 = cLIENTES.FONO1,
+                        FONO2 = cLIENTES.FONO2,
+                        ID_COMUNA = cLIENTES.ID_COMUNA,
+                        ID_PLAN = cLIENTES.ID_PLAN,
+                        ID_TIPO = cLIENTES.ID_TIPO,
+                        NOMBRE_RAZON_SOCIAL = cLIENTES.NOMBRE_RAZON_SOCIAL,
+                        OBSERVACIONES = cLIENTES.OBSERVACIONES,
+                        RUT = cLIENTES.RUT,
+                        STATUS_ACTIVACION = cLIENTES.STATUS_ACTIVACION,
+                        TIMESTAMP = cLIENTES.TIMESTAMP
+                    };
+                    //if (cLIENTES == null)
+                    //{
+                    //    return HttpNotFound();
+                    //}
+                    ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+                    ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+                    ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+                    ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+                    return View(clientModel);
+                }
+                else
+                {
+                    ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+                    ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+                    ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+                    ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+                    return View(clientModel);
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_COMUNA = new List<string>();
+                ViewBag.ID_TIPO = new List<string>();
+                ViewBag.ID_PLAN = new List<string>();
+                ViewBag.ID_USUARIO = new List<string>();
+                return View(clientModel);
+            }
+            
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DataContact([Bind(Include = "ID_CLIENTE,RUT,NOMBRE_RAZON_SOCIAL,ID_TIPO,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES,TIMESTAMP,STATUS_ACTIVACION,ID_PLAN,ID_USUARIO")] ClientModel cLIENTES)
         {
-            if (ModelState.IsValid)
+            try
             {
-                CLIENTES clienInsert = new CLIENTES()
+                if (ModelState.IsValid)
                 {
-                    ID_CLIENTE = cLIENTES.ID_CLIENTE,
-                    ID_USUARIO = cLIENTES.ID_USUARIO,
-                    CONTACTO = cLIENTES.CONTACTO,
-                    CORREO = cLIENTES.CORREO,
-                    DIRECCION = cLIENTES.DIRECCION,
-                    FONO1 = cLIENTES.FONO1,
-                    FONO2 = cLIENTES.FONO2,
-                    ID_COMUNA = cLIENTES.ID_COMUNA,
-                    ID_PLAN = cLIENTES.ID_PLAN,
-                    ID_TIPO = cLIENTES.ID_TIPO,
-                    NOMBRE_RAZON_SOCIAL = cLIENTES.NOMBRE_RAZON_SOCIAL,
-                    OBSERVACIONES = cLIENTES.OBSERVACIONES,
-                    RUT = cLIENTES.RUT,
-                    STATUS_ACTIVACION = cLIENTES.STATUS_ACTIVACION,
-                    TIMESTAMP = cLIENTES.TIMESTAMP
-                };
 
-                db.Entry(clienInsert).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Inicio");
+                    CLIENTES clienInsert = new CLIENTES()
+                    {
+                        ID_CLIENTE = cLIENTES.ID_CLIENTE,
+                        ID_USUARIO = cLIENTES.ID_USUARIO,
+                        CONTACTO = cLIENTES.CONTACTO,
+                        CORREO = cLIENTES.CORREO,
+                        DIRECCION = cLIENTES.DIRECCION,
+                        FONO1 = cLIENTES.FONO1,
+                        FONO2 = cLIENTES.FONO2,
+                        ID_COMUNA = cLIENTES.ID_COMUNA,
+                        ID_PLAN = cLIENTES.ID_PLAN,
+                        ID_TIPO = cLIENTES.ID_TIPO,
+                        NOMBRE_RAZON_SOCIAL = cLIENTES.NOMBRE_RAZON_SOCIAL,
+                        OBSERVACIONES = cLIENTES.OBSERVACIONES,
+                        RUT = cLIENTES.RUT,
+                        STATUS_ACTIVACION = cLIENTES.STATUS_ACTIVACION,
+                        TIMESTAMP = cLIENTES.TIMESTAMP
+                    };
+
+                    db.Entry(clienInsert).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Inicio");
+                }
+                ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+                ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+                ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+                return View(cLIENTES);
             }
-            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
-            ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
-            ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
-            return View(cLIENTES);
+            catch (Exception)
+            {
+                ViewBag.ID_COMUNA = new List<string>();
+                ViewBag.ID_TIPO = new List<string>();
+                ViewBag.ID_PLAN = new List<string>();
+                ViewBag.ID_USUARIO = new List<string>();
+                return View(cLIENTES);
+            }
+            
         }
 
         [HttpPost]
@@ -272,56 +399,66 @@ namespace LexAbogadosWeb.Controllers
         public ActionResult CompletarPerfil([Bind(Include = "RUT,NOMBRE_RAZON_SOCIAL,DIRECCION,CORREO,CONTACTO,FONO1,FONO2,ID_COMUNA,OBSERVACIONES")] ClientModel cLIENTES)
         {
             USUARIOS _UsuarioLogued = (USUARIOS)Session["LoginCredentials"];
-            
-            cLIENTES.ID_USUARIO = _UsuarioLogued.ID_USUARIO;
-            cLIENTES.ID_TIPO = _UsuarioLogued.ID_ROL == 41?41:21;
-            cLIENTES.ID_CLIENTE = 1;
-            cLIENTES.TIMESTAMP = DateTime.Now.ToString();
-            cLIENTES.STATUS_ACTIVACION = "Activo";
-            cLIENTES.ID_PLAN = 22;
-            if (ModelState.IsValid)
+            try
             {
-                cLIENTES.RUT = cLIENTES.RUT.Replace(".", "").Replace("-", "");
-                CLIENTES clienInsert = new CLIENTES()
+                cLIENTES.ID_USUARIO = _UsuarioLogued.ID_USUARIO;
+                cLIENTES.ID_TIPO = _UsuarioLogued.ID_ROL == 41 ? 41 : 21;
+                cLIENTES.ID_CLIENTE = 1;
+                cLIENTES.TIMESTAMP = DateTime.Now.ToString();
+                cLIENTES.STATUS_ACTIVACION = "Activo";
+                cLIENTES.ID_PLAN = 22;
+                if (ModelState.IsValid)
                 {
-                    ID_CLIENTE = cLIENTES.ID_CLIENTE,
-                    ID_USUARIO = cLIENTES.ID_USUARIO,
-                    CONTACTO = cLIENTES.CONTACTO,
-                    CORREO = cLIENTES.CORREO,
-                    DIRECCION = cLIENTES.DIRECCION,
-                    FONO1 = cLIENTES.FONO1,
-                    FONO2 = cLIENTES.FONO2,
-                    ID_COMUNA = cLIENTES.ID_COMUNA,
-                    ID_PLAN = cLIENTES.ID_PLAN,
-                    ID_TIPO = cLIENTES.ID_TIPO,
-                    NOMBRE_RAZON_SOCIAL = cLIENTES.NOMBRE_RAZON_SOCIAL,
-                    OBSERVACIONES = cLIENTES.OBSERVACIONES,
-                    RUT = cLIENTES.RUT,
-                    STATUS_ACTIVACION = cLIENTES.STATUS_ACTIVACION,
-                    TIMESTAMP = cLIENTES.TIMESTAMP
-                };
+                    cLIENTES.RUT = cLIENTES.RUT.Replace(".", "").Replace("-", "");
+                    CLIENTES clienInsert = new CLIENTES()
+                    {
+                        ID_CLIENTE = cLIENTES.ID_CLIENTE,
+                        ID_USUARIO = cLIENTES.ID_USUARIO,
+                        CONTACTO = cLIENTES.CONTACTO,
+                        CORREO = cLIENTES.CORREO,
+                        DIRECCION = cLIENTES.DIRECCION,
+                        FONO1 = cLIENTES.FONO1,
+                        FONO2 = cLIENTES.FONO2,
+                        ID_COMUNA = cLIENTES.ID_COMUNA,
+                        ID_PLAN = cLIENTES.ID_PLAN,
+                        ID_TIPO = cLIENTES.ID_TIPO,
+                        NOMBRE_RAZON_SOCIAL = cLIENTES.NOMBRE_RAZON_SOCIAL,
+                        OBSERVACIONES = cLIENTES.OBSERVACIONES,
+                        RUT = cLIENTES.RUT,
+                        STATUS_ACTIVACION = cLIENTES.STATUS_ACTIVACION,
+                        TIMESTAMP = cLIENTES.TIMESTAMP
+                    };
 
 
-                db.CLIENTES.Add(clienInsert);
-                db.SaveChanges();
-                Session["PerfilCliente"] = db.CLIENTES.Where(x => x.RUT == cLIENTES.RUT);
-                return RedirectToAction("Perfil");
+                    db.CLIENTES.Add(clienInsert);
+                    db.SaveChanges();
+                    Session["PerfilCliente"] = db.CLIENTES.Where(x => x.RUT == cLIENTES.RUT);
+                    return RedirectToAction("Perfil");
 
-                //db.Entry(cLIENTES).State = EntityState.Modified;
-                //db.SaveChanges();
+                    //db.Entry(cLIENTES).State = EntityState.Modified;
+                    //db.SaveChanges();
 
-                //return RedirectToAction("Perfil");
+                    //return RedirectToAction("Perfil");
+                }
+                ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
+                ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
+                ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
+                return View(cLIENTES);
             }
-            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", cLIENTES.ID_COMUNA);
-            ViewBag.ID_TIPO = new SelectList(db.TIPO_CLIENTE, "ID_TIPO_CLIENTE", "NOMBRE_TIPO", cLIENTES.ID_TIPO);
-            ViewBag.ID_PLAN = new SelectList(db.PLAN_PAGO, "ID_PAGO", "PLAN", cLIENTES.ID_PLAN);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
-            return View(cLIENTES);
+            catch (Exception)
+            {
+                ViewBag.ID_COMUNA = new List<string>();
+                ViewBag.ID_TIPO = new List<string>();
+                ViewBag.ID_PLAN = new List<string>();
+                ViewBag.ID_USUARIO = new List<string>();
+                return View(cLIENTES);
+            }
+
         }
 
         public ActionResult Inicio()
         {
-
             return View();
         }
 

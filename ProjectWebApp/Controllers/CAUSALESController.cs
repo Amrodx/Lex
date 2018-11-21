@@ -10,6 +10,7 @@ using LexAbogadosWeb.Models;
 
 namespace LexAbogadosWeb.Controllers
 {
+    [Authorize]
     public class CAUSALESController : Controller
     {
         private ODAO db = new ODAO();
@@ -17,22 +18,43 @@ namespace LexAbogadosWeb.Controllers
         // GET: CAUSALES
         public ActionResult Index()
         {
-            return View(db.CAUSALES.ToList());
+            List<CAUSALES> causales = new List<CAUSALES>();
+            try
+            {
+                causales = db.CAUSALES.ToList();
+                return View(causales);
+
+            }
+            catch (Exception)
+            {
+
+                return View(causales);
+            }
         }
 
         // GET: CAUSALES/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            CAUSALES cAUSALES = new CAUSALES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                cAUSALES = db.CAUSALES.Find(id);
+                if (cAUSALES == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cAUSALES);
             }
-            CAUSALES cAUSALES = db.CAUSALES.Find(id);
-            if (cAUSALES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(cAUSALES);
             }
-            return View(cAUSALES);
+
         }
 
         // GET: CAUSALES/Create

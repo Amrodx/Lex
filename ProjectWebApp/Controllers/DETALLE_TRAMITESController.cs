@@ -10,6 +10,7 @@ using LexAbogadosWeb.Models;
 
 namespace LexAbogadosWeb.Controllers
 {
+    [Authorize]
     public class DETALLE_TRAMITESController : Controller
     {
         private ODAO db = new ODAO();

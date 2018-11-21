@@ -196,6 +196,7 @@
     <Compile Include="Controllers\DETALLE_COSTOSController.cs" />
     <Compile Include="Controllers\DETALLE_TRAMITESController.cs" />
     <Compile Include="Controllers\DOCUMENTOSController.cs" />
+    <Compile Include="Controllers\ErrorHandlerController.cs" />
     <Compile Include="Controllers\MENUController.cs" />
     <Compile Include="Controllers\MENU_SUBController.cs" />
     <Compile Include="Controllers\ORDEN_PAGOController.cs" />
@@ -4653,6 +4654,8 @@
     <Content Include="Views\ASISTENTES\Perfil.cshtml" />
     <Content Include="Views\ASISTENTES\DataContact.cshtml" />
     <Content Include="Views\CLIENTES\Inicio.cshtml" />
+    <Content Include="Views\ErrorHandler\Index.cshtml" />
+    <Content Include="Views\ErrorHandler\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

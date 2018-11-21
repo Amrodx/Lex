@@ -10,6 +10,7 @@ using LexAbogadosWeb.Models;
 
 namespace LexAbogadosWeb.Controllers
 {
+    [Authorize]
     public class PRESUPUESTOController : Controller
     {
         private ODAO db = new ODAO();
@@ -17,31 +18,60 @@ namespace LexAbogadosWeb.Controllers
         // GET: PRESUPUESTO
         public ActionResult Index()
         {
-            var pRESUPUESTO = db.PRESUPUESTO.Include(p => p.CAUSALES).Include(p => p.USUARIOS);
-            return View(pRESUPUESTO.ToList());
+            List<PRESUPUESTO> pRESUPUESTO = new List<PRESUPUESTO>();
+            try
+            {
+                pRESUPUESTO = db.PRESUPUESTO.Include(p => p.CAUSALES).Include(p => p.USUARIOS).ToList();
+                return View(pRESUPUESTO);
+            }
+            catch (Exception)
+            {
+                return View(pRESUPUESTO);
+            }
+
         }
 
         // GET: PRESUPUESTO/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            PRESUPUESTO pRESUPUESTO = new PRESUPUESTO();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                pRESUPUESTO = db.PRESUPUESTO.Find(id);
+                if (pRESUPUESTO == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pRESUPUESTO);
             }
-            PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Find(id);
-            if (pRESUPUESTO == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(pRESUPUESTO);
             }
-            return View(pRESUPUESTO);
+
         }
 
         // GET: PRESUPUESTO/Create
         public ActionResult Create()
         {
-            ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE");
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER");
-            return View();
+            try
+            {
+                ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE");
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER");
+                return View();
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_CAUSAL = new List<string>();
+                ViewBag.ID_USUARIO = new List<string>();
+                return View();
+            }
+
         }
 
         // POST: PRESUPUESTO/Create

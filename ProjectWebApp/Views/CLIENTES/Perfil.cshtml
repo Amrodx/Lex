@@ -61,14 +61,22 @@
                         <div class="profile_img">
                             <div id="crop-avatar">
                                 <!-- Current avatar -->
-                                @if (uProfile.BINARY_IMAGE == null)
+                                @if (uProfile != null)
                                 {
-                                    <img src="data:image;base64,@System.Convert.ToBase64String(uProfile.BINARY_IMAGE)" alt="Avatar" class="img-responsive avatar-view" />
+                                    if (uProfile.BINARY_IMAGE == null)
+                                    {
+                                        <img src="data:image;base64,@System.Convert.ToBase64String(uProfile.BINARY_IMAGE)" alt="Avatar" class="img-responsive avatar-view" />
+                                    }
+                                    else
+                                    {
+                                        <img src="https://safety.uncc.edu/sites/safety.uncc.edu/files/styles/directory-list/public/fields/directory/field_directory_image/default-avatar_2.png?itok=CUJno2j0" alt="Avatar" class="img-responsive avatar-view" />
+                                    }
                                 }
                                 else
                                 {
                                     <img src="https://safety.uncc.edu/sites/safety.uncc.edu/files/styles/directory-list/public/fields/directory/field_directory_image/default-avatar_2.png?itok=CUJno2j0" alt="Avatar" class="img-responsive avatar-view" />
                                 }
+
                                 @*<img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar">*@
                             </div>
                         </div>
@@ -183,46 +191,50 @@
                                 <div class="row">
                                     <!-- accepted payments column -->
                                     @*<div class="col-xs-6">
-                                        <p class="lead">Payment Methods:</p>
-                                        <img src="~/assets/img/visa.png" alt="Visa">
-                                        <img src="~/assets/img/mastercard.png" alt="Mastercard">
-                                        <img src="~/assets/img/american-express.png" alt="American Express">
-                                        <img src="~/assets/img/paypal.png" alt="Paypal">
-                                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                                        </p>
-                                    </div>*@
+            <p class="lead">Payment Methods:</p>
+            <img src="~/assets/img/visa.png" alt="Visa">
+            <img src="~/assets/img/mastercard.png" alt="Mastercard">
+            <img src="~/assets/img/american-express.png" alt="American Express">
+            <img src="~/assets/img/paypal.png" alt="Paypal">
+            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+            </p>
+        </div>*@
                                     <!-- /.col -->
                                     <hr>
-                                    @if (uProfile.ID_ROL == 61)
-	                                {
-                                    <div class="col-xs-6">
-                                        <p class="lead">Plan de Pago Actual</p>
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <tbody>
-                                                    @*<tr>
-                                                        <th style="width:50%">Subtotal:</th>
-                                                        <td>$250.30</td>
-                                                    </tr>*@
-                                                    <tr>
-                                                        <th>Nombre del Plan: </th>
-                                                        <td> @ViewBag.DescPlan</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Valor del Plan: </th>
-                                                        <td>@ViewBag.ValPlan</td>
-                                                    </tr>
-                                                    @*<tr>
-                                                        <th>Total:</th>
-                                                        <td>$265.24</td>
-                                                    </tr>*@
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-	                                }
+                                    @if (uProfile != null)
+                                    {
+                                        if (uProfile.ID_ROL == 61)
+                                        {
+                                            <div class="col-xs-6">
+                                                <p class="lead">Plan de Pago Actual</p>
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            @*<tr>
+                                    <th style="width:50%">Subtotal:</th>
+                                    <td>$250.30</td>
+                                </tr>*@
+                                                            <tr>
+                                                                <th>Nombre del Plan: </th>
+                                                                <td> @ViewBag.DescPlan</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Valor del Plan: </th>
+                                                                <td>@ViewBag.ValPlan</td>
+                                                            </tr>
+                                                            @*<tr>
+                                    <th>Total:</th>
+                                    <td>$265.24</td>
+                                </tr>*@
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
                                     
+
                                     <!-- /.col -->
                                 </div>
                                 <!-- /.row -->

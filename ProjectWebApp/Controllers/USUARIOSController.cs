@@ -14,8 +14,7 @@ using System.Configuration;
 using System.IO;
 
 namespace LexAbogadosWeb.Controllers
-{ 
-
+{
     public class USUARIOSController : Controller
     {
 
@@ -55,7 +54,7 @@ namespace LexAbogadosWeb.Controllers
                                     {
                                         USUARIOS _loginCredentials = _entity.USUARIOS.Where(x => x.USER.Trim().ToLower() == _login.USER.Trim().ToLower()).FirstOrDefault();  // Get the login user details and bind it to LoginModels class  
 
-                                        FormsAuthentication.SetAuthCookie(_loginCredentials.USER, false); // set the formauthentication cookie  
+                                        FormsAuthentication.SetAuthCookie(_loginCredentials.USER, true); // set the formauthentication cookie  
                                         Session["LoginCredentials"] = _loginCredentials; // Bind the _logincredentials details to "LoginCredentials" session  
                                         Session["MenuMaster"] = db.MENU.Include("MENU_SUB").Where(w => w.ID_ROL == _loginCredentials.ID_ROL).ToList(); //Bind the _menus list to MenuMaster session  
                                         Session["UserName"] = _loginCredentials.USER;
@@ -142,13 +141,22 @@ namespace LexAbogadosWeb.Controllers
 
         public ActionResult Subir(USUARIOS _usuarioSubir)
         {
-            HttpPostedFileBase File = Request.Files["IMG_PROFILE"];
-            _usuarioSubir.IMG_PROFILE = File.FileName;
-            _usuarioSubir.BINARY_IMAGE = ConvertToByte(Request.Files["IMG_PROFILE"]);
-            db.USUARIOS.Add(_usuarioSubir);
-            db.SaveChanges();
+            try
+            {
+                HttpPostedFileBase File = Request.Files["IMG_PROFILE"];
+                _usuarioSubir.IMG_PROFILE = File.FileName;
+                _usuarioSubir.BINARY_IMAGE = ConvertToByte(Request.Files["IMG_PROFILE"]);
+                db.USUARIOS.Add(_usuarioSubir);
+                db.SaveChanges();
 
-            ViewBag.ID_ROL = new SelectList(db.TIPO_ROL.ToList(), "ID_ROL", "NOMBRE_ROL");
+                ViewBag.ID_ROL = new SelectList(db.TIPO_ROL.ToList(), "ID_ROL", "NOMBRE_ROL");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ID_ROL = "";
+                ViewBag.Message = ex.Message;
+                throw;
+            }
             return View();
         }
         public byte[] ConvertToByte(HttpPostedFileBase file)
@@ -170,18 +178,30 @@ namespace LexAbogadosWeb.Controllers
 
 
         // GET: USUARIOS
+        [Authorize]
         public ActionResult Index()
         {
-            if(Session["LoginCredentials"] == null) {
-                return RedirectToAction("Login", "USUARIOS");
-            }
+            List <USUARIOS> uSUARIOS = new List<USUARIOS>();
+            try
+            {
+                if (Session["LoginCredentials"] == null)
+                {
+                    return RedirectToAction("Login", "USUARIOS");
+                }
                 ViewBag.USUARIOS = Session["LoginCredentials"];
 
-            var uSUARIOS = db.USUARIOS.Include(u => u.ASISTENTES).Include(u => u.CLIENTES).Include(u => u.TIPO_ROL);
-            return View(uSUARIOS.ToList());
+                uSUARIOS = db.USUARIOS.Include(u => u.ASISTENTES).Include(u => u.CLIENTES).Include(u => u.TIPO_ROL).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View(uSUARIOS);
         }
 
         // GET: USUARIOS/Details/5
+        [Authorize]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -197,6 +217,7 @@ namespace LexAbogadosWeb.Controllers
         }
 
         // GET: USUARIOS/Create
+        [Authorize]
         public ActionResult Create()
         {
             if (Session["LoginCredentials"] == null) { Response.Redirect("/USUARIOS/Login"); };
@@ -210,6 +231,7 @@ namespace LexAbogadosWeb.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "USER,PASS,TIMESTAMP,ID_ROL,RUT,ID_USER")] USUARIOS uSUARIOS)
         {
@@ -228,6 +250,7 @@ namespace LexAbogadosWeb.Controllers
         }
 
         // GET: USUARIOS/Edit/5
+        [Authorize]
         public ActionResult Edit(long? id)
         {
             if (Session["LoginCredentials"] == null) { Response.Redirect("/USUARIOS/Login"); };
@@ -250,23 +273,35 @@ namespace LexAbogadosWeb.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "USER,PASS,TIMESTAMP,ID_ROL,RUT,ID_USER")] USUARIOS uSUARIOS)
         {
-            if (Session["LoginCredentials"] == null) { Response.Redirect("/USUARIOS/Login"); };
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(uSUARIOS).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (Session["LoginCredentials"] == null) { Response.Redirect("/USUARIOS/Login"); };
+                if (ModelState.IsValid)
+                {
+                    db.Entry(uSUARIOS).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ASISTENTES = new SelectList(db.ASISTENTES, "RUT", "NOMBRES", uSUARIOS.ASISTENTES);
+                ViewBag.CLIENTES = new SelectList(db.CLIENTES, "RUT", "NOMBRE_RAZON_SOCIAL", uSUARIOS.CLIENTES);
+                ViewBag.ID_ROL = new SelectList(db.TIPO_ROL, "ID_ROL", "NOMBRE_ROL", uSUARIOS.ID_ROL);
             }
-            ViewBag.ASISTENTES = new SelectList(db.ASISTENTES, "RUT", "NOMBRES", uSUARIOS.ASISTENTES);
-            ViewBag.CLIENTES = new SelectList(db.CLIENTES, "RUT", "NOMBRE_RAZON_SOCIAL", uSUARIOS.CLIENTES);
-            ViewBag.ID_ROL = new SelectList(db.TIPO_ROL, "ID_ROL", "NOMBRE_ROL", uSUARIOS.ID_ROL);
+            catch (Exception)
+            {
+                ViewBag.ASISTENTES = new SelectList("");
+                ViewBag.CLIENTES = new SelectList("");
+                ViewBag.ID_ROL = new SelectList("");
+            }
+            
             return View(uSUARIOS);
         }
 
         // GET: USUARIOS/Delete/5
+        [Authorize]
         public ActionResult Delete(long? id)
         {
             if (Session["LoginCredentials"] == null) { Response.Redirect("/USUARIOS/Login"); };
@@ -284,14 +319,22 @@ namespace LexAbogadosWeb.Controllers
 
         // POST: USUARIOS/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            if (Session["LoginCredentials"] == null) { Response.Redirect("/USUARIOS/Login"); };
-            USUARIOS uSUARIOS = db.USUARIOS.Find(id);
-            db.USUARIOS.Remove(uSUARIOS);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                if (Session["LoginCredentials"] == null) { Response.Redirect("/USUARIOS/Login"); };
+                USUARIOS uSUARIOS = db.USUARIOS.Find(id);
+                db.USUARIOS.Remove(uSUARIOS);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)
