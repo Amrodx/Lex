@@ -203,10 +203,13 @@
     <Compile Include="Controllers\PRESUPUESTOController.cs" />
     <Compile Include="Controllers\REGIONESController.cs" />
     <Compile Include="Controllers\Servicio\SecureUtil.cs" />
+    <Compile Include="Controllers\Servicio\UtilClientAddress.cs" />
     <Compile Include="Controllers\Servicio\UtilCorreos.cs" />
     <Compile Include="Controllers\TIPO_CLIENTEController.cs" />
     <Compile Include="Controllers\TIPO_ROLController.cs" />
     <Compile Include="Controllers\USUARIOSController.cs" />
+    <Compile Include="Models\DataNotation\AssistantModel.cs" />
+    <Compile Include="Models\DataNotation\ClientModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -289,6 +292,7 @@
     <Content Include="assets\img\pdf.png" />
     <Content Include="assets\img\perfilAbogado.jpg" />
     <Content Include="assets\img\powerpoint.png" />
+    <Content Include="assets\img\user.png" />
     <Content Include="assets\img\word.png" />
     <Content Include="assets\vendors\animate.css\animate.css" />
     <Content Include="assets\vendors\animate.css\animate.min.css" />
@@ -4638,12 +4642,19 @@
     <Content Include="Views\ASISTENTES\Edit.cshtml" />
     <Content Include="Views\ASISTENTES\Index.cshtml" />
     <Content Include="Views\DOCUMENTOS\SubidaDocumentos.cshtml" />
-    <Content Include="Views\DOCUMENTOS\BajadaDocumentos.cshtml" />
+    <Content Include="Views\CLIENTES\CompletarPerfil.cshtml" />
     <Content Include="Views\CLIENTES\Perfil.cshtml" />
+    <Content Include="Views\PRESUPUESTO\Asignaciones.cshtml" />
     <None Include="Views\PRESUPUESTO\Contrato.cshtml" />
+    <Content Include="Views\PRESUPUESTO\GEProcesos.cshtml" />
+    <Content Include="Views\PRESUPUESTO\GestionAsistencia.cshtml" />
     <None Include="Views\PRESUPUESTO\OrdenPago.cshtml" />
     <None Include="Views\PRESUPUESTO\Presupuesto.cshtml" />
-    <None Include="Views\PRESUPUESTO\Recepcion.cshtml" />
+    <None Include="Views\PRESUPUESTO\Procesos.cshtml" />
+    <Content Include="Views\CLIENTES\DataContact.cshtml" />
+    <Content Include="Views\ASISTENTES\CompletarPerfil.cshtml" />
+    <Content Include="Views\ASISTENTES\Perfil.cshtml" />
+    <Content Include="Views\ASISTENTES\DataContact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

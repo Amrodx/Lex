@@ -156,11 +156,11 @@
     @if (ViewBag.Message != null)
     {
         <script>
-        $(document).ready(function () {
+        $(document).ready(function (){
                 new PNotify({
                 title: "Notificacion",
                 type: "warning",
-                text: "@ViewBag.MessageWarning",
+                text: "@ViewBag.Message",
                 nonblock: {
                 nonblock: true
                 },

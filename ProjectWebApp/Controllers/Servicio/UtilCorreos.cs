@@ -19,8 +19,8 @@ namespace ProjectWebApp.Controllers.Servicio
         readonly string smtpAddress = "smtp.xyz.com";
         readonly int portNumber = 587;
         readonly bool enableSSL = true;
-        readonly string m_userName = "support@xyz.com";
-        readonly string m_UserpassWord = "56436578";
+        //readonly string userName = "support@xyz.com";
+        //readonly string UserpassWord = "56436578";
 
         public void SendEmail(USUARIOS _customers)
         {

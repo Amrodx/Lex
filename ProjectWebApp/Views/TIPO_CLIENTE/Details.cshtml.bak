@@ -1,0 +1,35 @@
+﻿@model ProjectWebApp.Models.TIPO_CLIENTE
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TIPO_CLIENTE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NOMBRE_TIPO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOMBRE_TIPO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TIMESTAMP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TIMESTAMP)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_TIPO_CLIENTE }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

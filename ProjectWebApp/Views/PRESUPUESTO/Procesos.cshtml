@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProjectWebApp.Models.PRESUPUESTO>
+﻿@using ProjectWebApp.Models;
+@model ProjectWebApp.Models.PRESUPUESTO
 
 @{
     ViewBag.Title = "Index";
@@ -35,8 +36,8 @@
                 <div class="x_content">
 
                     <!-- Smart Wizard -->
-                    <p>Asistente de Antecedentes y Documentación.</p>
-                    <div id="wizard" class="form_wizard wizard_horizontal" style="height:auto;">
+                    <p>Antecedentes y Documentación.</p>
+                    <div id="wizard" class="form_wizard wizard_horizontal">
                         <ul class="wizard_steps">
                             <li>
                                 <a href="#step-1">
@@ -90,13 +91,20 @@
                                 Acontinuacion puede ingresar los datos iniciales para generar la solicitud del presupuesto segun sus necesidades. La recepción de estos datos registrará la documentación o papeles para gestionar su caso.
                             </p>
                             <div style="padding-top:20px;padding-bottom:20px;">
-                                <form class="form-horizontal form-label-left">
+                                <form class="form-horizontal form-label-left" method="post" action="/Presupuesto/Procesos">
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                                             Causal <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            @Html.DropDownList("ID_CAUSAL", (IEnumerable<SelectListItem>)ViewBag.CAUSAL, "-- Seleccione Tipo de Rol --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", id = "first-name", required = "required" })
+                                            @if (Model != null)
+                                            {
+                                                @Html.DropDownListFor(Model => Model.ID_CAUSAL, (IEnumerable<SelectListItem>)ViewBag.CAUSAL, "-- Seleccione Tipo de Rol --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", id = "first-name", required = "required", disabled = "disabled" })
+                                            }
+                                            else
+                                            {
+                                                @Html.DropDownList("ID_CAUSAL", (IEnumerable<SelectListItem>)ViewBag.CAUSAL, "-- Seleccione Tipo de Rol --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", id = "first-name", required = "required" })
+                                            }
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -104,36 +112,28 @@
                                             Antecedentes <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea id="textarea" required="required" name="Observaciones" class="form-control col-md-7 col-xs-12"></textarea>
+                                            <textarea id="textarea" required="required" name="Observaciones" class="form-control col-md-7 col-xs-12" @if (Model != null) { @("disabled = 'disabled'") ; }>@if(Model != null){ @Model.OBSERVACIONES; } </textarea>
                                         </div>
+
                                     </div>
+
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                             Fecha Notificacion de Caso <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-3">
-                                            <div class="daterangepicker xdisplay picker_1 single opensright show-calendar">
-                                                <div class="ranges" style="display: none;">
-                                                    <div class="range_inputs">
-                                                        <div class="daterangepicker_start_input">
-                                                            <label for="daterangepicker_start">From</label>
-                                                            <input id="daterangepicker_start" class="input-mini" type="text" name="daterangepicker_start" value="">
-                                                        </div>
-                                                        <div class="daterangepicker_end_input">
-                                                            <label for="daterangepicker_end">To</label>
-                                                            <input id="daterangepicker_end" class="input-mini" type="text" name="daterangepicker_end" value="">
-                                                        </div>
-                                                        <button class="applyBtn btn btn-small btn-sm btn-success">Apply</button>&nbsp;
-                                                        <button class="cancelBtn btn btn-small btn-sm btn-default">Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
                                             <fieldset>
                                                 <div class="control-group">
                                                     <div class="controls">
-                                                        <div class="col-md-11 xdisplay_inputx form-group has-feedback">
-                                                            <input type="text" class="form-control has-feedback-left" id="single_cal1" placeholder="First Name" aria-describedby="inputSuccess2Status">
+                                                        <div class="xdisplay_inputx form-group has-feedback">
+                                                            @if (Model != null)
+                                                            {
+                                                                <input type="text" class="form-control has-feedback-left" id="single_cal1" placeholder="Fecha Aproximada de Notificacion" aria-describedby="inputSuccess2Status" name="FECHA_NOTIFICA" value="@Model.FECHA_NOTIFICA.Value.ToShortDateString()" disabled="disabled">
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="text" class="form-control has-feedback-left" id="single_cal1" placeholder="Fecha Aproximada de Notificacion" aria-describedby="inputSuccess2Status" name="FECHA_NOTIFICA">
+                                                            }
                                                             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                                             <span id="inputSuccess2Status" class="sr-only">(success)</span>
                                                         </div>
@@ -141,24 +141,38 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @if (Model == null)
+                                            {
+                                                <button class="btn btn-success pull-right" type="submit">Crear Recepción</button>
+                                            }
+                                        </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="form-group col-md-auto">
-                                <p>
-                                    Si tiene documentacion como Cédula de Identidad (Carné), Licencias, Finiquitos o cualquier documento que apoye su Causal arrastre o haga click en recuadro. <br />
-                                    Los Archivos compatibles son:
-                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Word, Excel, Adobe Pdf, PowerPoint">
-                                        <img src="~/assets/img/word.png" style="width:25px" /><img src="~/assets/img/powerpoint.png" style="width:25px" /><img src="~/assets/img/pdf.png" style="width:25px" /><img src="~/assets/img/excel.png" style="width:25px" />
-                                
-                                    </span>
-                                </p>
+                           @if (Model != null)
+                            {
 
-                            </div>
-                            <div class="form-group col-md-auto" style="height:200px">
-                                <form action="/DOCUMENTOS/SubidaDocumentos" class="dropzone"></form>
-                            </div>
+                                <div class="form-group col-md-auto">
+                                    <p>
+                                        Si tiene documentacion como Cédula de Identidad (Carné), Licencias, Finiquitos o cualquier documento que apoye su Causal arrastre o haga click en recuadro. <br />
+                                        Los Archivos compatibles son:
+                                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Word, Excel, Adobe Pdf, PowerPoint">
+                                            <img src="~/assets/img/word.png" style="width:25px" />
+                                            <img src="~/assets/img/powerpoint.png" style="width:25px" />
+                                            <img src="~/assets/img/pdf.png" style="width:25px" />
+                                            <img src="~/assets/img/excel.png" style="width:25px" />
+                                        </span>
+                                    </p>
+
+                                    <div class="form-group col-md-auto" style="height:200px">
+                                        <form action="/DOCUMENTOS/SubidaDocumentos" class="dropzone">
+                                            <input type="hidden" value="@Model.ID_PRESUPUESTO" name="ID_PRESUPUESTO" />
+                                        </form>
+                                    </div>
+                                </div>
+
+                            }
                         </div>
                         <div id="step-2">
                             <h2 class="StepTitle">Paso 2 Asignación de Abogado Asistente y Notas de Caso</h2>
@@ -240,7 +254,7 @@
                                 </div>
 
                             </div>
-                            
+
 
                         </div>
                         <div id="step-3">
@@ -251,13 +265,13 @@
 
                             <div class="row" style="text-align:center;">
                                 <div class="col-md-4 col-sm-12 col-xs-12 form-group">
-                                    
+
                                 </div>
                                 <div class="col-md-4 col-sm-12 col-xs-12 form-group" style="height:500px">
                                     <embed src="data:application/pdf;base64,@System.Convert.ToBase64String(((ProjectWebApp.Models.DOCUMENTOS)ViewBag.Documento).DOCUMENTO_DIGITAL)" type="application/pdf" width="100%" height="100%" data="@((ProjectWebApp.Models.DOCUMENTOS)ViewBag.Documento).NOMBRE_ARCHIVO" />
                                 </div>
                                 <div class="col-md-4 col-sm-12 col-xs-12 form-group">
-                                   
+
                                 </div>
                             </div>
                             <div class="row" style="text-align:center;">
@@ -277,19 +291,153 @@
                         <div id="step-4">
                             <h2 class="StepTitle">Step 4 Content</h2>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                Status de Procesos Judiciales
                             </p>
                         </div>
-                    </div>
+                        <div id="step-5">
+                            <h2 class="StepTitle">Step 4 Content</h2>
+
+
+                            <div class="col-md-3 col-xs-12 widget widget_tally_box">
+                                <div class="x_panel fixed_height_390">
+                                    <div class="x_content">
+
+                                        <div class="flex">
+                                            <ul class="list-inline widget_profile_box">
+                                                <li>
+                                                    <a>
+                                                        <i class="fa fa-facebook"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <img src="~/images/user.png" alt="..." class="img-circle profile_img">
+                                                </li>
+                                                <li>
+                                                    <a>
+                                                        <i class="fa fa-twitter"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        @*@{
+                        ProjectWebApp.Models.AsistentePresupuesto objAsistente = ViewBag.Asistente;
+                    }
+                    <h3 class="name">@objAsistente.Cargo</h3>
+                    <h3 class="name">@objAsistente.NombreAsistente</h3>
+
+                    <div class="flex">
+                        <ul class="list-inline count2">
+                            <li>
+                                <h3>Rut</h3>
+                                <span>@objAsistente.Rut</span>
+                            </li>
+                        </ul>
+                    </div>*@
+                                        <p>
+                                            If you've decided to go in development mode and tweak all of this a bit, there are few things you should do.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-xs-12 widget widget_tally_box">
+                                <div class="x_panel fixed_height_490">
+                                    <div class="x_content">
+
+                                        <div class="flex">
+                                            <ul class="list-inline widget_profile_box">
+                                                <li>
+                                                    <a>
+                                                        <i class="fa fa-facebook"></i>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    @*<img src="data:image;base64,@System.Convert.ToBase64String(uProfile.BINARY_IMAGE)" style="width:30px;height:30px;" />@uProfile.USER
+                                <img src="images/user.png" alt="..." class="img-circle profile_img">*@
+                                                </li>
+                                                <li>
+                                                    <a>
+                                                        <i class="fa fa-twitter"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        @*@{
+                        ProjectWebApp.Models.ClientePresupuesto objCliente = ViewBag.Cliente;
+                    }
+                    <h3 class="name">Cliente</h3>
+                    <h3 class="name">@objCliente.NombreCliente</h3>
+
+                    <div class="flex">
+                        <ul class="list-inline count2">
+                            <li>
+                                <h3>Rut</h3>
+                                <span>@objCliente.RutCliente</span>
+                            </li>
+                            <li>
+                                <h3>Correo</h3>
+                                <span>@objCliente.CorreoCliente</span>
+                            </li>
+                            <li>
+                                <h3>Fono</h3>
+                                <span>@objCliente.ContactoCliente</span>
+                            </li>
+                        </ul>
+                    </div>*@
+                                        <p>
+                                            If you've decided to go in development mode and tweak all of this a bit, there are few things you should do.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p>Seleccione los planes de pago</p>
+
+
+                            <div class="table-responsive">
+                                <table class="table table-striped jambo_table bulk_action">
+                                    <thead>
+                                        <tr class="headings">
+
+
+                                            <!--th class="column-title" style="display: table-cell;">Id_pago</!--th-->
+                                            <th class="column-title" style="display: table-cell;">Plan</th>
+                                            <th class="column-title" style="display: table-cell;">Valor</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        @*@foreach (var pago in (ViewBag.ListaPlanPago as List<ProjectWebApp.Models.PlanPago>))
+                    {
+
+                        <tr class="even pointer selected">
+                            <td class="a-center ">
+                                <input type="radio" name="plan_@pago.IdPago" value="@pago.Plan"> @pago.Plan
+                            <td class="a-right a-right ">$@pago.Valor</td>
+                            <td class=" last"></td>
+                        </tr>
+                    }*@
+
+                                    </tbody>
+
+                                </table>
+
+
+                                <div class="col-xs-12">
+                                    @*<th class="column-title" style="display: table-cell;">Total: </th>
+                <th class="column-title" style="display: table-cell;">$31.790 </th>*@
+
+                                    <a class="btn btn-success pull-right" href="~/PAGO/Index">Pagar</a>
+                                </div>
+
+                            </div>
+                        </div>
+                            <!-- End SmartWizard Content -->
+                        </div>
                     <!-- End SmartWizard Content -->
                 </div>
             </div>
@@ -297,14 +445,5 @@
     </div>
 </div>
 
-
-
-@*<p>Drag multiple files to the box below for multi upload or click to select files. This is for demonstration purposes only, the files are not uploaded to any server.</p>
-    <form action="/DOCUMENTOS/SubidaDocumentos" class="dropzone"></form>
-    <br />
-    <br />
-    <br />
-    <br />
-    <div class="ln_solid"></div>*@
 
 

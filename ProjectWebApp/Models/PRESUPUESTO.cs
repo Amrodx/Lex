@@ -30,6 +30,7 @@ namespace ProjectWebApp.Models
         public long ID_CAUSAL { get; set; }
         public Nullable<long> ID_CLIENTE { get; set; }
         public string NOTA { get; set; }
+        public Nullable<System.DateTime> FECHA_NOTIFICA { get; set; }
     
         public virtual CAUSALES CAUSALES { get; set; }
         public virtual CLIENTES CLIENTES { get; set; }

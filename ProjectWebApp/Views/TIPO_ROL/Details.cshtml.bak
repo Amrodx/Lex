@@ -1,0 +1,35 @@
+﻿@model ProjectWebApp.Models.TIPO_ROL
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TIPO_ROL</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NOMBRE_ROL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOMBRE_ROL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CATEGORIA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CATEGORIA)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_ROL }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

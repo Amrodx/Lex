@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ProjectWebApp.Models.TIPO_CLIENTE>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NOMBRE_TIPO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TIMESTAMP)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NOMBRE_TIPO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TIMESTAMP)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_TIPO_CLIENTE }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_TIPO_CLIENTE }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_TIPO_CLIENTE })
+        </td>
+    </tr>
+}
+
+</table>

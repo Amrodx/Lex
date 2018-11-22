@@ -1,122 +1,155 @@
 ﻿@model ProjectWebApp.Models.CLIENTES
-
 @{
     ViewBag.Title = "Perfil";
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
-}
 
-<h2>Perfil</h2>
-<div class="">
+}
+@using ProjectWebApp.Models
+@{
+    USUARIOS uProfile = (USUARIOS)Session["LoginCredentials"];
+}
+<!-- page content -->
+
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Perfil Cliente</h3>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
+                <div class="x_title">
+                    <h2>Informacion general <small></small></h2>
+                    <div class="clearfix"></div>
+                </div>
                 <div class="x_content">
-                    <form class="form-horizontal form-label-left">
-                        @*<p>
-                            For alternative validation library <code>parsleyJS</code> check out in the <a href="form.html">form page</a>
-                        </p>*@
-                        <span class="section">Modificacion de Campos</span>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                RUT <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="RUT" placeholder="" required="required" type="text">
+                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                        <div class="profile_img">
+                            <div id="crop-avatar">
+                                <!-- Current avatar -->
+                                @if (uProfile.BINARY_IMAGE != null)
+                                {
+                                    <img src="data:image;base64,@System.Convert.ToBase64String(uProfile.BINARY_IMAGE)" alt="Avatar" class="img-responsive avatar-view img-circle profile_img" style="height:200px;width:200px" />
+                                    @*<img src="data:image;base64,@System.Convert.ToBase64String(uProfile.BINARY_IMAGE)" style="width:50px;height:50px;" alt="..." class="img-circle profile_img" />*@
+                                }
+                                else
+                                {
+                                    <img src="~/assets/img/user.png" alt="Avatar" class="img-responsive avatar-view" />
+                                }
                             </div>
                         </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                Razon Social <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="NOMBRE_RAZON_SOCIAL" placeholder="" required="required" type="text">
-                            </div>
-                        </div>
-                        @*<div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                Comuna <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.DropDownList("ID_TIPO", null, "-- Seleccione Tipo de Cliente --", htmlAttributes: new { @class = "form-control" })
-                            </div>
-                        </div>*@
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                cOMUNA <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.DropDownList("ID_COMUNA", null, "-- Seleccione Comuna --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", required = "required" })
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                Direccion <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="DIRECCION" placeholder="" required="required" type="text">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                Correo <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="CORREO" placeholder="" required="required" type="text">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                Contacto <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="CONTACTO" placeholder="" required="required" type="text">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                FONO1 <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="FONO1" placeholder="" required="required" type="text">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                                FONO2 <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="FONO2" placeholder="" required="required" type="text">
-                            </div>
-                        </div>
+                        <h3>
+                            @Html.DisplayFor(model => model.NOMBRE_RAZON_SOCIAL)
+                        </h3>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <i class="fa fa-map-marker user-profile-icon"></i>
+                                <strong>Rut: </strong> @Html.DisplayFor(model => model.RUT)
+                            </li>
+                            <li>
+                                <i class="fa fa-map-marker user-profile-icon"></i>
+                                <strong>Estado: </strong> @Html.DisplayFor(model => model.STATUS_ACTIVACION)
+                            </li>
+                            <li>
+                                <i class="fa fa-map-marker user-profile-icon"></i>
+                                <strong>Observaciones: </strong> @Html.DisplayFor(model => model.OBSERVACIONES)
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
 
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">
-                                OBSERVACIONES <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <textarea id="textarea" required="required" name="OBSERVACIONES" class="form-control col-md-7 col-xs-12"></textarea>
-                            </div>
+                        <!-- start of user-activity-graph -->
+                        <div id="graph_bar" style="width:100%; height:280px;">
+                            <section class="content invoice">
+                                <!-- title row -->
+                                <div class="row">
+                                    <div class="col-xs-12 invoice-header">
+                                        <h1>
+                                            <i class="fa fa-envelope"></i> Datos de Contacto
+                                            <small class="pull-right">Fecha de Creacion: @Html.DisplayFor(model => model.TIMESTAMP)</small>
+                                        </h1>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- info row -->
+                                <div class="row invoice-info">
+                                    <div class="col-sm-4 invoice-col">
+                                        <i class="fa fa-home"></i> Direccion
+                                        <address>
+                                            <strong>Region</strong>
+                                            <br> @ViewBag.Region
+                                            <br><strong>Comuna</strong>
+                                            <br> @ViewBag.Comuna
+                                            <br><strong>Direccion</strong>
+                                            <br> @Html.DisplayFor(model => model.DIRECCION)
+                                        </address>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-sm-4 invoice-col">
+                                        <i class="fa fa-envelope-o"></i> Contactos
+                                        <address>
+                                            <strong>Correo</strong>
+                                            <br> @Html.DisplayFor(model => model.CORREO)
+                                            <br><strong>Contacto</strong>
+                                            <br> @Html.DisplayFor(model => model.CONTACTO)
+                                        </address>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-sm-4 invoice-col">
+                                        <i class="fa fa-phone-square"></i> Telefonos
+                                        <address>
+                                            <strong>Numero Primario</strong>
+                                            <br> @Html.DisplayFor(model => model.FONO1)
+                                            <br><strong>Numero Segundario</strong>
+                                            <br> @Html.DisplayFor(model => model.FONO2)
+                                        </address>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+
+                                <div class="row">
+                                    <hr>
+                                    @if (uProfile.ID_ROL == 61)
+                                    {
+                                        <div class="col-xs-6">
+                                            <p class="lead">Plan de Pago Actual</p>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Nombre del Plan: </th>
+                                                            <td> @ViewBag.DescPlan</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Valor del Plan: </th>
+                                                            <td>@ViewBag.ValPlan</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                                <!-- this row will not appear when printing -->
+                                <div class="row no-print">
+                                    <div class="col-xs-12">
+                                        
+                                        <button class="btn btn-primary pull-right"><i class="fa fa-credit-card"></i> Efectuar Pago</button>
+                                        <a href="@Url.Action("DataContact", new { id = Model.ID_CLIENTE })" class="btn btn-primary pull-right"><i class="fa fa-edit m-right-xs"></i> Actualizar Datos </a>
+                                        <button class="btn btn-info pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+                                        <button class="btn btn-info pull-right" onclick="window.print();"><i class="fa fa-print"></i> Imprimir</button>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-
-
-
-                        <div class="ln_solid"></div>
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-3">
-                                <button type="submit" class="btn btn-primary">Cancelar</button>
-                                <button id="send" type="submit" class="btn btn-success">Guardar</button>
-                            </div>
-                        </div>
-                    </form>                      
-                    <div class="actionBar">
-                        @*<a href="#" class="buttonFinish buttonDisabled btn btn-default">Finish</a>
-                            <a href="#" class="buttonNext btn btn-success">Next</a>*@
-                        @Html.ActionLink("Volver a Listado", "Index", null, new { @class = "buttonPrevious btn btn-primary" })
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
 

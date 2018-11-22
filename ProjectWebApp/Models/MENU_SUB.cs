@@ -22,6 +22,7 @@ namespace ProjectWebApp.Models
         public string CRUD { get; set; }
         public string CONTROLLER { get; set; }
         public string ACTION { get; set; }
+        public Nullable<long> ORDEN { get; set; }
     
         public virtual MENU MENU { get; set; }
         public virtual TIPO_ROL TIPO_ROL { get; set; }

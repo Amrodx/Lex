@@ -1,83 +1,310 @@
-﻿@model IEnumerable<ProjectWebApp.Models.USUARIOS>
+﻿@model IEnumerable<ProjectWebApp.Models.PRESUPUESTO>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
-@*PASO 2*@
-<div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_panel">
-        
-        <div class="x_content">
+<div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Resolución de Procesos Judiciales y Causas<small>Lex Abogados</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
 
-            <!-- Smart Wizard -->
-            <p>Estado de su Solicitud</p>
-            <div id="wizard" class="form_wizard wizard_horizontal">
-                <ul class="wizard_steps">
-                    <li>
-                        <a href="#step-1" class="selected" isdone="1" rel="1">
-                            <span class="step_no">1</span>
-                            <span class="step_descr">
-                                Paso 1<br>
-                                <small>Enviar solicitud</small>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-2" class="selected" isdone="2" rel="2">
-                            <span class="step_no">2</span>
-                            <span class="step_descr">
-                                Paso 2<br />
-                                <small>Recepción Solicitud</small>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-3">
-                            <span class="step_no">3</span>
-                            <span class="step_descr">
-                                Paso 3<br />
-                                <small>Generar Presupuesto</small>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-4">
-                            <span class="step_no">4</span>
-                            <span class="step_descr">
-                                Paso 4<br />
-                                <small>Generar Contrato</small>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
+                    <!-- Smart Wizard -->
+                    <p>Asistente de Antecedentes y Documentación.</p>
+                    <div id="wizard" class="form_wizard wizard_horizontal" style="height:auto;">
+                        <ul class="wizard_steps">
+                            <li>
+                                <a href="#step-1">
+                                    <span class="step_no">1</span>
+                                    <span class="step_descr">
+                                        Conocimiento de Causa<br />
+                                        <small>Antecedentes y Documentos</small>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#step-2">
+                                    <span class="step_no">2</span>
+                                    <span class="step_descr">
+                                        Step 2<br />
+                                        <small>Status de Recepcion</small>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#step-3">
+                                    <span class="step_no">3</span>
+                                    <span class="step_descr">
+                                        Step 3<br />
+                                        <small>Step 3 Contrato</small>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#step-4">
+                                    <span class="step_no">4</span>
+                                    <span class="step_descr">
+                                        Step 4<br />
+                                        <small>Step 4 Estado Judicial</small>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#step-5">
+                                    <span class="step_no">5</span>
+                                    <span class="step_descr">
+                                        Step 5<br />
+                                        <small>Step 5 Pago</small>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="step-1">
+                            <h2 class="StepTitle">Paso 1 Ingreso de Datos Iniciales</h2>
+                            <p>
+                                Acontinuacion puede ingresar los datos iniciales para generar la solicitud del presupuesto segun sus necesidades. La recepción de estos datos registrará la documentación o papeles para gestionar su caso.
+                            </p>
+                            <div style="padding-top:20px;padding-bottom:20px;">
+                                <form class="form-horizontal form-label-left">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                            Causal <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.DropDownList("ID_CAUSAL", (IEnumerable<SelectListItem>)ViewBag.CAUSAL, "-- Seleccione Tipo de Rol --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", id = "first-name", required = "required" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                                            Antecedentes <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea id="textarea" required="required" name="Observaciones" class="form-control col-md-7 col-xs-12"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Fecha Notificacion de Caso <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-3">
+                                            <div class="daterangepicker xdisplay picker_1 single opensright show-calendar">
+                                                <div class="ranges" style="display: none;">
+                                                    <div class="range_inputs">
+                                                        <div class="daterangepicker_start_input">
+                                                            <label for="daterangepicker_start">From</label>
+                                                            <input id="daterangepicker_start" class="input-mini" type="text" name="daterangepicker_start" value="">
+                                                        </div>
+                                                        <div class="daterangepicker_end_input">
+                                                            <label for="daterangepicker_end">To</label>
+                                                            <input id="daterangepicker_end" class="input-mini" type="text" name="daterangepicker_end" value="">
+                                                        </div>
+                                                        <button class="applyBtn btn btn-small btn-sm btn-success">Apply</button>&nbsp;
+                                                        <button class="cancelBtn btn btn-small btn-sm btn-default">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
 
+                                            <fieldset>
+                                                <div class="control-group">
+                                                    <div class="controls">
+                                                        <div class="col-md-11 xdisplay_inputx form-group has-feedback">
+                                                            <input type="text" class="form-control has-feedback-left" id="single_cal1" placeholder="First Name" aria-describedby="inputSuccess2Status">
+                                                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                                            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
 
-            </div>
-            <div class="container">
-                <div class="panel panel-primary">
-                    <div class="panel-body">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="form-group col-md-auto">
+                                <p>
+                                    Si tiene documentacion como Cédula de Identidad (Carné), Licencias, Finiquitos o cualquier documento que apoye su Causal arrastre o haga click en recuadro. <br />
+                                    Los Archivos compatibles son:
+                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Word, Excel, Adobe Pdf, PowerPoint">
+                                        <img src="~/assets/img/word.png" style="width:25px" /><img src="~/assets/img/powerpoint.png" style="width:25px" /><img src="~/assets/img/pdf.png" style="width:25px" /><img src="~/assets/img/excel.png" style="width:25px" />
+                                
+                                    </span>
+                                </p>
 
-                        <form name="form1" id="form1" method="post" action="guarda.php" enctype="multipart/form-data">
-
-                            <h4 class="text-center">Carga de Archivos</h4>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Subir Documentos Solicitados</label>
-                                <div class="col-sm-8">
-                                    <input type="file" class="form-control" id="archivo[]" name="archivo[]" multiple="">
+                            </div>
+                            <div class="form-group col-md-auto" style="height:200px">
+                                <form action="/DOCUMENTOS/SubidaDocumentos" class="dropzone"></form>
+                            </div>
+                        </div>
+                        <div id="step-2">
+                            <h2 class="StepTitle">Paso 2 Asignación de Abogado Asistente y Notas de Caso</h2>
+                            <p>
+                                A continuación se le signó un Abogado Asistente que se encargará de su caso.
+                            </p><br /><br />
+                            <div class="row">
+                                <div class="col-md-3 widget widget_tally_box">
+                                    <div class="x_panel fixed_height_390">
+                                        <div class="x_content">
+                                            <div class="flex">
+                                                <ul class="list-inline widget_profile_box">
+                                                    <li>
+                                                        <a>
+                                                            <i class="fa fa-facebook"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <img src="~/assets/img/perfilAbogado.jpg" alt="..." class="img-circle profile_img">
+                                                    </li>
+                                                    <li>
+                                                        <a>
+                                                            <i class="fa fa-twitter"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h3 class="name">Marccelo Benetti</h3>
+                                            <div class="flex">
+                                                <ul class="list-inline count2">
+                                                    <li>
+                                                        <h3>123</h3>
+                                                        <span>Casos Resueltos</span>
+                                                    </li>
+                                                    <li>
+                                                        <h3>58</h3>
+                                                        <span>Casos Familia</span>
+                                                    </li>
+                                                    <li>
+                                                        <h3>33</h3>
+                                                        <span>Casos Laborales</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <p>
+                                                Abogado asistente con experiencias en Tribunales de Familia (Pensiones), habilidades de manejo con reuniones contraparte y efectivo manejo de documentación tributaria.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <table id="datatable-buttons" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>CodigoProducto</th>
+                                                <th>Estado Tramite</th>
+                                                <th>Fecha inicio</th>
+                                                <th>Valor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Timbre Contrato</td>
+                                                <td>PRGH-392</td>
+                                                <td>En Espera</td>
+                                                <td>2018/10/22</td>
+                                                <td>$32.000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Posicion Efectiva</td>
+                                                <td>PRGH-392</td>
+                                                <td>En Espera</td>
+                                                <td>2018/10/22</td>
+                                                <td>$82.000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Cargar</button>
                             </div>
+                            
 
-                        </form>
+                        </div>
+                        <div id="step-3">
+                            <h2 class="StepTitle">Step 3 Aceptar Condiciones y Generar Contrato</h2>
+                            <p>
+                                Para comenzar a gestionar su caso debe aceptrar el contrato a continuacion.
+                            </p>
 
+                            <div class="row" style="text-align:center;">
+                                <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+                                    
+                                </div>
+                                <div class="col-md-4 col-sm-12 col-xs-12 form-group" style="height:500px">
+                                    <embed src="data:application/pdf;base64,@System.Convert.ToBase64String(((ProjectWebApp.Models.DOCUMENTOS)ViewBag.Documento).DOCUMENTO_DIGITAL)" type="application/pdf" width="100%" height="100%" data="@((ProjectWebApp.Models.DOCUMENTOS)ViewBag.Documento).NOMBRE_ARCHIVO" />
+                                </div>
+                                <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+                                   
+                                </div>
+                            </div>
+                            <div class="row" style="text-align:center;">
+                                <div class="checkbox-inline">
+                                    <label class="hover">
+                                        <div class="icheckbox_flat-green checked hover" style="position: relative;"><input type="checkbox" class="flat" checked="checked" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Acepto Contrato de Costos Basicos Generados por Presupuestos
+                                    </label>
+                                </div><br />
+                                <div class="checkbox-inline">
+                                    <label class="hover">
+
+                                        <div class="icheckbox_flat-green checked hover" style="position: relative;"><input type="checkbox" class="flat" checked="checked" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Acepto Contrato de Gestion de Documentos Personales
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="step-4">
+                            <h2 class="StepTitle">Step 4 Content</h2>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                        </div>
                     </div>
+                    <!-- End SmartWizard Content -->
                 </div>
             </div>
-
-        </div>
         </div>
     </div>
+</div>
+
+
+
+@*<p>Drag multiple files to the box below for multi upload or click to select files. This is for demonstration purposes only, the files are not uploaded to any server.</p>
+    <form action="/DOCUMENTOS/SubidaDocumentos" class="dropzone"></form>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="ln_solid"></div>*@
+
 

@@ -5,7 +5,7 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-cl">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
@@ -44,7 +44,7 @@
         <div class="login_wrapper">
             <div class="animate form login_form">
                 <section class="login_content">
-                    @using (Html.BeginForm("Login", "Usuarios", FormMethod.Post, new { id = "formname" }))
+                    @using (Html.BeginForm("Login", "Usuarios", FormMethod.Post, new { id = "formname",  enctype = "multipart/form-data"  }))
                     {
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <h1>Ingreso de Usuario</h1>
@@ -83,12 +83,12 @@
             </div>
             <div id="register" class="animate form registration_form">
                 <section class="login_content">
-                    @using (Html.BeginForm("Login", "Usuarios", FormMethod.Post))
+                    @using (Html.BeginForm("Login", "Usuarios", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <h1>Crear Cuenta</h1>
                         <div>
-                            @Html.DropDownList("ID_ROL", (IEnumerable<SelectListItem>)ViewBag.Rol, "-- Seleccione Tipo de Usuario --", new { id = "ID_ROL", @class = "form-control", required = "required", name = "Rol" })
+                            @Html.DropDownList("ID_ROL", (IEnumerable<SelectListItem>)ViewBag.Rol, "-- Seleccione Tipo de Rol --", new { id = "ID_ROL", @class = "form-control", required = "required", name = "Rol" })
                         </div><br />
                         <div>
                             <input type="text" class="form-control" placeholder="Usuario" required="required" name="user" />
@@ -103,6 +103,15 @@
                         <div>
                             <input type="password" class="form-control" placeholder="Contraseña" required="required" name="pass" />
                         </div>
+                        <div>
+                            <label class="btn btn-primary btn-upload" for="inputImage" title="Subir imagen">
+                                <input type="file" class="sr-only" id="inputImage" name="IMG_PROFILE" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*">
+                                <span class="docs-tooltip" data-toggle="tooltip" title="Importar Imagen o Fotografía de Perfil">
+                                    <span class="fa fa-upload"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <br />
                         <div>
                             <button class="btn btn-default submit">Registrar</button>
                         </div>
@@ -151,7 +160,7 @@
                 new PNotify({
                 title: "Notificacion",
                 type: "warning",
-                text: "@ViewBag.Message",
+                text: "@ViewBag.MessageWarning",
                 nonblock: {
                 nonblock: true
                 },
@@ -168,7 +177,6 @@
                         return false;
                     }
                 });
-
         });
         </script>
     }

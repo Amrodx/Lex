@@ -134,6 +134,7 @@
           <Property Name="CRUD" Type="varchar2" MaxLength="2" Nullable="false" />
           <Property Name="CONTROLLER" Type="varchar2" MaxLength="200" />
           <Property Name="ACTION" Type="varchar2" MaxLength="200" />
+          <Property Name="ORDEN" Type="number" Precision="19" Scale="0" />
         </EntityType>
         <EntityType Name="ORDEN_PAGO">
           <Key>
@@ -172,6 +173,7 @@
           <Property Name="ID_CAUSAL" Type="number" Precision="19" Scale="0" Nullable="false" />
           <Property Name="ID_CLIENTE" Type="number" Precision="19" Scale="0" />
           <Property Name="NOTA" Type="varchar2" MaxLength="4000" />
+          <Property Name="FECHA_NOTIFICA" Type="date" />
         </EntityType>
         <EntityType Name="REGIONES">
           <Key>
@@ -772,6 +774,7 @@
           <Property Name="ACTION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MENU" Relationship="ORACLE_MODEL.MENU_SUB_FK1" FromRole="MENU_SUB" ToRole="MENU" />
           <NavigationProperty Name="TIPO_ROL" Relationship="ORACLE_MODEL.MENU_SUB_FK2" FromRole="MENU_SUB" ToRole="TIPO_ROL" />
+          <Property Name="ORDEN" Type="Int64" />
         </EntityType>
         <EntityType Name="ORDEN_PAGO">
           <Key>
@@ -1078,6 +1081,7 @@
           <NavigationProperty Name="DOCUMENTOS" Relationship="ORACLE_MODEL.DOCUMENTOS_FK2" FromRole="PRESUPUESTO" ToRole="DOCUMENTOS" />
           <NavigationProperty Name="ASISTENTES" Relationship="ORACLE_MODEL.PRESUPUESTO_FK3" FromRole="PRESUPUESTO" ToRole="ASISTENTES" />
           <Property Name="NOTA" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_NOTIFICA" Type="DateTime" />
         </EntityType>
         <Association Name="PRESUPUESTO_FK2">
           <End Type="ORACLE_MODEL.CAUSALES" Role="CAUSALES" Multiplicity="1" />
@@ -1245,6 +1249,7 @@
           <EntitySetMapping Name="MENU_SUB">
             <EntityTypeMapping TypeName="ORACLE_MODEL.MENU_SUB">
               <MappingFragment StoreEntitySet="MENU_SUB">
+                <ScalarProperty Name="ORDEN" ColumnName="ORDEN" />
                 <ScalarProperty Name="ACTION" ColumnName="ACTION" />
                 <ScalarProperty Name="CONTROLLER" ColumnName="CONTROLLER" />
                 <ScalarProperty Name="CRUD" ColumnName="CRUD" />
@@ -1355,6 +1360,7 @@
           <EntitySetMapping Name="PRESUPUESTO">
             <EntityTypeMapping TypeName="ORACLE_MODEL.PRESUPUESTO">
               <MappingFragment StoreEntitySet="PRESUPUESTO">
+                <ScalarProperty Name="FECHA_NOTIFICA" ColumnName="FECHA_NOTIFICA" />
                 <ScalarProperty Name="NOTA" ColumnName="NOTA" />
                 <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
                 <ScalarProperty Name="ID_CAUSAL" ColumnName="ID_CAUSAL" />
