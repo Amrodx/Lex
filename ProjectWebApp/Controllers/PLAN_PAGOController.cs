@@ -60,29 +60,47 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_PAGO,PLAN,VALOR")] PLAN_PAGO pLAN_PAGO)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.PLAN_PAGO.Add(pLAN_PAGO);
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.PLAN_PAGO.Add(pLAN_PAGO);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(pLAN_PAGO);
+            }
+            catch (Exception)
+            {
+
                 return RedirectToAction("Index");
             }
 
-            return View(pLAN_PAGO);
         }
 
         // GET: PLAN_PAGO/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            PLAN_PAGO pLAN_PAGO = new PLAN_PAGO();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                pLAN_PAGO = db.PLAN_PAGO.Find(id);
+                if (pLAN_PAGO == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pLAN_PAGO);
             }
-            PLAN_PAGO pLAN_PAGO = db.PLAN_PAGO.Find(id);
-            if (pLAN_PAGO == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(pLAN_PAGO);
             }
-            return View(pLAN_PAGO);
+
         }
 
         // POST: PLAN_PAGO/Edit/5
@@ -92,28 +110,47 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_PAGO,PLAN,VALOR")] PLAN_PAGO pLAN_PAGO)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(pLAN_PAGO).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(pLAN_PAGO).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(pLAN_PAGO);
             }
-            return View(pLAN_PAGO);
+            catch (Exception)
+            {
+
+                return View(pLAN_PAGO);
+            }
+
         }
 
         // GET: PLAN_PAGO/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            PLAN_PAGO pLAN_PAGO = new PLAN_PAGO();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                pLAN_PAGO = db.PLAN_PAGO.Find(id);
+                if (pLAN_PAGO == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pLAN_PAGO);
             }
-            PLAN_PAGO pLAN_PAGO = db.PLAN_PAGO.Find(id);
-            if (pLAN_PAGO == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(pLAN_PAGO);
             }
-            return View(pLAN_PAGO);
+
         }
 
         // POST: PLAN_PAGO/Delete/5
@@ -121,10 +158,23 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            PLAN_PAGO pLAN_PAGO = db.PLAN_PAGO.Find(id);
-            db.PLAN_PAGO.Remove(pLAN_PAGO);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                if (id > 0)
+                {
+                    PLAN_PAGO pLAN_PAGO = db.PLAN_PAGO.Find(id);
+                    db.PLAN_PAGO.Remove(pLAN_PAGO);
+                    db.SaveChanges();
+                }
+                
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Index");
+            }
+
         }
 
         protected override void Dispose(bool disposing)

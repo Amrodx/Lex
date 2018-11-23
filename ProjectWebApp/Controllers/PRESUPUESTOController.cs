@@ -81,33 +81,54 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_PRESUPUESTO,COD_SOLICITUD,FECHA,ESTADO_AVANCE,CONTRATADO,OBSERVACIONES,ID_ASISTENTE,ID_CAUSAL,ID_USUARIO")] PRESUPUESTO pRESUPUESTO)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.PRESUPUESTO.Add(pRESUPUESTO);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.PRESUPUESTO.Add(pRESUPUESTO);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
+                return View(pRESUPUESTO);
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_CAUSAL = new SelectList(new List<string>());
+                ViewBag.ID_USUARIO = new SelectList(new List<string>());
+                return View(pRESUPUESTO);
             }
 
-            ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
-            return View(pRESUPUESTO);
         }
 
         // GET: PRESUPUESTO/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            PRESUPUESTO pRESUPUESTO = new PRESUPUESTO();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                pRESUPUESTO = db.PRESUPUESTO.Find(id);
+                if (pRESUPUESTO == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
+                return View(pRESUPUESTO);
             }
-            PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Find(id);
-            if (pRESUPUESTO == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                ViewBag.ID_CAUSAL = new SelectList(new List<string>());
+                ViewBag.ID_USUARIO = new SelectList(new List<string>());
+                return View(pRESUPUESTO);
             }
-            ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
-            return View(pRESUPUESTO);
+
         }
 
         // POST: PRESUPUESTO/Edit/5
@@ -117,30 +138,50 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_PRESUPUESTO,COD_SOLICITUD,FECHA,ESTADO_AVANCE,CONTRATADO,OBSERVACIONES,ID_ASISTENTE,ID_CAUSAL,ID_USUARIO")] PRESUPUESTO pRESUPUESTO)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(pRESUPUESTO).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(pRESUPUESTO).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
+                ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
+                return View(pRESUPUESTO);
             }
-            ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES, "ID_CAUSAL", "NOMBRE", pRESUPUESTO.ID_CAUSAL);
-            ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", pRESUPUESTO.ID_USUARIO);
-            return View(pRESUPUESTO);
+            catch (Exception)
+            {
+                ViewBag.ID_CAUSAL = new SelectList(new List<string>());
+                ViewBag.ID_USUARIO = new SelectList(new List<string>());
+                return View(pRESUPUESTO);
+            }
+
         }
 
         // GET: PRESUPUESTO/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            PRESUPUESTO pRESUPUESTO = new PRESUPUESTO();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                pRESUPUESTO = db.PRESUPUESTO.Find(id);
+                if (pRESUPUESTO == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pRESUPUESTO);
             }
-            PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Find(id);
-            if (pRESUPUESTO == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(pRESUPUESTO);
             }
-            return View(pRESUPUESTO);
+
         }
 
         // POST: PRESUPUESTO/Delete/5
@@ -148,10 +189,23 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Find(id);
-            db.PRESUPUESTO.Remove(pRESUPUESTO);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                if (id > 0)
+                {
+                    PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Find(id);
+                    db.PRESUPUESTO.Remove(pRESUPUESTO);
+                    db.SaveChanges();
+                }
+                
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Index");
+            }
+
         }
 
         protected override void Dispose(bool disposing)

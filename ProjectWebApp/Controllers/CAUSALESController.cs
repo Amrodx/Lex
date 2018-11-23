@@ -70,29 +70,48 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_CAUSAL,NOMBRE")] CAUSALES cAUSALES)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.CAUSALES.Add(cAUSALES);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.CAUSALES.Add(cAUSALES);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                return View(cAUSALES);
+            }
+            catch (Exception)
+            {
+
+                return View(cAUSALES);
             }
 
-            return View(cAUSALES);
         }
 
         // GET: CAUSALES/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            CAUSALES cAUSALES = new CAUSALES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                cAUSALES = db.CAUSALES.Find(id);
+                if (cAUSALES == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cAUSALES);
             }
-            CAUSALES cAUSALES = db.CAUSALES.Find(id);
-            if (cAUSALES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(cAUSALES);
             }
-            return View(cAUSALES);
+
         }
 
         // POST: CAUSALES/Edit/5
@@ -102,28 +121,47 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_CAUSAL,NOMBRE")] CAUSALES cAUSALES)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(cAUSALES).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(cAUSALES).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(cAUSALES);
             }
-            return View(cAUSALES);
+            catch (Exception)
+            {
+
+                return View(cAUSALES);
+            }
+
         }
 
         // GET: CAUSALES/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            CAUSALES cAUSALES = new CAUSALES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                cAUSALES = db.CAUSALES.Find(id);
+                if (cAUSALES == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cAUSALES);
             }
-            CAUSALES cAUSALES = db.CAUSALES.Find(id);
-            if (cAUSALES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(cAUSALES);
             }
-            return View(cAUSALES);
+
         }
 
         // POST: CAUSALES/Delete/5
@@ -131,10 +169,23 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            CAUSALES cAUSALES = db.CAUSALES.Find(id);
-            db.CAUSALES.Remove(cAUSALES);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                if (id > 0)
+                {
+                    CAUSALES cAUSALES = db.CAUSALES.Find(id);
+                    db.CAUSALES.Remove(cAUSALES);
+                    db.SaveChanges();
+                }
+                
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Index");
+            }
+
         }
 
         protected override void Dispose(bool disposing)

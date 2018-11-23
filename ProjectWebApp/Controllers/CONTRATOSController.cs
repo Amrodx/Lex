@@ -190,9 +190,13 @@ namespace LexAbogadosWeb.Controllers
             CONTRATOS cONTRATOS = new CONTRATOS();
             try
             {
-                cONTRATOS = db.CONTRATOS.Find(id);
-                db.CONTRATOS.Remove(cONTRATOS);
-                db.SaveChanges();
+                if (id > 0)
+                {
+                    cONTRATOS = db.CONTRATOS.Find(id);
+                    db.CONTRATOS.Remove(cONTRATOS);
+                    db.SaveChanges();
+                }
+                
                 return RedirectToAction("Index");
             }
             catch (Exception)

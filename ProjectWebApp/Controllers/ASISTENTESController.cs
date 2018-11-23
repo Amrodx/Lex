@@ -22,14 +22,14 @@ namespace LexAbogadosWeb.Controllers
             try
             {
                 aSISTENTES = db.ASISTENTES.Include(a => a.USUARIOS).ToList();
+                return View(aSISTENTES);
             }
             catch (Exception)
             {
 
-                return HttpNotFound();
+                return View(aSISTENTES);
             }
-            
-            return View(aSISTENTES);
+
         }
 
         // GET: ASISTENTES/Details/5
@@ -178,9 +178,13 @@ namespace LexAbogadosWeb.Controllers
         {
             try
             {
-                ASISTENTES aSISTENTES = db.ASISTENTES.Find(id);
-                db.ASISTENTES.Remove(aSISTENTES);
-                db.SaveChanges();
+                if (id > 0)
+                {
+                    ASISTENTES aSISTENTES = db.ASISTENTES.Find(id);
+                    db.ASISTENTES.Remove(aSISTENTES);
+                    db.SaveChanges();
+                }
+                
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -239,9 +243,7 @@ namespace LexAbogadosWeb.Controllers
             {
                 return View(asi);
             }
-            
         }
-
 
         public ActionResult DataContact(long? id)
         {
@@ -264,7 +266,6 @@ namespace LexAbogadosWeb.Controllers
             {
                 return View(asis);
             }
-            
         }
 
         [HttpPost]

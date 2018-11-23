@@ -17,22 +17,42 @@ namespace LexAbogadosWeb.Controllers
         // GET: TIPO_ROL
         public ActionResult Index()
         {
-            return View(db.TIPO_ROL.ToList());
+            List<TIPO_ROL> tIPO_ROL = new List<TIPO_ROL>();
+            try
+            {
+                tIPO_ROL = db.TIPO_ROL.ToList();
+                return View(tIPO_ROL);
+            }
+            catch (Exception)
+            {
+
+                return View(tIPO_ROL);
+            }
         }
 
         // GET: TIPO_ROL/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            TIPO_ROL tIPO_ROL = new TIPO_ROL();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                tIPO_ROL = db.TIPO_ROL.Find(id);
+                if (tIPO_ROL == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tIPO_ROL);
             }
-            TIPO_ROL tIPO_ROL = db.TIPO_ROL.Find(id);
-            if (tIPO_ROL == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(tIPO_ROL);
             }
-            return View(tIPO_ROL);
+
         }
 
         // GET: TIPO_ROL/Create
@@ -48,29 +68,48 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_ROL,NOMBRE_ROL,CATEGORIA")] TIPO_ROL tIPO_ROL)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.TIPO_ROL.Add(tIPO_ROL);
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.TIPO_ROL.Add(tIPO_ROL);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                return View(tIPO_ROL);
+            }
+            catch (Exception)
+            {
+
                 return RedirectToAction("Index");
             }
 
-            return View(tIPO_ROL);
         }
 
         // GET: TIPO_ROL/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            TIPO_ROL tIPO_ROL = new TIPO_ROL();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                tIPO_ROL = db.TIPO_ROL.Find(id);
+                if (tIPO_ROL == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tIPO_ROL);
             }
-            TIPO_ROL tIPO_ROL = db.TIPO_ROL.Find(id);
-            if (tIPO_ROL == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(tIPO_ROL);
             }
-            return View(tIPO_ROL);
+
         }
 
         // POST: TIPO_ROL/Edit/5
@@ -80,28 +119,47 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_ROL,NOMBRE_ROL,CATEGORIA")] TIPO_ROL tIPO_ROL)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(tIPO_ROL).State = EntityState.Modified;
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.Entry(tIPO_ROL).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(tIPO_ROL);
+            }
+            catch (Exception)
+            {
+
                 return RedirectToAction("Index");
             }
-            return View(tIPO_ROL);
+
         }
 
         // GET: TIPO_ROL/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            TIPO_ROL tIPO_ROL = new TIPO_ROL();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                tIPO_ROL = db.TIPO_ROL.Find(id);
+                if (tIPO_ROL == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tIPO_ROL);
             }
-            TIPO_ROL tIPO_ROL = db.TIPO_ROL.Find(id);
-            if (tIPO_ROL == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(tIPO_ROL);
             }
-            return View(tIPO_ROL);
+
         }
 
         // POST: TIPO_ROL/Delete/5
@@ -109,10 +167,22 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            TIPO_ROL tIPO_ROL = db.TIPO_ROL.Find(id);
-            db.TIPO_ROL.Remove(tIPO_ROL);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                if (id > 0)
+                {
+                    TIPO_ROL tIPO_ROL = db.TIPO_ROL.Find(id);
+                    db.TIPO_ROL.Remove(tIPO_ROL);
+                    db.SaveChanges();
+                }
+                
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

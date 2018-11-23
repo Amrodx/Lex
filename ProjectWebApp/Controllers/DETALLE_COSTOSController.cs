@@ -18,30 +18,60 @@ namespace LexAbogadosWeb.Controllers
         // GET: DETALLE_COSTOS
         public ActionResult Index()
         {
-            var dETALLE_COSTOS = db.DETALLE_COSTOS.Include(d => d.CONTRATOS);
-            return View(dETALLE_COSTOS.ToList());
+            List<DETALLE_COSTOS> dETALLE_COSTOS = new List<DETALLE_COSTOS>();
+            try
+            {
+                dETALLE_COSTOS = db.DETALLE_COSTOS.Include(d => d.CONTRATOS).ToList();
+                return View(dETALLE_COSTOS);
+            }
+            catch (Exception)
+            {
+                return View(dETALLE_COSTOS);
+            }
+
         }
 
         // GET: DETALLE_COSTOS/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            DETALLE_COSTOS dETALLE_COSTOS = new DETALLE_COSTOS();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                dETALLE_COSTOS = db.DETALLE_COSTOS.Find(id);
+                if (dETALLE_COSTOS == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(dETALLE_COSTOS);
             }
-            DETALLE_COSTOS dETALLE_COSTOS = db.DETALLE_COSTOS.Find(id);
-            if (dETALLE_COSTOS == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                return View(dETALLE_COSTOS);
             }
-            return View(dETALLE_COSTOS);
+
         }
 
         // GET: DETALLE_COSTOS/Create
         public ActionResult Create()
         {
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO");
-            return View();
+            try
+            {
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO");
+                if (ViewBag.ID_CONTRATO == null)
+                {
+                    ViewBag.ID_CONTRATO = "";
+                }
+                return View();
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+
         }
 
         // POST: DETALLE_COSTOS/Create
@@ -51,31 +81,58 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_DETALLE_COSTO,ID_CONTRATO,TIPO_GASTO,MONTO,BOLETA_DIGITALIZADA,FECHA,AUTORIZADA_REEMBOLZO,ASISTENTE_RESPONZABLE,NOMBRE_NOTARIA,DIRECCION_NOTARIA")] DETALLE_COSTOS dETALLE_COSTOS)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.DETALLE_COSTOS.Add(dETALLE_COSTOS);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.DETALLE_COSTOS.Add(dETALLE_COSTOS);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_COSTOS.ID_CONTRATO);
+                if (ViewBag.ID_CONTRATO == null)
+                {
+                    ViewBag.ID_CONTRATO = "";
+                }
+                return View(dETALLE_COSTOS);
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_CONTRATO = new SelectList(new List<string>());
+                return View(dETALLE_COSTOS);
             }
 
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_COSTOS.ID_CONTRATO);
-            return View(dETALLE_COSTOS);
         }
 
         // GET: DETALLE_COSTOS/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            DETALLE_COSTOS dETALLE_COSTOS = new DETALLE_COSTOS();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                dETALLE_COSTOS = db.DETALLE_COSTOS.Find(id);
+                if (dETALLE_COSTOS == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_COSTOS.ID_CONTRATO);
+                if (ViewBag.ID_CONTRATO == null)
+                {
+                    ViewBag.ID_CONTRATO = "";
+                }
+                return View(dETALLE_COSTOS);
             }
-            DETALLE_COSTOS dETALLE_COSTOS = db.DETALLE_COSTOS.Find(id);
-            if (dETALLE_COSTOS == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                ViewBag.ID_CONTRATO = "";
+                return View(dETALLE_COSTOS);
             }
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_COSTOS.ID_CONTRATO);
-            return View(dETALLE_COSTOS);
+
         }
 
         // POST: DETALLE_COSTOS/Edit/5
@@ -85,14 +142,22 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_DETALLE_COSTO,ID_CONTRATO,TIPO_GASTO,MONTO,BOLETA_DIGITALIZADA,FECHA,AUTORIZADA_REEMBOLZO,ASISTENTE_RESPONZABLE,NOMBRE_NOTARIA,DIRECCION_NOTARIA")] DETALLE_COSTOS dETALLE_COSTOS)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(dETALLE_COSTOS).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(dETALLE_COSTOS).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_COSTOS.ID_CONTRATO);
+                return View(dETALLE_COSTOS);
             }
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_COSTOS.ID_CONTRATO);
-            return View(dETALLE_COSTOS);
+            catch (Exception)
+            {
+                ViewBag.ID_CONTRATO = new SelectList(new List<string>());
+                return View(dETALLE_COSTOS);
+            }
         }
 
         // GET: DETALLE_COSTOS/Delete/5
@@ -115,10 +180,22 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            DETALLE_COSTOS dETALLE_COSTOS = db.DETALLE_COSTOS.Find(id);
-            db.DETALLE_COSTOS.Remove(dETALLE_COSTOS);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                if (id > 0)
+                {
+                    DETALLE_COSTOS dETALLE_COSTOS = db.DETALLE_COSTOS.Find(id);
+                    db.DETALLE_COSTOS.Remove(dETALLE_COSTOS);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Index");
+            }
+
         }
 
         protected override void Dispose(bool disposing)

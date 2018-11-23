@@ -18,30 +18,59 @@ namespace LexAbogadosWeb.Controllers
         // GET: ORDEN_PAGO
         public ActionResult Index()
         {
-            var oRDEN_PAGO = db.ORDEN_PAGO.Include(o => o.CONTRATOS);
-            return View(oRDEN_PAGO.ToList());
+            List<ORDEN_PAGO> oRDEN_PAGO = new List<ORDEN_PAGO>();
+            try
+            {
+                oRDEN_PAGO = db.ORDEN_PAGO.Include(o => o.CONTRATOS).ToList(); ;
+                return View(oRDEN_PAGO);
+            }
+            catch (Exception)
+            {
+
+                return View(oRDEN_PAGO);
+            }
+
         }
 
         // GET: ORDEN_PAGO/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            ORDEN_PAGO oRDEN_PAGO = new ORDEN_PAGO();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                oRDEN_PAGO = db.ORDEN_PAGO.Find(id);
+                if (oRDEN_PAGO == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(oRDEN_PAGO);
             }
-            ORDEN_PAGO oRDEN_PAGO = db.ORDEN_PAGO.Find(id);
-            if (oRDEN_PAGO == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(oRDEN_PAGO);
             }
-            return View(oRDEN_PAGO);
+
         }
 
         // GET: ORDEN_PAGO/Create
         public ActionResult Create()
         {
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO");
-            return View();
+            try
+            {
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO");
+                return View();
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_CONTRATO = new SelectList( new List<string>());
+                return View();
+            }
+
         }
 
         // POST: ORDEN_PAGO/Create
@@ -51,31 +80,49 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_ORDEN_PAGO,TIPO_PAGO,ID_CONTRATO,MONTO_TOTAL,ESTADO,IP,CREATED,NUMERO_TRANSACCION,CUOTAS,VALOR_CUOTA")] ORDEN_PAGO oRDEN_PAGO)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.ORDEN_PAGO.Add(oRDEN_PAGO);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.ORDEN_PAGO.Add(oRDEN_PAGO);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", oRDEN_PAGO.ID_CONTRATO);
-            return View(oRDEN_PAGO);
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", oRDEN_PAGO.ID_CONTRATO);
+                return View(oRDEN_PAGO);
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_CONTRATO = new SelectList(new List<string>());
+                return View(oRDEN_PAGO);
+            }
         }
 
         // GET: ORDEN_PAGO/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            ORDEN_PAGO oRDEN_PAGO = new ORDEN_PAGO();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                oRDEN_PAGO = db.ORDEN_PAGO.Find(id);
+                if (oRDEN_PAGO == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", oRDEN_PAGO.ID_CONTRATO);
+                return View(oRDEN_PAGO);
             }
-            ORDEN_PAGO oRDEN_PAGO = db.ORDEN_PAGO.Find(id);
-            if (oRDEN_PAGO == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(oRDEN_PAGO);
             }
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", oRDEN_PAGO.ID_CONTRATO);
-            return View(oRDEN_PAGO);
+
         }
 
         // POST: ORDEN_PAGO/Edit/5
@@ -85,29 +132,48 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_ORDEN_PAGO,TIPO_PAGO,ID_CONTRATO,MONTO_TOTAL,ESTADO,IP,CREATED,NUMERO_TRANSACCION,CUOTAS,VALOR_CUOTA")] ORDEN_PAGO oRDEN_PAGO)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(oRDEN_PAGO).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(oRDEN_PAGO).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", oRDEN_PAGO.ID_CONTRATO);
+                return View(oRDEN_PAGO);
             }
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", oRDEN_PAGO.ID_CONTRATO);
-            return View(oRDEN_PAGO);
+            catch (Exception)
+            {
+                ViewBag.ID_CONTRATO = new SelectList( new List<string>());
+                return View(oRDEN_PAGO);
+            }
+
         }
 
         // GET: ORDEN_PAGO/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            ORDEN_PAGO oRDEN_PAGO = new ORDEN_PAGO();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                oRDEN_PAGO = db.ORDEN_PAGO.Find(id);
+                if (oRDEN_PAGO == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(oRDEN_PAGO);
             }
-            ORDEN_PAGO oRDEN_PAGO = db.ORDEN_PAGO.Find(id);
-            if (oRDEN_PAGO == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(oRDEN_PAGO);
             }
-            return View(oRDEN_PAGO);
+
         }
 
         // POST: ORDEN_PAGO/Delete/5
@@ -115,10 +181,22 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            ORDEN_PAGO oRDEN_PAGO = db.ORDEN_PAGO.Find(id);
-            db.ORDEN_PAGO.Remove(oRDEN_PAGO);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            ORDEN_PAGO oRDEN_PAGO = new ORDEN_PAGO();
+            try
+            {
+                if (id.Equals(null) || id < 1)
+                {
+                    oRDEN_PAGO = db.ORDEN_PAGO.Find(id);
+                    db.ORDEN_PAGO.Remove(oRDEN_PAGO);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
+
         }
 
         protected override void Dispose(bool disposing)

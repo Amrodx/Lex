@@ -18,30 +18,57 @@ namespace LexAbogadosWeb.Controllers
         // GET: DETALLE_TRAMITES
         public ActionResult Index()
         {
-            var dETALLE_TRAMITES = db.DETALLE_TRAMITES.Include(d => d.CONTRATOS);
-            return View(dETALLE_TRAMITES.ToList());
+            List<DETALLE_TRAMITES> dETALLE_TRAMITES = new List<DETALLE_TRAMITES>();
+            try
+            {
+                dETALLE_TRAMITES = db.DETALLE_TRAMITES.Include(d => d.CONTRATOS).ToList();
+                return View(dETALLE_TRAMITES);
+            }
+            catch (Exception)
+            {
+
+                return View(dETALLE_TRAMITES);
+            }
         }
 
         // GET: DETALLE_TRAMITES/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            DETALLE_TRAMITES dETALLE_TRAMITES = new DETALLE_TRAMITES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                dETALLE_TRAMITES = db.DETALLE_TRAMITES.Find(id);
+                if (dETALLE_TRAMITES == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(dETALLE_TRAMITES);
             }
-            DETALLE_TRAMITES dETALLE_TRAMITES = db.DETALLE_TRAMITES.Find(id);
-            if (dETALLE_TRAMITES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(dETALLE_TRAMITES);
             }
-            return View(dETALLE_TRAMITES);
         }
 
         // GET: DETALLE_TRAMITES/Create
         public ActionResult Create()
         {
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO");
-            return View();
+            try
+            {
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO");
+                return View();
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_CONTRATO = new SelectList( new List<string>());
+                return View();
+            }
+
         }
 
         // POST: DETALLE_TRAMITES/Create
@@ -51,31 +78,50 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_TRAMITES,ID_CONTRATO,ID_SOLICITUD,CODIGO_TRAMITE,NOMBRE_TRAMITE,COSTO,STATUS,TIMESTAMP,CREATED")] DETALLE_TRAMITES dETALLE_TRAMITES)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.DETALLE_TRAMITES.Add(dETALLE_TRAMITES);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.DETALLE_TRAMITES.Add(dETALLE_TRAMITES);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_TRAMITES.ID_CONTRATO);
+                return View(dETALLE_TRAMITES);
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_CONTRATO = new SelectList(new List<string>());
+                return View(dETALLE_TRAMITES);
             }
 
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_TRAMITES.ID_CONTRATO);
-            return View(dETALLE_TRAMITES);
         }
 
         // GET: DETALLE_TRAMITES/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            DETALLE_TRAMITES dETALLE_TRAMITES = new DETALLE_TRAMITES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                dETALLE_TRAMITES = db.DETALLE_TRAMITES.Find(id);
+                if (dETALLE_TRAMITES == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_TRAMITES.ID_CONTRATO);
+                return View(dETALLE_TRAMITES);
             }
-            DETALLE_TRAMITES dETALLE_TRAMITES = db.DETALLE_TRAMITES.Find(id);
-            if (dETALLE_TRAMITES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(dETALLE_TRAMITES);
             }
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_TRAMITES.ID_CONTRATO);
-            return View(dETALLE_TRAMITES);
+
         }
 
         // POST: DETALLE_TRAMITES/Edit/5
@@ -85,29 +131,47 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_TRAMITES,ID_CONTRATO,ID_SOLICITUD,CODIGO_TRAMITE,NOMBRE_TRAMITE,COSTO,STATUS,TIMESTAMP,CREATED")] DETALLE_TRAMITES dETALLE_TRAMITES)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(dETALLE_TRAMITES).State = EntityState.Modified;
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.Entry(dETALLE_TRAMITES).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_TRAMITES.ID_CONTRATO);
+                return View(dETALLE_TRAMITES);
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_CONTRATO = new SelectList(new List<string>());
                 return RedirectToAction("Index");
             }
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dETALLE_TRAMITES.ID_CONTRATO);
-            return View(dETALLE_TRAMITES);
         }
 
         // GET: DETALLE_TRAMITES/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            DETALLE_TRAMITES dETALLE_TRAMITES = new DETALLE_TRAMITES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                dETALLE_TRAMITES = db.DETALLE_TRAMITES.Find(id);
+                if (dETALLE_TRAMITES == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(dETALLE_TRAMITES);
             }
-            DETALLE_TRAMITES dETALLE_TRAMITES = db.DETALLE_TRAMITES.Find(id);
-            if (dETALLE_TRAMITES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(dETALLE_TRAMITES);
             }
-            return View(dETALLE_TRAMITES);
+
         }
 
         // POST: DETALLE_TRAMITES/Delete/5
@@ -115,10 +179,24 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            DETALLE_TRAMITES dETALLE_TRAMITES = db.DETALLE_TRAMITES.Find(id);
-            db.DETALLE_TRAMITES.Remove(dETALLE_TRAMITES);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            DETALLE_TRAMITES dETALLE_TRAMITES = new DETALLE_TRAMITES();
+            try
+            {
+                if (id > 0)
+                {
+                    dETALLE_TRAMITES = db.DETALLE_TRAMITES.Find(id);
+                    db.DETALLE_TRAMITES.Remove(dETALLE_TRAMITES);
+                    db.SaveChanges();
+                }
+                
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Index");
+            }
+
         }
 
         protected override void Dispose(bool disposing)

@@ -17,8 +17,16 @@ namespace LexAbogadosWeb.Controllers
         // GET: COMUNAS
         public ActionResult Index()
         {
-            var cOMUNAS = db.COMUNAS.Include(c => c.REGIONES);
-            return View(cOMUNAS.ToList());
+            List<COMUNAS> cOMUNAS = new List<COMUNAS>();
+            try
+            {
+                cOMUNAS = db.COMUNAS.Include(c => c.REGIONES).ToList();
+                return View(cOMUNAS);
+            }
+            catch (Exception)
+            {
+                return View(cOMUNAS);
+            }
         }
 
         // GET: COMUNAS/Details/5

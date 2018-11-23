@@ -18,31 +18,60 @@ namespace LexAbogadosWeb.Controllers
         // GET: DOCUMENTOS
         public ActionResult Index()
         {
-            var dOCUMENTOS = db.DOCUMENTOS.Include(d => d.CONTRATOS).Include(d => d.PRESUPUESTO);
-            return View(dOCUMENTOS.ToList());
+            List<DOCUMENTOS> dOCUMENTOS = new List<DOCUMENTOS>();
+            try
+            {
+                dOCUMENTOS = db.DOCUMENTOS.Include(d => d.CONTRATOS).Include(d => d.PRESUPUESTO).ToList();
+                return View(dOCUMENTOS);
+            }
+            catch (Exception)
+            {
+
+                return View(dOCUMENTOS);
+            }
+
         }
 
         // GET: DOCUMENTOS/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            DOCUMENTOS dOCUMENTOS = new DOCUMENTOS();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                dOCUMENTOS = db.DOCUMENTOS.Find(id);
+                if (dOCUMENTOS == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(dOCUMENTOS);
             }
-            DOCUMENTOS dOCUMENTOS = db.DOCUMENTOS.Find(id);
-            if (dOCUMENTOS == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                return View(dOCUMENTOS);
             }
-            return View(dOCUMENTOS);
+
         }
 
         // GET: DOCUMENTOS/Create
         public ActionResult Create()
         {
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO");
-            ViewBag.ID_PRESUPUESTO = new SelectList(db.PRESUPUESTO, "ID_PRESUPUESTO", "COD_SOLICITUD");
-            return View();
+            try
+            {
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO");
+                ViewBag.ID_PRESUPUESTO = new SelectList(db.PRESUPUESTO, "ID_PRESUPUESTO", "COD_SOLICITUD");
+                return View();
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_CONTRATO = new SelectList(new List<string>());
+                ViewBag.ID_PRESUPUESTO = new SelectList(new List<string>());
+                return View();
+            }
+            
         }
 
         // POST: DOCUMENTOS/Create
@@ -52,16 +81,26 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_DOCUMENTO,ID_CONTRATO,ID_PRESUPUESTO,FECHA_INGRESO,DOCUMENTO_DIGITAL,PATH")] DOCUMENTOS dOCUMENTOS)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.DOCUMENTOS.Add(dOCUMENTOS);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.DOCUMENTOS.Add(dOCUMENTOS);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dOCUMENTOS.ID_CONTRATO);
+                ViewBag.ID_PRESUPUESTO = new SelectList(db.PRESUPUESTO, "ID_PRESUPUESTO", "COD_SOLICITUD", dOCUMENTOS.ID_PRESUPUESTO);
+                return View(dOCUMENTOS);
+            }
+            catch (Exception)
+            {
+                ViewBag.ID_CONTRATO = new SelectList(new List<string>());
+                ViewBag.ID_PRESUPUESTO = new SelectList(new List<string>());
+                return View(dOCUMENTOS);
             }
 
-            ViewBag.ID_CONTRATO = new SelectList(db.CONTRATOS, "ID_CONTRATO", "DOCUMENTO_GENERADO", dOCUMENTOS.ID_CONTRATO);
-            ViewBag.ID_PRESUPUESTO = new SelectList(db.PRESUPUESTO, "ID_PRESUPUESTO", "COD_SOLICITUD", dOCUMENTOS.ID_PRESUPUESTO);
-            return View(dOCUMENTOS);
         }
 
         // GET: DOCUMENTOS/Edit/5
@@ -102,16 +141,26 @@ namespace LexAbogadosWeb.Controllers
         // GET: DOCUMENTOS/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            DOCUMENTOS dOCUMENTOS = new DOCUMENTOS();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                dOCUMENTOS = db.DOCUMENTOS.Find(id);
+                if (dOCUMENTOS == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(dOCUMENTOS);
             }
-            DOCUMENTOS dOCUMENTOS = db.DOCUMENTOS.Find(id);
-            if (dOCUMENTOS == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(dOCUMENTOS);
             }
-            return View(dOCUMENTOS);
+
         }
 
         // POST: DOCUMENTOS/Delete/5
@@ -119,31 +168,45 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            DOCUMENTOS dOCUMENTOS = db.DOCUMENTOS.Find(id);
-            db.DOCUMENTOS.Remove(dOCUMENTOS);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            DOCUMENTOS dOCUMENTOS = new DOCUMENTOS();
+            try
+            {
+                dOCUMENTOS = db.DOCUMENTOS.Find(id);
+                db.DOCUMENTOS.Remove(dOCUMENTOS);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Index");
+            }
+
         }
         public ActionResult SubidaDocumentos(DOCUMENTOS _pdocumentos)
         {
+            try
+            {
+                foreach (string f in Request.Files.Keys)
+                {
+                    HttpPostedFileBase File = Request.Files["IMG_PROFILE"];
 
-            foreach (string f in Request.Files.Keys)
+                    if (Request.Files[f].ContentLength > 0)
+                    {
+                        //_pdocumentos.PATH = File.FileName;
+                        _pdocumentos.DOCUMENTO_DIGITAL = ConvertToByte(Request.Files[f]);
+                    }
+                    db.DOCUMENTOS.Add(_pdocumentos);
+                    db.SaveChanges();
+                }
+                return View();
+            }
+            catch (Exception)
             {
 
-                HttpPostedFileBase File = Request.Files["IMG_PROFILE"];
-
-                if (Request.Files[f].ContentLength > 0)
-                { 
-                    //_pdocumentos.PATH = File.FileName;
-                    _pdocumentos.DOCUMENTO_DIGITAL = ConvertToByte(Request.Files[f]);
-                }
-                db.DOCUMENTOS.Add(_pdocumentos);
-                db.SaveChanges();
-
-
-
+                return View();
             }
-            return View();
+
         }
         protected override void Dispose(bool disposing)
         {

@@ -38,14 +38,13 @@ namespace LexAbogadosWeb.Controllers
             CLIENTES cLIENTES = new CLIENTES();
             try
             {
-                if (id == null)
+                if (id != null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                cLIENTES = db.CLIENTES.Find(id);
-                if (cLIENTES == null)
-                {
-                    return HttpNotFound();
+                    cLIENTES = db.CLIENTES.Find(id);
+                    if (cLIENTES != null)
+                    {
+                        return View(cLIENTES);
+                    }
                 }
                 return View(cLIENTES);
             }
@@ -108,7 +107,6 @@ namespace LexAbogadosWeb.Controllers
                 ViewBag.ID_USUARIO = new List<string>();
                 return View(cLIENTES);
             }
-            
         }
 
         // GET: CLIENTES/Edit/5
@@ -208,9 +206,13 @@ namespace LexAbogadosWeb.Controllers
         {
             try
             {
-                CLIENTES cLIENTES = db.CLIENTES.Find(id);
-                db.CLIENTES.Remove(cLIENTES);
-                db.SaveChanges();
+                if (id > 0)
+                {
+                    CLIENTES cLIENTES = db.CLIENTES.Find(id);
+                    db.CLIENTES.Remove(cLIENTES);
+                    db.SaveChanges();
+                }
+                
                 return RedirectToAction("Index");
             }
             catch (Exception)

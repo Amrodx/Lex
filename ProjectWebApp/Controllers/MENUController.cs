@@ -17,8 +17,18 @@ namespace LexAbogadosWeb.Controllers
         // GET: MENU
         public ActionResult Index()
         {
-            var mENU = db.MENU.Include(m => m.TIPO_ROL);
-            return View(mENU.ToList());
+            List<MENU> mENU = new List<MENU>();
+            try
+            {
+                mENU = db.MENU.Include(m => m.TIPO_ROL).ToList();
+                return View(mENU);
+            }
+            catch (Exception)
+            {
+
+                return View(mENU);
+            }
+
         }
 
         // GET: MENU/Details/5

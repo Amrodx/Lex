@@ -17,22 +17,42 @@ namespace LexAbogadosWeb.Controllers
         // GET: REGIONES
         public ActionResult Index()
         {
-            return View(db.REGIONES.ToList());
+            List<REGIONES> rEGIONES = new List<REGIONES>();
+            try
+            {
+                rEGIONES = db.REGIONES.ToList();
+                return View(rEGIONES);
+            }
+            catch (Exception)
+            {
+
+                return View(rEGIONES);
+            }
         }
 
         // GET: REGIONES/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            REGIONES rEGIONES = new REGIONES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                rEGIONES = db.REGIONES.Find(id);
+                if (rEGIONES == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(rEGIONES);
             }
-            REGIONES rEGIONES = db.REGIONES.Find(id);
-            if (rEGIONES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(rEGIONES);
             }
-            return View(rEGIONES);
+
         }
 
         // GET: REGIONES/Create
@@ -48,29 +68,48 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_REGION,NOMBRE")] REGIONES rEGIONES)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.REGIONES.Add(rEGIONES);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.REGIONES.Add(rEGIONES);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                return View(rEGIONES);
+            }
+            catch (Exception)
+            {
+
+                return View(rEGIONES);
             }
 
-            return View(rEGIONES);
         }
 
         // GET: REGIONES/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            REGIONES rEGIONES = new REGIONES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                rEGIONES = db.REGIONES.Find(id);
+                if (rEGIONES == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(rEGIONES);
             }
-            REGIONES rEGIONES = db.REGIONES.Find(id);
-            if (rEGIONES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(rEGIONES);
             }
-            return View(rEGIONES);
+
         }
 
         // POST: REGIONES/Edit/5
@@ -80,28 +119,47 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_REGION,NOMBRE")] REGIONES rEGIONES)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(rEGIONES).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(rEGIONES).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(rEGIONES);
             }
-            return View(rEGIONES);
+            catch (Exception)
+            {
+
+                return View(rEGIONES);
+            }
+
         }
 
         // GET: REGIONES/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            REGIONES rEGIONES = new REGIONES();
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                rEGIONES = db.REGIONES.Find(id);
+                if (rEGIONES == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(rEGIONES);
             }
-            REGIONES rEGIONES = db.REGIONES.Find(id);
-            if (rEGIONES == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                return View(rEGIONES);
             }
-            return View(rEGIONES);
+
         }
 
         // POST: REGIONES/Delete/5
@@ -109,10 +167,24 @@ namespace LexAbogadosWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            REGIONES rEGIONES = db.REGIONES.Find(id);
-            db.REGIONES.Remove(rEGIONES);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            REGIONES rEGIONES = new REGIONES();
+            try
+            {
+                if (id > 0)
+                {
+                    rEGIONES = db.REGIONES.Find(id);
+                    db.REGIONES.Remove(rEGIONES);
+                    db.SaveChanges();
+                }
+                
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Index");
+            }
+
         }
 
         protected override void Dispose(bool disposing)
