@@ -5,15 +5,15 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Eliminar</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Seguro que desea eliminar este registro?</h3>
 <div>
-    <h4>MENU_SUB</h4>
+    <h4>Menu Sub</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TEXTO)
+            Texto:
         </dt>
 
         <dd>
@@ -21,61 +21,58 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.REFERENCIA)
+            Referencia:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.REFERENCIA)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.CRUD)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CRUD)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CONTROLLER)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CONTROLLER)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ACTION)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ACTION)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MENU.TEXTO)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MENU.TEXTO)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TIPO_ROL.NOMBRE_ROL)
+            Rol:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.TIPO_ROL.NOMBRE_ROL)
         </dd>
+        <dt>
+            Menú Padre:
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.MENU.TEXTO)
+        </dd>
+        <dt>
+            CRUD:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CRUD)
+        </dd>
+        <dt>
+            Controller:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTROLLER)
+        </dd>
+        <dt>
+            Action:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACTION)
+        </dd>
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-group">
+            <div class="col-md-6 col-md-offset-3">
+                <button type="submit" class="btn btn-default" value="Delete">Eliminar</button>
+                @Html.ActionLink("Volver a Listado", "Index")
+            </div>
         </div>
     }
 </div>

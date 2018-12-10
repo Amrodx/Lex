@@ -5,63 +5,55 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Detalle <small></small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
 
-<div>
-    <h4>MENU</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TEXTO)
-        </dt>
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <label for="name">
+                                Texto:
+                            </label> @Model.TEXTO
+                        </li>
 
-        <dd>
-            @Html.DisplayFor(model => model.TEXTO)
-        </dd>
+                        <li>
+                            <label for="name">
+                                Referencia:
+                            </label>  @Model.REFERENCIA
+                        </li>
+                        <li>
+                            <label for="name">
+                                Rol:
+                            </label>  @Model.TIPO_ROL.NOMBRE_ROL
+                        </li>                        
+                        <li>
+                            <label for="name">
+                                Controller:
+                            </label>  @Model.CONTROLLER
+                        </li>
+                        <li>
+                            <label for="name">
+                                Action:
+                            </label>  @Model.ACTION
+                        </li>
+                    </ul>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.REFERENCIA)
-        </dt>
+                    <a href="/MENU/Edit/@Model.MENU_ID" class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Editar Menú</a>
+                    <br>
 
-        <dd>
-            @Html.DisplayFor(model => model.REFERENCIA)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ORDEN)
-        </dt>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.ORDEN)
-        </dd>
+            </div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CONTROLLER)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CONTROLLER)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ACTION)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ACTION)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TIPO_ROL.NOMBRE_ROL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TIPO_ROL.NOMBRE_ROL)
-        </dd>
-
-    </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MENU_ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+

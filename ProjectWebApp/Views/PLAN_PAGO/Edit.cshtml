@@ -5,42 +5,82 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>Edit</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>PLAN_PAGO</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID_PAGO)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PLAN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PLAN, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PLAN, "", new { @class = "text-danger" })
-            </div>
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Plan</h3>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.VALOR, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VALOR, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VALOR, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Ir!</button>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
-}
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Editar <small></small></h2>                  
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form class="form-horizontal form-label-left" method="post">
+                        @Html.AntiForgeryToken()
+                        @*<p>
+                                For alternative validation library <code>parsleyJS</code> check out in the <a href="form.html">form page</a>
+                            </p>*@
+                        @*<span class="section">Personal Info</span>*@
+                        @Html.HiddenFor(model => model.ID_PAGO)
+                        @*<div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">
+                                    Usuario <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.DropDownList("ID_USUARIO", (IEnumerable<SelectListItem>)ViewBag.Usuario, "-- Seleccione Usuario --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", requiered = "requiered" })
+                                </div>
+                            </div>*@
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                Plan <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" id="plan" name="plan" required="required" class="form-control col-md-7 col-xs-12" value="@Model.PLAN">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                Valor <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" id="valor" name="valor" required="required" class="form-control col-md-7 col-xs-12" value="@Model.VALOR">
+                            </div>
+                        </div>
+                        
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary">Cancel</button>
+                                <button id="send" type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="actionBar">
+                        @*<a href="#" class="buttonFinish buttonDisabled btn btn-default">Finish</a>
+                            <a href="#" class="buttonNext btn btn-success">Next</a>*@
+                        @Html.ActionLink("Volver a Listado", "Index", null, new { @class = "buttonPrevious btn btn-primary" })
+                    </div>
+                </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    </div>
 </div>
+
+
+

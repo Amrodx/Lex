@@ -1,0 +1,220 @@
+﻿@using ProjectWebApp.Models;
+@model ProjectWebApp.Models.CLIENTES
+
+@{
+    ViewBag.Title = "Landing";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<!-- page content -->
+
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Home Usuario</h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    @*<input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Informacion@*<small>Actividad</small>*@</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        @*<li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                        <div class="profile_img">
+                            <div id="crop-avatar">
+                                <!-- Current avatar -->
+                                @if (((USUARIOS)Session["LoginCredentials"]).BINARY_IMAGE != null)
+                                {
+                                    <img src="data:image;base64,@System.Convert.ToBase64String(((USUARIOS)Session["LoginCredentials"]).BINARY_IMAGE)" style="width:200px;height:200px;" alt="Avatar" class="img-responsive avatar-view" title="Change the avatar" />
+                                }
+                                else
+                                {
+                                    <img src="~/assets/img/user.png" style="width:200px;height:200px;" alt="Avatar" class="img-responsive avatar-view" title="Change the avatar" />
+                                }
+
+                            </div>
+                        </div>
+                        <h3>@Model.NOMBRE_RAZON_SOCIAL</h3>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <i class="fa fa-map-marker user-profile-icon"></i>@Model.DIRECCION - @Model.COMUNAS.COMUNA,@Model.COMUNAS.REGIONES.NOMBRE
+                            </li>
+                            <li>
+                                <i class="fa fa-briefcase user-profile-icon"></i> @Model.PLAN_PAGO.PLAN
+                            </li>
+                            <li class="m-top-xs">
+                                <i class="fa fa-external-link user-profile-icon"></i>
+                                <a href="@Model.CORREO" target="_blank">@Model.CORREO</a>
+                            </li>
+                        </ul>
+                        <a class="btn btn-success" href="/CLIENTES/DataContact/@Model.ID_CLIENTE"><i class="fa fa-edit m-right-xs"></i>Editar Perfil</a>
+                        <br />
+
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="profile_title">
+                            <div class="col-md-6">
+                                <h2>Actividad de Usuario</h2>
+                            </div>
+                            @*<div class="col-md-6">
+                                    <div id="reportrange" class="pull-right" style="margin-top: 5px; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #E6E9ED">
+                                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                        <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+                                    </div>
+                                </div>*@
+                        </div>
+                        <!-- start of user-activity-graph -->
+                        @*<div id="graph_bar" style="width:100%; height:280px;"></div>*@
+                        <!-- end of user-activity-graph -->
+                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Dashboard</a>
+                                </li>
+                            </ul>
+
+                            <!-- grafico canvas -->
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="x_panel tile fixed_height_320 overflow_hidden">
+                                    <div class="x_title">
+                                        <h2>Causas</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        <table class="" style="width:100%">
+                                            <tr>
+                                                <th style="width:37%;">
+                                                    <p>Top 5</p>
+                                                </th>
+                                                <th>
+                                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                                        <p class="">Casos</p>
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                        <p class="">Cantidad Causas</p>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <canvas id="canvas1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                                                </td>
+                                                <td>
+                                                    <table class="tile_info" id="causas_chart">
+                                                        @foreach (var item in (Dictionary<string, int>)ViewBag.Graf)
+                                                        {
+                                                            <tr>
+                                                                <td id="causa_item">
+                                                                    <p><i class="fa fa-square blue"></i>@(item.Key)</p>
+                                                                </td>
+                                                                <td>@item.Value</td>
+                                                            </tr>
+                                                        }
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- end recent activity -->
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="x_panel tile fixed_height_320 overflow_hidden">
+                                    <div class="x_title">
+                                        <!-- start user projects -->
+                                        <table class="data table table-striped no-margin">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cuasal</th>
+                                                    <th>Codigo</th>
+                                                    <th class="hidden-phone">Estado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (PRESUPUESTO item in Model.PRESUPUESTO.OrderBy(o => o.FECHA))
+                                                {
+                                                    string status = "";
+                                                    switch (item.ESTADO_AVANCE)
+                                                    {
+
+                                                        case "Recepcionado":
+                                                            status = "success";
+                                                            break;
+                                                        case "Aceptado":
+                                                            status = "success";
+                                                            break;
+                                                        case "Rechazado":
+                                                            status = "danger";
+                                                            break;
+                                                        case "Asignado":
+                                                            status = "primary";
+                                                            break;
+                                                        case "Firmado Contrato":
+                                                            status = "info";
+                                                            break;
+                                                        case "Poder Judicial":
+                                                            status = "info";
+                                                            break;
+                                                        case "Resolucion Judicial":
+                                                            status = "warning";
+                                                            break;
+                                                        case "Pagado":
+                                                            status = "success";
+                                                            break;
+                                                    }
+                                                    <tr>
+                                                        <td>@item.CAUSALES.NOMBRE</td>
+                                                        <td>@item.COD_SOLICITUD</td>
+                                                        <td><button type="button" class="btn btn-@status btn-xs">@Html.DisplayFor(modelItem => item.ESTADO_AVANCE)</button></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <!-- end user projects -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->

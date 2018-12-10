@@ -5,31 +5,7 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-                  <!-- Large modal -->
-                  @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
-
-                  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                          </button>
-                          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                          <h4>Text in a modal</h4>
-                          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-                          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>*@
+<!-- Large modal -->
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
@@ -41,16 +17,13 @@
                 <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline projects" cellspacing="0" width="100%" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
                     <thead>
                         <tr role="row">
-
                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-label="Position: activate to sort column ascending">Cod Solicitud</th>
-                            <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-label="Position: activate to sort column ascending">Fecha Notificacion</th>
+                            @*<th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-label="Position: activate to sort column ascending">Fecha Notificacion</th>*@
                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-label="Position: activate to sort column ascending">Estado</th>
-                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Contrato</th>
+                            @*<th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Contrato</th>*@
                             <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Asistente</th>
                             <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Causal</th>
                             <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Fecha Creacion</th>
-
-
                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: 200px;" aria-label="Salary: activate to sort column ascending">Acción</th>
                         </tr>
                     </thead>
@@ -63,9 +36,9 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.COD_SOLICITUD)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.FECHA_NOTIFICA)
-                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.FECHA_NOTIFICA)
+                                    </td>*@
                                 @{string status = "";}
                                 @switch (item.ESTADO_AVANCE)
                                 {
@@ -102,9 +75,9 @@
                                 <td>
                                     <button type="button" class="btn btn-@status btn-xs">@Html.DisplayFor(modelItem => item.ESTADO_AVANCE)</button>
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CONTRATADO)
-                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.CONTRATADO)
+                                    </td>*@
 
 
                                 <td>
@@ -118,7 +91,7 @@
                                         else
                                         {
                                             <li>
-                                                <img src="data:image;base64,@System.Convert.ToBase64String(item.ASISTENTES.USUARIOS.BINARY_IMAGE)" class="avatar img-circle" alt="Avatar" title="@item.ASISTENTES.NOMBRES" /><small>@item.ASISTENTES.NOMBRES</small>
+                                                <img src="data:image;base64,@System.Convert.ToBase64String(item.ASISTENTES.USUARIOS.BINARY_IMAGE)" class="avatar img-circle" alt="Avatar" title="@item.ASISTENTES.NOMBRES" /><small style="text-align:right">@item.ASISTENTES.NOMBRES</small>
                                             </li>
                                         }
 
@@ -133,9 +106,9 @@
                                     @Html.DisplayFor(modelItem => item.FECHA)
                                 </td>
                                 <td>
-                                    <a href="/PRESUPUESTO/Procesos/@item.ID_PRESUPUESTO" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver Caso </a>
-                                    <a href="/PRESUPUESTO/Asignaciones/@item.ID_PRESUPUESTO" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Asignar Abogado </a>
-                                    <a href="" class="btn btn-warning btn-xs"><i class="fa fa-check"></i> Rechazar</a>
+                                    <a href="/PRESUPUESTO/Procesos/@item.ID_PRESUPUESTO" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver</a>
+                                    <a href="/PRESUPUESTO/Asignaciones/@item.ID_PRESUPUESTO" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Gestionar</a>
+                                    <a href="" class="btn btn-danger btn-xs"><i class="fa fa-remove"></i> Rechazar</a>
                                 </td>
                             </tr>
                         }
@@ -150,6 +123,89 @@
 </div>
 
 
+@section Scripts{
+    <!--DataTables-->
+    <script>
+        $(document).ready(function () {
+            var handleDataTableButtons = function () {
+                if ($("#datatable-buttons").length) {
+                    $("#datatable-buttons").DataTable({
+                        dom: "Bfrtip",
+                        buttons: [
+                            {
+                                extend: "copy",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "csv",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "excel",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "pdfHtml5",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "print",
+                                className: "btn-sm"
+                            },
+                        ],
+                        responsive: true
+                    });
+                }
+            };
 
+            TableManageButtons = function () {
+                "use strict";
+                return {
+                    init: function () {
+                        handleDataTableButtons();
+                    }
+                };
+            }();
+
+            $('#datatable').dataTable();
+
+            $('#datatable-keytable').DataTable({
+                keys: true
+            });
+
+            $('#datatable-responsive').DataTable();
+
+            $('#datatable-scroller').DataTable({
+                ajax: "js/datatables/json/scroller-demo.json",
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true
+            });
+
+            $('#datatable-fixed-header').DataTable({
+                fixedHeader: true
+            });
+
+            var $datatable = $('#datatable-checkbox');
+
+            $datatable.dataTable({
+                'order': [[1, 'asc']],
+                'columnDefs': [
+                    { orderable: false, targets: [0] }
+                ]
+            });
+            $datatable.on('draw.dt', function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-green'
+                });
+            });
+
+            TableManageButtons.init();
+        });
+    </script>
+
+    <!--DataTables-->
+}
 
 

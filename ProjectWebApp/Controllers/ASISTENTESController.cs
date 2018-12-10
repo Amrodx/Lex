@@ -39,6 +39,11 @@ namespace ProjectWebApp.Controllers
         // GET: ASISTENTES/Create
         public ActionResult Create()
         {
+            USUARIOS USUARIOS = new USUARIOS();
+            using (ODAO _uSUARIOS = new ODAO())
+            {
+                ViewBag.Usuarios = new SelectList(_uSUARIOS.USUARIOS.Include("TIPO_ROL").ToList(), "ID_USUARIO", "USER", "TIPO_ROL.NOMBRE_ROL", 1);
+            }
             ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER");
             return View();
         }
@@ -48,7 +53,7 @@ namespace ProjectWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_ASISTENTE,RUT,NOMBRES,APELLIDO_PATERNO,APELLIDO_MATERNO,CARGO,TITULO_ACADEMICO,TIMESTAMP,ID_USUARIO")] ASISTENTES aSISTENTES)
+        public ActionResult Create([Bind(Include = "ID_ASISTENTE,RUT,NOMBRES,APELLIDO_PATERNO,APELLIDO_MATERNO,CARGO,TITULO_ACADEMICO,TIMESTAMP,ID_USUARIO,CORREO,FONO,ID_COMUNA,DIRECCION")] ASISTENTES aSISTENTES)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +61,7 @@ namespace ProjectWebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", aSISTENTES.ID_COMUNA);
             ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", aSISTENTES.ID_USUARIO);
             return View(aSISTENTES);
         }
@@ -73,6 +78,7 @@ namespace ProjectWebApp.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", aSISTENTES.ID_COMUNA);
             ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", aSISTENTES.ID_USUARIO);
             return View(aSISTENTES);
         }
@@ -82,7 +88,7 @@ namespace ProjectWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_ASISTENTE,RUT,NOMBRES,APELLIDO_PATERNO,APELLIDO_MATERNO,CARGO,TITULO_ACADEMICO,TIMESTAMP,ID_USUARIO")] ASISTENTES aSISTENTES)
+        public ActionResult Edit([Bind(Include = "ID_ASISTENTE,RUT,NOMBRES,APELLIDO_PATERNO,APELLIDO_MATERNO,CARGO,TITULO_ACADEMICO,TIMESTAMP,ID_USUARIO,CORREO,FONO,ID_COMUNA,DIRECCION")] ASISTENTES aSISTENTES)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +96,7 @@ namespace ProjectWebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ID_COMUNA = new SelectList(db.COMUNAS, "ID_COMUNA", "COMUNA", aSISTENTES.ID_COMUNA);
             ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", aSISTENTES.ID_USUARIO);
             return View(aSISTENTES);
         }
@@ -152,7 +159,7 @@ namespace ProjectWebApp.Controllers
             ASISTENTES asi = db.ASISTENTES.Where(X => X.ID_USUARIO == perfil.ID_USUARIO).FirstOrDefault();
             if (asi == null)
             {
-                return HttpNotFound();
+                return View("Create");
             }
             return View(asi);
         }
@@ -176,7 +183,7 @@ namespace ProjectWebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DataContact([Bind(Include = "ID_ASISTENTE,RUT,NOMBRES,APELLIDO_PATERNO,APELLIDO_MATERNO,CARGO,TITULO_ACADEMICO,TIMESTAMP,ID_USUARIO")] ASISTENTES aSISTENTES)
+        public ActionResult DataContact([Bind(Include = "ID_ASISTENTE,RUT,NOMBRES,APELLIDO_PATERNO,APELLIDO_MATERNO,CARGO,TITULO_ACADEMICO,TIMESTAMP,ID_USUARIO,CORREO,FONO,ID_COMUNA,DIRECCION")] ASISTENTES aSISTENTES)
         {
             if (ModelState.IsValid)
             {
@@ -193,7 +200,7 @@ namespace ProjectWebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CompletarPerfil([Bind(Include = "ID_ASISTENTE,RUT,NOMBRES,APELLIDO_PATERNO,APELLIDO_MATERNO,CARGO,TITULO_ACADEMICO,TIMESTAMP,ID_USUARIO")] ASISTENTES aSISTENTES)
+        public ActionResult CompletarPerfil([Bind(Include = "ID_ASISTENTE,RUT,NOMBRES,APELLIDO_PATERNO,APELLIDO_MATERNO,CARGO,TITULO_ACADEMICO,TIMESTAMP,ID_USUARIO,CORREO,FONO,ID_COMUNA,DIRECCION")] ASISTENTES aSISTENTES)
         {
             USUARIOS _UsuarioLogued = (USUARIOS)Session["LoginCredentials"];
 
@@ -220,7 +227,30 @@ namespace ProjectWebApp.Controllers
             //ViewBag.ID_USUARIO = new SelectList(db.USUARIOS, "ID_USUARIO", "USER", cLIENTES.ID_USUARIO);
             return View(aSISTENTES);
         }
+        public ActionResult Landing(long? id)
+        {
+            Dictionary<string, int> ValoresGraf = new Dictionary<string, int>();
+            USUARIOS perfil = (USUARIOS)Session["LoginCredentials"];
+            List<PRESUPUESTO> PreSupuesto = new List<PRESUPUESTO>();
+            ASISTENTES _asistente = db.ASISTENTES.Include(i => i.USUARIOS).Where(X => X.ID_USUARIO == perfil.ID_USUARIO).First();
+            _asistente.COMUNAS = db.COMUNAS.Include(i => i.REGIONES).Where(w => w.ID_COMUNA == _asistente.ID_COMUNA).First();
+            PreSupuesto = db.PRESUPUESTO.Include(i => i.CAUSALES).Where(w => w.ID_ASISTENTE == _asistente.ID_COMUNA).ToList();
+            _asistente.PRESUPUESTO = PreSupuesto;
+            foreach (var item in PreSupuesto.GroupBy(g => g.ESTADO_AVANCE).Select(group => new { Campo = group.Key, campo2 = group.Count() }).ToArray())
+            {
+                ValoresGraf.Add(item.Campo, item.campo2);
+            }
 
+            //ViewBag.Graf = db.PRESUPUESTO.GroupBy(g => g.ESTADO_AVANCE).Select(group => Tuple.Create(group.Key, group.Count()));
+
+            if (_asistente == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Graf = ValoresGraf;
+            ViewBag.Perfil = perfil;
+            return View(_asistente);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

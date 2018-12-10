@@ -5,15 +5,15 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Eliminar</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Seguro que desea eliminar este registro?</h3>
 <div>
-    <h4>MENU</h4>
+    <h4>Menú</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TEXTO)
+            Texto:
         </dt>
 
         <dd>
@@ -21,53 +21,44 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.REFERENCIA)
+            Referencia:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.REFERENCIA)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.ORDEN)
+            Rol:
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ORDEN)
-        </dd>
-
+            @Html.DisplayFor(model => model.TIPO_ROL.NOMBRE_ROL)
+        </dd>        
         <dt>
-            @Html.DisplayNameFor(model => model.CONTROLLER)
+            Controller:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.CONTROLLER)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.ACTION)
+            Action:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.ACTION)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TIPO_ROL.NOMBRE_ROL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TIPO_ROL.NOMBRE_ROL)
-        </dd>
-
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-group">
+            <div class="col-md-6 col-md-offset-3">
+                <button type="submit" class="btn btn-default" value="Delete">Eliminar</button>
+                @Html.ActionLink("Volver a Listado", "Index")
+            </div>
         </div>
     }
 </div>

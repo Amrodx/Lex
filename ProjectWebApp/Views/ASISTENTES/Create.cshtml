@@ -5,99 +5,7 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-@*<h2>Crear</h2>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <h4>ASISTENTES</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.ID_ASISTENTE, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ID_ASISTENTE, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ID_ASISTENTE, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.RUT, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.RUT, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.RUT, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.NOMBRES, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.NOMBRES, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.NOMBRES, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.APELLIDO_PATERNO, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.APELLIDO_PATERNO, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.APELLIDO_PATERNO, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.APELLIDO_MATERNO, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.APELLIDO_MATERNO, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.APELLIDO_MATERNO, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.CARGO, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CARGO, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CARGO, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.TITULO_ACADEMICO, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.TITULO_ACADEMICO, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TITULO_ACADEMICO, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.TIMESTAMP, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.TIMESTAMP, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TIMESTAMP, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ID_USUARIO, "ID_USUARIO", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("ID_USUARIO", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.ID_USUARIO, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
-    }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>*@
 
 <div class="">
     <div class="page-title">
@@ -123,22 +31,7 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Crear<small></small></h2>
-                    @*<ul class="nav navbar-right panel_toolbox">
-                            <li>
-                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#">Listado</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>*@
+
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -153,7 +46,7 @@
                                 Usuario <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.DropDownList("ID_USUARIO", (IEnumerable<SelectListItem>)ViewBag.Usuario, "-- Seleccione Usuario --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", requiered = "requiered" })
+                                @Html.DropDownList("ID_USUARIO", (IEnumerable<SelectListItem>)ViewBag.Usuarios, "-- Seleccione Usuario --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", requiered = "requiered" })
                             </div>
                         </div>
                         <div class="item form-group">
@@ -186,6 +79,38 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="apellido_materno" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="apellido_materno" placeholder="" required="required" type="text">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                Correo <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="correo" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="correo" placeholder="" required="required" type="text">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">
+                                Comuna <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.DropDownList("ID_COMUNA", (IEnumerable<SelectListItem>)ViewBag.Comuna, "-- Seleccione Comuna --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", requiered = "requiered" })
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                Dirección <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="direccion" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="direccion" placeholder="" required="required" type="text">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                Teléfono <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="fono" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="fono" placeholder="" required="required" type="text">
                             </div>
                         </div>
                         <div class="item form-group">

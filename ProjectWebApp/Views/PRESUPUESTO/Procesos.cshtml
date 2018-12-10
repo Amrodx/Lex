@@ -86,6 +86,9 @@
                             </li>
                         </ul>
                         <div id="step-1">
+                            <div class="row">
+
+                            </div>
                             <h2 class="StepTitle">Paso 1 Ingreso de Datos Iniciales</h2>
                             <p>
                                 Acontinuacion puede ingresar los datos iniciales para generar la solicitud del presupuesto segun sus necesidades. La recepción de estos datos registrará la documentación o papeles para gestionar su caso.
@@ -99,11 +102,11 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             @if (Model != null)
                                             {
-                                                @Html.DropDownListFor(Model => Model.ID_CAUSAL, (IEnumerable<SelectListItem>)ViewBag.CAUSAL, "-- Seleccione Tipo de Rol --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", id = "first-name", required = "required", disabled = "disabled" })
+                                                @Html.DropDownListFor(Model => Model.ID_CAUSAL, (IEnumerable<SelectListItem>)ViewBag.CAUSAL, "- Seleccione Causal -", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", id = "first-name", required = "required", disabled = "disabled" })
                                             }
                                             else
                                             {
-                                                @Html.DropDownList("ID_CAUSAL", (IEnumerable<SelectListItem>)ViewBag.CAUSAL, "-- Seleccione Tipo de Rol --", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", id = "first-name", required = "required" })
+                                                @Html.DropDownList("ID_CAUSAL", (IEnumerable<SelectListItem>)ViewBag.CAUSAL, "- Seleccione Causal -", htmlAttributes: new { @class = "form-control col-md-7 col-xs-12", id = "first-name", required = "required" })
                                             }
                                         </div>
                                     </div>
@@ -119,7 +122,7 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Fecha Notificacion de Caso <span class="required">*</span>
+                                            Fecha Estimada <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <fieldset>
@@ -150,9 +153,8 @@
                                     </div>
                                 </form>
                             </div>
-                           @if (Model != null)
+                            @if (Model != null)
                             {
-
                                 <div class="form-group col-md-auto">
                                     <p>
                                         Si tiene documentacion como Cédula de Identidad (Carné), Licencias, Finiquitos o cualquier documento que apoye su Causal arrastre o haga click en recuadro. <br />
@@ -164,14 +166,12 @@
                                             <img src="~/assets/img/excel.png" style="width:25px" />
                                         </span>
                                     </p>
-
                                     <div class="form-group col-md-auto" style="height:200px">
                                         <form action="/DOCUMENTOS/SubidaDocumentos" class="dropzone">
                                             <input type="hidden" value="@Model.ID_PRESUPUESTO" name="ID_PRESUPUESTO" />
                                         </form>
                                     </div>
                                 </div>
-
                             }
                         </div>
                         <div id="step-2">
@@ -268,7 +268,10 @@
 
                                 </div>
                                 <div class="col-md-4 col-sm-12 col-xs-12 form-group" style="height:500px">
-                                    <embed src="data:application/pdf;base64,@System.Convert.ToBase64String(((ProjectWebApp.Models.DOCUMENTOS)ViewBag.Documento).DOCUMENTO_DIGITAL)" type="application/pdf" width="100%" height="100%" data="@((ProjectWebApp.Models.DOCUMENTOS)ViewBag.Documento).NOMBRE_ARCHIVO" />
+                                    @if (Model != null && ViewBag.Documento != null)
+                                    {
+                                        <embed src="data:application/pdf;base64,@System.Convert.ToBase64String(((ProjectWebApp.Models.DOCUMENTOS)ViewBag.Documento).DOCUMENTO_DIGITAL)" type="application/pdf" width="100%" height="100%" data="@((ProjectWebApp.Models.DOCUMENTOS)ViewBag.Documento).NOMBRE_ARCHIVO" />
+                                    }
                                 </div>
                                 <div class="col-md-4 col-sm-12 col-xs-12 form-group">
 
@@ -282,7 +285,6 @@
                                 </div><br />
                                 <div class="checkbox-inline">
                                     <label class="hover">
-
                                         <div class="icheckbox_flat-green checked hover" style="position: relative;"><input type="checkbox" class="flat" checked="checked" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Acepto Contrato de Gestion de Documentos Personales
                                     </label>
                                 </div>
@@ -310,7 +312,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <img src="~/images/user.png" alt="..." class="img-circle profile_img">
+                                                    <img src="~/assets/img/user.png" class="img-circle profile_img" />
                                                 </li>
                                                 <li>
                                                     <a>
@@ -320,20 +322,6 @@
                                             </ul>
                                         </div>
 
-                                        @*@{
-                        ProjectWebApp.Models.AsistentePresupuesto objAsistente = ViewBag.Asistente;
-                    }
-                    <h3 class="name">@objAsistente.Cargo</h3>
-                    <h3 class="name">@objAsistente.NombreAsistente</h3>
-
-                    <div class="flex">
-                        <ul class="list-inline count2">
-                            <li>
-                                <h3>Rut</h3>
-                                <span>@objAsistente.Rut</span>
-                            </li>
-                        </ul>
-                    </div>*@
                                         <p>
                                             If you've decided to go in development mode and tweak all of this a bit, there are few things you should do.
                                         </p>
@@ -354,8 +342,7 @@
                                                 </li>
 
                                                 <li>
-                                                    @*<img src="data:image;base64,@System.Convert.ToBase64String(uProfile.BINARY_IMAGE)" style="width:30px;height:30px;" />@uProfile.USER
-                                <img src="images/user.png" alt="..." class="img-circle profile_img">*@
+
                                                 </li>
                                                 <li>
                                                     <a>
@@ -365,28 +352,6 @@
                                             </ul>
                                         </div>
 
-                                        @*@{
-                        ProjectWebApp.Models.ClientePresupuesto objCliente = ViewBag.Cliente;
-                    }
-                    <h3 class="name">Cliente</h3>
-                    <h3 class="name">@objCliente.NombreCliente</h3>
-
-                    <div class="flex">
-                        <ul class="list-inline count2">
-                            <li>
-                                <h3>Rut</h3>
-                                <span>@objCliente.RutCliente</span>
-                            </li>
-                            <li>
-                                <h3>Correo</h3>
-                                <span>@objCliente.CorreoCliente</span>
-                            </li>
-                            <li>
-                                <h3>Fono</h3>
-                                <span>@objCliente.ContactoCliente</span>
-                            </li>
-                        </ul>
-                    </div>*@
                                         <p>
                                             If you've decided to go in development mode and tweak all of this a bit, there are few things you should do.
                                         </p>
@@ -412,15 +377,15 @@
                                     <tbody>
 
                                         @*@foreach (var pago in (ViewBag.ListaPlanPago as List<ProjectWebApp.Models.PlanPago>))
-                    {
+                                            {
 
-                        <tr class="even pointer selected">
-                            <td class="a-center ">
-                                <input type="radio" name="plan_@pago.IdPago" value="@pago.Plan"> @pago.Plan
-                            <td class="a-right a-right ">$@pago.Valor</td>
-                            <td class=" last"></td>
-                        </tr>
-                    }*@
+                                                <tr class="even pointer selected">
+                                                    <td class="a-center ">
+                                                        <input type="radio" name="plan_@pago.IdPago" value="@pago.Plan"> @pago.Plan
+                                                    <td class="a-right a-right ">$@pago.Valor</td>
+                                                    <td class=" last"></td>
+                                                </tr>
+                                            }*@
 
                                     </tbody>
 
@@ -429,15 +394,15 @@
 
                                 <div class="col-xs-12">
                                     @*<th class="column-title" style="display: table-cell;">Total: </th>
-                <th class="column-title" style="display: table-cell;">$31.790 </th>*@
+                                        <th class="column-title" style="display: table-cell;">$31.790 </th>*@
 
                                     <a class="btn btn-success pull-right" href="~/PAGO/Index">Pagar</a>
                                 </div>
 
                             </div>
                         </div>
-                            <!-- End SmartWizard Content -->
-                        </div>
+                        <!-- End SmartWizard Content -->
+                    </div>
                     <!-- End SmartWizard Content -->
                 </div>
             </div>
@@ -445,5 +410,22 @@
     </div>
 </div>
 
+@section Styles {
+    <link rel="stylesheet" href="~/assets/build/css/jquery-ui.css">
+    <link href="~/assets/vendors/Simple-jQuery-Loading-Spinner-Overlay-Plugin-Loader/style.css" rel="stylesheet" />
+}
 
+@section Scripts{
+    <script src="~/assets/build/js/jquery-ui.js"></script>
+    <script src="~/assets/vendors/Simple-jQuery-Loading-Spinner-Overlay-Plugin-Loader/jquery-loader.js"></script>
+    <script>
 
+        //$(function () {
+        //    $("#single_cal1").datepicker();
+        //});
+        $('#single_cal1').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+    </script>
+
+}

@@ -12,44 +12,62 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>ASISTENTES</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    
-        @Html.HiddenFor(x => x.ID_ASISTENTE)
-        @Html.HiddenFor(x => x.RUT)
-        @Html.HiddenFor(x => x.NOMBRES)
-        @Html.HiddenFor(x => x.APELLIDO_PATERNO)
-        @Html.HiddenFor(x => x.APELLIDO_MATERNO)
-        @Html.HiddenFor(x => x.TIMESTAMP)
-        @Html.HiddenFor(x => x.ID_USUARIO)
+<div class="form-horizontal">
+    <h4>ASISTENTES</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+    @Html.HiddenFor(x => x.ID_ASISTENTE)
+    @Html.HiddenFor(x => x.RUT)
+    @Html.HiddenFor(x => x.NOMBRES)
+    @Html.HiddenFor(x => x.APELLIDO_PATERNO)
+    @Html.HiddenFor(x => x.APELLIDO_MATERNO)
+    @Html.HiddenFor(x => x.TIMESTAMP)
+    @Html.HiddenFor(x => x.ID_USUARIO)
+    @Html.HiddenFor(x => x.CORREO)
+    @Html.HiddenFor(x => x.DIRECCION)
+    @Html.HiddenFor(x => x.FONO)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CARGO, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CARGO, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CARGO, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TITULO_ACADEMICO, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TITULO_ACADEMICO, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TITULO_ACADEMICO, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-    
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CARGO, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CARGO, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CARGO, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.TITULO_ACADEMICO, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TITULO_ACADEMICO, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TITULO_ACADEMICO, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CORREO, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CORREO, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CORREO, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DIRECCION, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DIRECCION, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DIRECCION, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.FONO, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FONO, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FONO, "", new { @class = "text-danger" })
+        </div>
+    </div><div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>

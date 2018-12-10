@@ -5,34 +5,6 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-@*<h2>Index</h2>
-
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NOMBRE)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NOMBRE)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID_REGION }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID_REGION }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID_REGION })
-                </td>
-            </tr>
-        }
-
-    </table>*@
 
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -97,3 +69,87 @@
 
 
 
+@section Scripts{
+    <!--DataTables-->
+    <script>
+        $(document).ready(function () {
+            var handleDataTableButtons = function () {
+                if ($("#datatable-buttons").length) {
+                    $("#datatable-buttons").DataTable({
+                        dom: "Bfrtip",
+                        buttons: [
+                            {
+                                extend: "copy",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "csv",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "excel",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "pdfHtml5",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "print",
+                                className: "btn-sm"
+                            },
+                        ],
+                        responsive: true
+                    });
+                }
+            };
+
+            TableManageButtons = function () {
+                "use strict";
+                return {
+                    init: function () {
+                        handleDataTableButtons();
+                    }
+                };
+            }();
+
+            $('#datatable').dataTable();
+
+            $('#datatable-keytable').DataTable({
+                keys: true
+            });
+
+            $('#datatable-responsive').DataTable();
+
+            $('#datatable-scroller').DataTable({
+                ajax: "js/datatables/json/scroller-demo.json",
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true
+            });
+
+            $('#datatable-fixed-header').DataTable({
+                fixedHeader: true
+            });
+
+            var $datatable = $('#datatable-checkbox');
+
+            $datatable.dataTable({
+                'order': [[1, 'asc']],
+                'columnDefs': [
+                    { orderable: false, targets: [0] }
+                ]
+            });
+            $datatable.on('draw.dt', function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-green'
+                });
+            });
+
+            TableManageButtons.init();
+        });
+    </script>
+
+    <!--DataTables-->
+}

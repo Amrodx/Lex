@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ProjectWebApp.Models.MENU>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TEXTO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REFERENCIA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ORDEN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONTROLLER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACTION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TIPO_ROL.NOMBRE_ROL)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEXTO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.REFERENCIA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ORDEN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CONTROLLER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACTION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TIPO_ROL.NOMBRE_ROL)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MENU_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MENU_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MENU_ID })
+        </td>
+    </tr>
+}
+
+</table>

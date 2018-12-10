@@ -1,0 +1,90 @@
+﻿@model ProjectWebApp.Models.ASISTENTES
+@{
+    ViewBag.Title = "Perfil";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+<h2>Perfil</h2>
+<div>
+    <h4>ASISTENTES</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_ASISTENTE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID_ASISTENTE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RUT)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RUT)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NOMBRES)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NOMBRES)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.APELLIDO_PATERNO)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.APELLIDO_PATERNO)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.APELLIDO_MATERNO)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.APELLIDO_MATERNO)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CARGO)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CARGO)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TITULO_ACADEMICO)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TITULO_ACADEMICO)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TIMESTAMP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TIMESTAMP)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_USUARIO)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID_USUARIO)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CORREO)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CORREO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DIRECCION)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DIRECCION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FONO)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FONO)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modificar Contactos", "DataContact", new { id = Model.ID_ASISTENTE }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

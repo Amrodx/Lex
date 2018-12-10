@@ -5,87 +5,60 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Detalle <small></small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
 
-<div>
-    <h4>ORDEN_PAGO</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TIPO_PAGO)
-        </dt>
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <label for="name">
+                                Tipo pago:
+                            </label> @Model.TIPO_PAGO
+                        </li>
 
-        <dd>
-            @Html.DisplayFor(model => model.TIPO_PAGO)
-        </dd>
+                        <li>
+                            <label for="name">
+                                Monto total:
+                            </label>  @Model.MONTO_TOTAL
+                        </li>
+                        <li>
+                            <label for="name">
+                                Cuotas:
+                            </label>  @Model.CUOTAS
+                        </li>
+                        <li>
+                            <label for="name">
+                                Valor por cuota:
+                            </label>  @Model.VALOR_CUOTA
+                        </li>
+                        <li>
+                            <label for="name">
+                                Estado:
+                            </label>  @Model.ESTADO
+                        </li>
+                        <li>
+                            <label for="name">
+                                Número de transacción:
+                            </label>  @Model.NUMERO_TRANSACCION
+                        </li>
+                    </ul>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MONTO_TOTAL)
-        </dt>
+                    <a href="/ORDEN_PAGO/Edit/@Model.ID_ORDEN_PAGO" class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Editar Orden</a>
+                    <br>
 
-        <dd>
-            @Html.DisplayFor(model => model.MONTO_TOTAL)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ESTADO)
-        </dt>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.ESTADO)
-        </dd>
+            </div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CREATED)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CREATED)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NUMERO_TRANSACCION)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NUMERO_TRANSACCION)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CUOTAS)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CUOTAS)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.VALOR_CUOTA)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VALOR_CUOTA)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CONTRATOS.DOCUMENTO_GENERADO)
-        </dd>
-
-    </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_ORDEN_PAGO }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+

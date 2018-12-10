@@ -5,31 +5,40 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Detalle <small></small></h2>                
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
 
-<div>
-    <h4>PLAN_PAGO</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PLAN)
-        </dt>
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <label for="name">
+                                Plan:
+                            </label> @Model.PLAN 
+                        </li>
 
-        <dd>
-            @Html.DisplayFor(model => model.PLAN)
-        </dd>
+                        <li>
+                            <label for="name">
+                                Valor:
+                            </label>  @Model.VALOR 
+                        </li>                        
+                    </ul>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.VALOR)
-        </dt>
+                    <a href="/PLAN_PAGO/Edit/@Model.ID_PAGO" class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Editar Plan</a>
+                    <br>
+                    
 
-        <dd>
-            @Html.DisplayFor(model => model.VALOR)
-        </dd>
+                </div>
 
-    </dl>
+            </div>
+        </div>
+
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_PAGO }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+

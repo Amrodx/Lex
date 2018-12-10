@@ -38,8 +38,8 @@
                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-label="Position: activate to sort column ascending">@Html.DisplayNameFor(model => model.TIPO_CLIENTE)</th>
                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-label="Position: activate to sort column ascending">@Html.DisplayNameFor(model => model.PLAN_PAGO)</th>
                             <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-sort="ascending" aria-label="Name: activate to sort column descending">@Html.DisplayNameFor(model => model.RUT)</th>
-                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-sort="ascending" aria-label="Name: activate to sort column descending">@Html.DisplayNameFor(model => model.NOMBRE_RAZON_SOCIAL)</th>                            
-                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-sort="ascending" aria-label="Name: activate to sort column descending">@Html.DisplayNameFor(model => model.STATUS_ACTIVACION)</th>                            
+                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-sort="ascending" aria-label="Name: activate to sort column descending">@Html.DisplayNameFor(model => model.NOMBRE_RAZON_SOCIAL)</th>
+                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: auto;" aria-sort="ascending" aria-label="Name: activate to sort column descending">@Html.DisplayNameFor(model => model.STATUS_ACTIVACION)</th>
 
 
                             <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" style="width: 200px;" aria-label="Salary: activate to sort column ascending">Acción</th>
@@ -65,10 +65,10 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.NOMBRE_RAZON_SOCIAL)
-                                </td>                                                        
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.STATUS_ACTIVACION)
-                                </td>                                
+                                </td>
                                 <td>
                                     @Html.ActionLink("Editar", "Edit", new { id = item.ID_CLIENTE }) |
                                     @Html.ActionLink("Detalle", "Details", new { id = item.ID_CLIENTE }) |
@@ -90,3 +90,114 @@
 
 
 
+@section Scripts{
+    <!-- Datatables -->
+    <script>
+        $(document).ready(function () {
+            var handleDataTableButtons = function () {
+                if ($("#datatable-buttons").length) {
+                    $("#datatable-buttons").DataTable({
+                        dom: "Bfrtip",
+                        buttons: [
+                            {
+                                extend: "copy",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "csv",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "excel",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "pdfHtml5",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "print",
+                                className: "btn-sm"
+                            },
+                        ],
+                        responsive: true
+                    });
+                }
+            };
+
+            TableManageButtons = function () {
+                "use strict";
+                return {
+                    init: function () {
+                        handleDataTableButtons();
+                    }
+                };
+            }();
+
+            $('#datatable').dataTable();
+
+            $('#datatable-keytable').DataTable({
+                keys: true
+            });
+
+            $('#datatable-responsive').DataTable();
+
+            $('#datatable-scroller').DataTable({
+                ajax: $.ajax({
+                    url: "https://apinotaria.azurewebsites.net/api/NOTARIA_TRAMITE/",
+                    async: true,
+                    cache: true,
+                    timeout: 60000,
+                    method: "GET",
+                    dataType: 'json',
+                    success: function (result) {
+                        //console.log(result[0].NOTARIA_VALOR);
+                        $.each(result, function (k, v) {
+                            console.log(k);
+                            console.log(v);
+
+                            var new_item = $("#GEN_BASE").clone().removeAttr("id");
+                            //new_item.find("#r_Categoria").text(v.NOTARIA_CATEGORIA.NOM_CATEGORIA);
+                            //new_item.find("#r_Nombre").text(v.NOMBRE_TRMT);
+                            //new_item.find("#r_Valor").text("$ " + formatNumber.new(v.NOTARIA_VALOR.VALOR_VLR)).css("font-weight", "bold");
+                            //new_item.find("#r_Codigo").text("NT_BGC" + v.ID_TRMT);
+                            //new_item.removeAttr("style")
+                            $("#R_GEN").append(new_item);
+                        });
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    }
+                }),
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true
+            });
+
+            $('#datatable-fixed-header').DataTable({
+                fixedHeader: true
+            });
+
+            var $datatable = $('#datatable-checkbox');
+
+            $datatable.dataTable({
+                'order': [[1, 'asc']],
+                'columnDefs': [
+                    { orderable: false, targets: [0] }
+                ]
+            });
+            $datatable.on('draw.dt', function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-green'
+                });
+            });
+
+            TableManageButtons.init();
+        });
+    </script>
+    <!-- /Datatables -->
+
+}

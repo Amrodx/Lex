@@ -86,11 +86,11 @@ namespace ProjectWebApp.Controllers
                                             if (_loginCredentials.ID_ROL == 41 | _loginCredentials.ID_ROL == 61)
                                             {
                                                 Session["PerfilCliente"] = _entity.CLIENTES.Where(x => x.ID_USUARIO == _loginCredentials.ID_USUARIO).FirstOrDefault();
-                                                return RedirectToAction("Perfil", "CLIENTES");
+                                                return RedirectToAction("Landing", "CLIENTES");
                                             }
                                             else
                                             {
-                                                return RedirectToAction("Perfil", "ASISTENTES");
+                                                return RedirectToAction("Landing", "ASISTENTES");
                                             }
                                         }
                                     }

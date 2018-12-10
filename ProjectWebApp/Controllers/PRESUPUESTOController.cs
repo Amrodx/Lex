@@ -10,6 +10,11 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Xml.Linq;
 using ProjectWebApp.Models;
+using System.Net;
+using System.Collections.Specialized;
+using System.Text;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace ProjectWebApp.Controllers
 {
@@ -29,7 +34,6 @@ namespace ProjectWebApp.Controllers
             CLIENTES cLIENTE = ((USUARIOS)Session["LoginCredentials"]).CLIENTES.First();
             List<PRESUPUESTO> pRESUPUESTO = db.PRESUPUESTO.
                 Include(p => p.CAUSALES).
-                Include(p => p.CLIENTES).
                 Include(p => p.ASISTENTES).
                 Where(w => w.ID_CLIENTE == cLIENTE.ID_CLIENTE).ToList();
             List<PRESUPUESTO> Conciliado = new List<PRESUPUESTO>();
@@ -186,20 +190,21 @@ namespace ProjectWebApp.Controllers
         {
             PRESUPUESTO SetModelo = db.PRESUPUESTO.Where(w => w.ID_PRESUPUESTO == id).First();
             ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES.ToList(), "ID_CAUSAL", "NOMBRE");
-            ViewBag.Documento = db.DOCUMENTOS.Where(w => w.MIME_TYPE.Contains("pdf") && w.NOMBRE_ARCHIVO.Contains("SOLICITUD")).FirstOrDefault();
+            ViewBag.Documento = db.DOCUMENTOS.Where(w => w.MIME_TYPE.Contains("pdf") && w.NOMBRE_ARCHIVO.Contains("ContratoLex")).FirstOrDefault();
             return View(SetModelo);
         }
-        [HttpGet]
+
         public ActionResult CrearProcesos()
         {
             ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES.ToList(), "ID_CAUSAL", "NOMBRE");
-            ViewBag.Documento = db.DOCUMENTOS.Where(w => w.MIME_TYPE.Contains("pdf") && w.NOMBRE_ARCHIVO.Contains("SOLICITUD")).FirstOrDefault();
+            ViewBag.Documento = db.DOCUMENTOS.Where(w => w.MIME_TYPE.Contains("pdf") && w.NOMBRE_ARCHIVO.Contains("ContratoLex")).FirstOrDefault();
             return View("Procesos");
         }
         [HttpPost]
         public ActionResult Procesos([Bind(Include = "FECHA_NOTIFICA,OBSERVACIONES,ID_CAUSAL")] PRESUPUESTO pRESUPUESTO)
         {
             CLIENTES cLIENTE = ((USUARIOS)Session["LoginCredentials"]).CLIENTES.First();
+            pRESUPUESTO.FECHA_NOTIFICA = pRESUPUESTO.FECHA_NOTIFICA;
             if (ModelState.IsValid)
             {
                 pRESUPUESTO.CONTRATADO = "N";
@@ -209,11 +214,14 @@ namespace ProjectWebApp.Controllers
                 pRESUPUESTO.ID_CLIENTE = cLIENTE.ID_CLIENTE;
                 db.PRESUPUESTO.Add(pRESUPUESTO);
                 db.SaveChanges();
+
+                ProjectWebApp.Controllers.Servicio.UtilCorreos Mandacorreo = new ProjectWebApp.Controllers.Servicio.UtilCorreos();
+                Mandacorreo.SendEmail(new USUARIOS());
             }
             pRESUPUESTO = db.PRESUPUESTO.Include(i => i.ASISTENTES).Where(w => w.COD_SOLICITUD == pRESUPUESTO.COD_SOLICITUD && w.FECHA_NOTIFICA == pRESUPUESTO.FECHA_NOTIFICA).First();
-            pRESUPUESTO.ASISTENTES.USUARIOS = db.USUARIOS.Where(w => w.ID_USUARIO == pRESUPUESTO.ASISTENTES.ID_USUARIO).First();
+            pRESUPUESTO.CLIENTES = db.CLIENTES.Where(W => W.ID_CLIENTE == cLIENTE.ID_CLIENTE).First();
             ViewBag.ID_CAUSAL = new SelectList(db.CAUSALES.ToList(), "ID_CAUSAL", "NOMBRE");
-            ViewBag.Documento = db.DOCUMENTOS.Where(w => w.MIME_TYPE.Contains("pdf") && w.NOMBRE_ARCHIVO.Contains("SOLICITUD")).FirstOrDefault();
+            ViewBag.Documento = db.DOCUMENTOS.Where(w => w.MIME_TYPE.Contains("pdf") && w.NOMBRE_ARCHIVO.Contains("ContratoLex")).FirstOrDefault();
             ViewBag.Presupuesto = pRESUPUESTO;
             ViewBag.Message = "Presupuesto Enviado para Revisión y Posterior Asignación";
             return View("Procesos",pRESUPUESTO);
@@ -240,17 +248,95 @@ namespace ProjectWebApp.Controllers
         }
         public ActionResult Asignaciones(long? id)
         {
+            List<DETALLE_TRAMITES> Tramites = new List<DETALLE_TRAMITES>();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Find(id);
+            PRESUPUESTO pRESUPUESTO = db.PRESUPUESTO.Include("DETALLE_TRAMITES").Where(w => w.ID_PRESUPUESTO == id).First();
+            if (Request["ID_ASISTENTE"] != null && Request["ID_ASISTENTE"] != "0")
+            {
+                pRESUPUESTO.ID_ASISTENTE = int.Parse(Request["ID_ASISTENTE"].ToString());
+                pRESUPUESTO.NOTA = Request["NOTA"].ToString();
+                pRESUPUESTO.ID_PRESUPUESTO = int.Parse(id.ToString());
+                db.Entry(pRESUPUESTO).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+
+            if (Request.Form.AllKeys.Where(w  => w.Contains("table_records")).Count() > 0)
+            {
+                try
+                {
+                    foreach (string item in Request.Form.AllKeys.Where(w => w.Contains("table_records")))
+                    {
+                        Dictionary<string, string> htmlAttributes = new Dictionary<string, string>();
+                        DETALLE_TRAMITES Detalle = new DETALLE_TRAMITES();
+                        string[] BaseDetalle = item.Split(',');
+                        Detalle.CODIGO_TRAMITE = BaseDetalle[1];
+                        Detalle.COSTO = int.Parse(BaseDetalle[4]);
+                        Detalle.NOMBRE_TRAMITE = BaseDetalle[3];
+
+                        using (var wb = new WebClient())
+                        {
+                            var data = new NameValueCollection();
+                            data["CODIGO_ORDEN"] = "1";
+                            data["COD_TRAM"] = "1";
+
+                            var response = wb.UploadValues("https://apinotaria.azurewebsites.net/api/NOTARIA_ESTADOS?id_orden=" + id + "&Cod_tramite=" + Detalle.CODIGO_TRAMITE, "POST", data);
+                            string responseInString = Encoding.UTF8.GetString(response);
+                            htmlAttributes = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseInString);
+                        }
+                        Detalle.CODIGO_TRAMITE = htmlAttributes["ID_ESTADOS"];
+                        Detalle.ID_PRESUPUESTO = id;
+                        Detalle.STATUS = htmlAttributes["ESTADO"];
+                        Detalle.CREATED = DateTime.Now;
+
+                        Tramites.Add(Detalle);
+                    }
+
+                    foreach (DETALLE_TRAMITES item in Tramites)
+                    {
+                        DETALLE_TRAMITES GUARDA = new DETALLE_TRAMITES();
+                        GUARDA = item;
+                        if(db.DETALLE_TRAMITES.Where(w => w.CODIGO_TRAMITE == item.CODIGO_TRAMITE).Count() == 0)
+                        {
+                            db.DETALLE_TRAMITES.Add(GUARDA);
+                            db.SaveChanges();
+                            ViewBag.Message = "Asignacion de Tramites y/o Abogado guardada correctamente.";
+                        }
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    if (!ex.Message.Contains("Saving or accepting changes "))
+                    {
+                        ViewBag.Error = ex.InnerException.Message.ToString();
+                    }
+                    else if (ex.Message.Contains("Saving or accepting changes "))
+                    {
+                        ViewBag.Message = "Asignacion de Tramites y/o Abogado guardada correctamente.";
+                    }
+                    
+                }
+
+            }
+
+            //ProjectWebApp.Controllers.Servicio.UtilCorreos Mandacorreo = new ProjectWebApp.Controllers.Servicio.UtilCorreos();
+            //Mandacorreo.SendEmail(new USUARIOS());
+
             if (pRESUPUESTO == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.Corporativos = new SelectList(db.ASISTENTES.Where(w => w.CARGO.Contains("Abogado") || w.CARGO.Contains("Tecnico Juridico") || w.CARGO.Contains("Abogada")).ToList(), "ID_ASISTENTE", "NOMBRES", "CARGO", 1);
+            //ViewBag.Corporativos = db.ASISTENTES.ToList();
             return View(pRESUPUESTO);
         }
+
+        
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -1,91 +1,133 @@
 ﻿@model ProjectWebApp.Models.ASISTENTES
-
 @{
     ViewBag.Title = "Perfil";
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+
 }
+@using ProjectWebApp.Models
+@{
+    USUARIOS uProfile = (USUARIOS)Session["LoginCredentials"];
+}
+<!-- page content -->
 
-<h2>Perfil</h2>
 
-<div>
-    <h4>ASISTENTES</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ID_ASISTENTE)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ID_ASISTENTE)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RUT)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RUT)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NOMBRES)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NOMBRES)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.APELLIDO_PATERNO)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.APELLIDO_PATERNO)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.APELLIDO_MATERNO)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.APELLIDO_MATERNO)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CARGO)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CARGO)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TITULO_ACADEMICO)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TITULO_ACADEMICO)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TIMESTAMP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TIMESTAMP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ID_USUARIO)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ID_USUARIO)
-        </dd>
-
-    </dl>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Perfil Asistente</h3>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Modificar Contactos", "DataContact", new { id = Model.ID_ASISTENTE }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Información general <small></small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Configuración 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuración 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                    <div class="profile_img">
+                        <div id="crop-avatar">
+                            <!-- Current avatar -->
+                            @if (uProfile.BINARY_IMAGE != null)
+                            {
+                                <img src="data:image;base64,@System.Convert.ToBase64String(uProfile.BINARY_IMAGE)" alt="Avatar" class="img-responsive avatar-view img-circle profile_img" style="height:200px;width:200px" />
+                                @*<img src="data:image;base64,@System.Convert.ToBase64String(uProfile.BINARY_IMAGE)" style="width:50px;height:50px;" alt="..." class="img-circle profile_img" />*@
+                            }
+                            else
+                            {
+                                <img src="https://safety.uncc.edu/sites/safety.uncc.edu/files/styles/directory-list/public/fields/directory/field_directory_image/default-avatar_2.png?itok=CUJno2j0" alt="Avatar" class="img-responsive avatar-view" />
+                            }
+                        </div>
+                    </div>
+                    <h3>
+                        @Html.DisplayFor(model => model.NOMBRES)
+                    </h3>
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <i class="fa fa-map-marker user-profile-icon"></i>
+                            <strong>Rut: </strong> @Html.DisplayFor(model => model.RUT)
+                        </li>
+                        <li>
+                            <i class="fa fa-map-marker user-profile-icon"></i>
+                            <strong>Título: </strong> @Html.DisplayFor(model => model.TITULO_ACADEMICO)
+                        </li>
+                        <li>
+                            <i class="fa fa-map-marker user-profile-icon"></i>
+                            <strong>Cargo: </strong> @Html.DisplayFor(model => model.CARGO)
+                        </li>
+                    </ul>
+                    <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Actualizar Perfil</a>
+                    <br />
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+
+                    <!-- start of user-activity-graph -->
+                    <div id="graph_bar" style="width:100%; height:280px;">
+                        <section class="content invoice">
+                            <!-- title row -->
+                            <div class="row">
+                                <div class="col-xs-12 invoice-header">
+                                    <h1>
+                                        <i class="fa fa-envelope"></i> Datos de Contacto
+                                        @*<small class="pull-right">Fecha de Creacion: @Html.DisplayFor(model => model.TIMESTAMP)</small>*@
+                                    </h1>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- info row -->
+                            <div class="row invoice-info">
+                                <div class="col-sm-4 invoice-col">
+                                    <i class="fa fa-home"></i> Dirección
+                                    <address>
+                                        <strong>Comuna</strong>
+                                        <br> @Html.DisplayFor(model => model.COMUNAS.COMUNA)
+                                        <br><strong>Dirección</strong>
+                                        <br> @Html.DisplayFor(model => model.DIRECCION)
+                                    </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                    <i class="fa fa-envelope-o"></i> Contactos
+                                    <address>
+                                        <br><strong>Teléfono</strong>
+                                        <br> @Html.DisplayFor(model => model.FONO)
+                                        <br><strong>Correo</strong>
+                                        <br> @Html.DisplayFor(model => model.CORREO)
+                                    </address>
+                                </div>
+                             </div> 
+            <div class="row no-print">
+                <div class="col-xs-12">
+                    <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Imprimir</button>
+                    <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Pagar</button>
+                    <a href="@Url.Action("DataContact", new { id = Model.ID_ASISTENTE })" class="btn btn-success pull-right"><i class="fa fa-edit m-right-xs"></i> Modificar datos de Contacto </a>
+                    <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+                </div>
+            </div>
+            </section>
+        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -193,6 +193,30 @@ namespace ProjectWebApp.Controllers
             return View(cli);
         }
 
+        public ActionResult Landing(long? id)
+        {
+            Dictionary<string, int> ValoresGraf = new Dictionary<string, int>();
+            USUARIOS perfil = (USUARIOS)Session["LoginCredentials"];
+            List<PRESUPUESTO> PreSupuesto = new List<PRESUPUESTO>();
+            CLIENTES cli = db.CLIENTES.Include(i => i.USUARIOS).Include(i => i.TIPO_CLIENTE).Include(i => i.PLAN_PAGO).Where(X => X.ID_USUARIO == perfil.ID_USUARIO).First();
+            cli.COMUNAS = db.COMUNAS.Include(i => i.REGIONES).Where(w => w.ID_COMUNA == cli.ID_COMUNA).First();
+            PreSupuesto = db.PRESUPUESTO.Include(i => i.CAUSALES).Where(w => w.ID_CLIENTE == cli.ID_CLIENTE).ToList();
+            cli.PRESUPUESTO = PreSupuesto;
+            foreach (var item in PreSupuesto.GroupBy(g => g.ESTADO_AVANCE).Select(group => new { Campo = group.Key, campo2 = group.Count() }).ToArray())
+            {
+                ValoresGraf.Add(item.Campo, item.campo2);
+            } 
+
+            //ViewBag.Graf = db.PRESUPUESTO.GroupBy(g => g.ESTADO_AVANCE).Select(group => Tuple.Create(group.Key, group.Count()));
+
+            if (cli == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Graf = ValoresGraf;
+            ViewBag.Perfil = perfil;
+            return View(cli);
+        }
 
         public ActionResult DataContact(long? id)
         {

@@ -1,0 +1,113 @@
+﻿@model IEnumerable<ProjectWebApp.Models.ASISTENTES>
+
+@{
+    ViewBag.Title = "ConsultarDiligencias";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h3>Casos en Tribunales</h3>
+            <div class="clearfix"></div>
+        </div>      
+            <div class="x_content">
+                <div id="datatable-buttons_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <table id="datatable-checkbox" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline">
+                        <thead>
+                            <tr>
+
+                                <th>Registro</th>
+                                <th>Contrato</th>
+                                <th>Causal</th>
+                                <th>Estado</th>
+                                <th>Observaciones</th>
+                                <th>Fecha creación</th>
+                            </tr>
+                        </thead>
+                        <tbody id="R_GEN">
+                            <tr id="GEN_BASE" style="display:none">
+
+                                <td id="r_registro"></td>
+                                <td id="r_contrato"></td>
+                                <td id="r_causal"></td>
+                                <td id="r_estado"></td>
+                                <td id="r_observaciones"></td>
+                                <td id="r_fecha"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            testfunction();
+            function testfunction() {
+                $.ajax({
+                    url: "https://apiservtribunaljusticia.azurewebsites.net/api/TRIBUNAL_JUSTICIA/",
+                    async: true,
+                    cache: true,
+                    timeout: 60000,
+                    method: "GET",
+                    dataType: 'json',
+                    success: function (result) {
+                        //console.log(result[0].NOTARIA_VALOR);
+                        $.each(result, function (k, v) {
+                            console.log(k);
+                            console.log(v);
+
+                            var new_item = $("#GEN_BASE").clone().css("display", "inline").css("text-align", "right").attr("rel", k);
+                            new_item.find("#r_registro").text(v.ID_REGISTRO);
+                            new_item.find("#r_contrato").text(v.ID_CONTRATO);
+                            new_item.find("#r_causal").text(v.CAUSAL);
+                            new_item.find("#r_estado").text(v.ID_ESTADO);
+                            new_item.find("#r_observaciones").text(v.OBSERVACIONES);
+                            new_item.find("#r_fecha").text(v.FECHA_CREACION);
+                            new_item.removeAttr("style")
+                            $("#R_GEN").append(new_item);
+                        });
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    }
+                });
+            }
+
+
+            var formatNumber = {
+                separador: ".", // separador para los miles
+                sepDecimal: ',', // separador para los decimales
+                formatear: function (num) {
+                    num += '';
+                    var splitStr = num.split('.');
+                    var splitLeft = splitStr[0];
+                    var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+                    var regx = /(\d+)(\d{3})/;
+                    while (regx.test(splitLeft)) {
+                        splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+                    }
+                    return this.simbol + splitLeft + splitRight;
+                },
+                new: function (num, simbol) {
+                    this.simbol = simbol || '';
+                    return this.formatear(num);
+                }
+            }
+        });
+
+        $("#basechk").click(function () {
+            alert("Handler for .click() called." + this.find("#BASE_GEN").attr("rel"));
+        });
+
+    </script>
+
+}
+

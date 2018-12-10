@@ -5,127 +5,273 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>Details</h2>
+@*<h2>Details</h2>
 
-<div>
-    <h4>CLIENTES</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RUT)
-        </dt>
+    <div>
+        <h4>CLIENTES</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.RUT)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.RUT)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.RUT)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NOMBRE_RAZON_SOCIAL)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.NOMBRE_RAZON_SOCIAL)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.NOMBRE_RAZON_SOCIAL)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.NOMBRE_RAZON_SOCIAL)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DIRECCION)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.DIRECCION)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DIRECCION)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DIRECCION)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CORREO)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CORREO)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CORREO)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CORREO)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CONTACTO)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CONTACTO)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CONTACTO)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CONTACTO)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FONO1)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.FONO1)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FONO1)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.FONO1)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FONO2)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.FONO2)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FONO2)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.FONO2)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OBSERVACIONES)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.OBSERVACIONES)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.OBSERVACIONES)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.OBSERVACIONES)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TIMESTAMP)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.TIMESTAMP)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TIMESTAMP)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.TIMESTAMP)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.STATUS_ACTIVACION)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.STATUS_ACTIVACION)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.STATUS_ACTIVACION)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.STATUS_ACTIVACION)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.COMUNAS.COMUNA)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.COMUNAS.COMUNA)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.COMUNAS.COMUNA)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.COMUNAS.COMUNA)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TIPO_CLIENTE.NOMBRE_TIPO)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.TIPO_CLIENTE.NOMBRE_TIPO)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TIPO_CLIENTE.NOMBRE_TIPO)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.TIPO_CLIENTE.NOMBRE_TIPO)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PLAN_PAGO.PLAN)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.PLAN_PAGO.PLAN)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PLAN_PAGO.PLAN)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.PLAN_PAGO.PLAN)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.USUARIOS.USER)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.USUARIOS.USER)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.USUARIOS.USER)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.USUARIOS.USER)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID_CLIENTE }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Detalle <small></small></h2>
+                @*<ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>*@
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <label for="name">
+                                Usuarios:
+                            </label> @Model.USUARIOS.USER @*Capturar user de tabla Usuarios*@
+                        </li>
+
+                        <li>
+                            <label for="name">
+                                Tipo Cliente:
+                            </label>  @Model.ID_TIPO @*Capturar nombre_tipo de tabla tipo_cliente*@
+                        </li>
+                        <li>
+                            <label for="name">
+                                Tipo de Pago:
+                            </label>  @Model.ID_PLAN @*Capturar plan de tabla plan_pago*@
+                        </li>
+                        <li>
+                            <label for="name">
+                                Rut:
+                            </label>  @Model.RUT
+                        </li>
+                        <li>
+                            <label for="name">
+                                Nombre Razón Social:
+                            </label>  @Model.NOMBRE_RAZON_SOCIAL
+                        </li>
+                        <li>
+                            <label for="name">
+                                Comuna:
+                            </label>  @Model.ID_COMUNA @*Capturar comuna de tabla Comunas*@
+                        </li>
+                        <li>
+                            <label for="name">
+                                Direccion:
+                            </label>  @Model.DIRECCION
+                        </li>
+                        <li>
+                            <label for="name">
+                                Correo Electrónico:
+                            </label>  @Model.CORREO
+                        </li>
+                        <li>
+                            <label for="name">
+                                Contacto:
+                            </label>  @Model.CONTACTO
+                        </li>
+                        <li>
+                            <label for="name">
+                                Fono 1:
+                            </label>  @Model.FONO1
+                        </li>
+                        <li>
+                            <label for="name">
+                                Fono 2:
+                            </label>  @Model.FONO2
+                        </li>
+                        <li>
+                            <label for="name">
+                                Observaciones:
+                            </label>  @Model.OBSERVACIONES
+                        </li>
+                        <li>
+                            <label for="name">
+                                Status de Activación:
+                            </label>  @Model.STATUS_ACTIVACION
+                        </li>
+                        <li>
+                            <label for="name">
+                                Fecha de Creación:
+                            </label>  @Model.TIMESTAMP @*Mostrar valor en tipo fecha*@
+                        </li>
+                    </ul>
+
+                    <a href="/CLIENTES/Edit/@Model.ID_CLIENTE" class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Editar Cliente</a>
+                    <br>
+
+                    <!-- start skills -->
+                    @*<h4>Skills</h4>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <p>Web Applications</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50" aria-valuenow="50" style="width: 50%;"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>Website Design</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70" aria-valuenow="69" style="width: 70%;"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>Automation &amp; Testing</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30" aria-valuenow="29" style="width: 30%;"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>UI / UX</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50" aria-valuenow="50" style="width: 50%;"></div>
+                                </div>
+                            </li>
+                        </ul>*@
+                    <!-- end of skills -->
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_CLIENTE }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+

@@ -4,44 +4,47 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="451b6a9a2cf849808e7c1ad8713e270c" Name="Diagram1" ZoomLevel="60">
-        <EntityTypeShape EntityType="ORACLE_MODEL.ASISTENTES" Width="1.5" PointX="5.25" PointY="18.5" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.CAUSALES" Width="1.5" PointX="13.125" PointY="8.875" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.CLIENTES" Width="1.5" PointX="5.25" PointY="12.125" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.COMUNAS" Width="1.5" PointX="3" PointY="21.125" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.DETALLE_COSTOS" Width="2.5" PointX="12" PointY="24.375" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.DETALLE_TRAMITES" Width="1.5" PointX="12" PointY="20.75" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.MENU" Width="1.5" PointX="3" PointY="17.125" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.MENU_SUB" Width="1.5" PointX="9" PointY="9.375" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.ORDEN_PAGO" Width="1.5" PointX="18.125" PointY="12.375" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.PLAN_PAGO" Width="1.5" PointX="1.125" PointY="9.125" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.REGIONES" Width="1.5" PointX="0.75" PointY="21.25" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.TIPO_CLIENTE" Width="1.5" PointX="3" PointY="6.625" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.TIPO_ROL" Width="1.5" PointX="0.75" PointY="15.25" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.USUARIOS" Width="1.5" PointX="3" PointY="12.75" />
-        <AssociationConnector Association="ORACLE_MODEL.ASISTENTES_FK1" />
-        <AssociationConnector Association="ORACLE_MODEL.CLIENTES_FK1" />
-        <AssociationConnector Association="ORACLE_MODEL.CLIENTES_FK2" />
-        <AssociationConnector Association="ORACLE_MODEL.CLIENTES_FK3" />
-        <AssociationConnector Association="ORACLE_MODEL.CLIENTES_FK4" />
-        <AssociationConnector Association="ORACLE_MODEL.COMUNAS_FK1" />
-        <AssociationConnector Association="ORACLE_MODEL.MENU_FK1" />
-        <AssociationConnector Association="ORACLE_MODEL.MENU_SUB_FK1" />
-        <AssociationConnector Association="ORACLE_MODEL.MENU_SUB_FK2" />
-        <AssociationConnector Association="ORACLE_MODEL.USUARIOS_FK3" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.CONTRATOS" Width="1.5" PointX="10.75" PointY="12.75" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.DOCUMENTOS" Width="1.5" PointX="16.375" PointY="17.5" />
-        <AssociationConnector Association="ORACLE_MODEL.CONTRATOS_FK2" />
-        <AssociationConnector Association="ORACLE_MODEL.DETALLE_COSTOS_FK1" />
+      <Diagram DiagramId="01c126705428449d8ca16bd8b813b33f" Name="Diagram1">
+        <EntityTypeShape EntityType="ORACLE_MODEL.ASISTENTES" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.CAUSALES" Width="1.5" PointX="11.25" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.CLIENTES" Width="1.5" PointX="8.25" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.COMUNAS" Width="1.5" PointX="6" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.CONTRATOS" Width="1.5" PointX="10.5" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.DETALLE_COSTOS" Width="1.5" PointX="12.75" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.DOCUMENTOS" Width="1.5" PointX="18.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.ESTADO" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.MENU" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.MENU_SUB" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.ORDEN_PAGO" Width="1.5" PointX="12.75" PointY="28.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.PLAN_PAGO" Width="1.5" PointX="6" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.PRESUPUESTO" Width="1.5" PointX="13.5" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.REGIONES" Width="1.5" PointX="3.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.TIPO_CLIENTE" Width="1.5" PointX="6" PointY="26.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.TIPO_ROL" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.USUARIOS" Width="1.5" PointX="3" PointY="16.875" IsExpanded="true" />
+        <AssociationConnector Association="ORACLE_MODEL.ASISTENTES_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.ASISTENTES_FK2" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.CONTRATOS_FK2" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.PRESUPUESTO_FK3" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.PRESUPUESTO_FK2" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.CLIENTES_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.CLIENTES_FK2" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.CLIENTES_FK3" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.CLIENTES_FK4" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.PRESUPUESTO_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.COMUNAS_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.CONTRATOS_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.DETALLE_COSTOS_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.DOCUMENTOS_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.ORDEN_PAGO_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.DOCUMENTOS_FK2" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.MENU_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.MENU_SUB_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.MENU_SUB_FK2" ManuallyRouted="false" />
+        <AssociationConnector Association="ORACLE_MODEL.USUARIOS_FK3" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ORACLE_MODEL.DETALLE_TRAMITES" Width="1.5" PointX="15.75" PointY="18.375" />
         <AssociationConnector Association="ORACLE_MODEL.DETALLE_TRAMITES_FK1" />
-        <AssociationConnector Association="ORACLE_MODEL.DOCUMENTOS_FK1" />
-        <AssociationConnector Association="ORACLE_MODEL.ORDEN_PAGO_FK1" />
-        <EntityTypeShape EntityType="ORACLE_MODEL.PRESUPUESTO" Width="1.5" PointX="8.5" PointY="13.75" />
-        <AssociationConnector Association="ORACLE_MODEL.PRESUPUESTO_FK2" />
-        <AssociationConnector Association="ORACLE_MODEL.PRESUPUESTO_FK1" />
-        <AssociationConnector Association="ORACLE_MODEL.CONTRATOS_FK1" />
-        <AssociationConnector Association="ORACLE_MODEL.DOCUMENTOS_FK2" />
-        <AssociationConnector Association="ORACLE_MODEL.PRESUPUESTO_FK3" />
+        <AssociationConnector Association="ORACLE_MODEL.PK_PRESUPUESTO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

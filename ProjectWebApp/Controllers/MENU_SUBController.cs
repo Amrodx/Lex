@@ -45,7 +45,7 @@ namespace ProjectWebApp.Controllers
                 ViewBag.SUB = new SelectList(Menu.MENU.Include("TIPO_ROL").ToList(), "MENU_ID", "TEXTO", "TIPO_ROL.NOMBRE_ROL", 1);
             }
             
-            ViewBag.MENU_ID_P = new SelectList(db.MENU, "MENU_ID", "TEXTO","");
+            ViewBag.MENU_ID_P = new SelectList(db.MENU, "MENU_ID", "TEXTO");
             ViewBag.ID_ROL = new SelectList(db.TIPO_ROL, "ID_ROL", "NOMBRE_ROL");
             return View();
         }
@@ -80,6 +80,10 @@ namespace ProjectWebApp.Controllers
             if (mENU_SUB == null)
             {
                 return HttpNotFound();
+            }
+            using (ODAO Menu = new ODAO())
+            {
+                ViewBag.SUB = new SelectList(Menu.MENU.Include("TIPO_ROL").ToList(), "MENU_ID", "TEXTO", "TIPO_ROL.NOMBRE_ROL", 1);
             }
             ViewBag.MENU_ID_P = new SelectList(db.MENU, "MENU_ID", "TEXTO", mENU_SUB.MENU_ID_P);
             ViewBag.ID_ROL = new SelectList(db.TIPO_ROL, "ID_ROL", "NOMBRE_ROL", mENU_SUB.ID_ROL);

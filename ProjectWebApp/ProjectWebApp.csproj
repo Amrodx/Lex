@@ -36,6 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -208,11 +209,6 @@
     <Compile Include="Controllers\TIPO_CLIENTEController.cs" />
     <Compile Include="Controllers\TIPO_ROLController.cs" />
     <Compile Include="Controllers\USUARIOSController.cs" />
-    <Compile Include="Models\DataNotation\AssistantModel.cs" />
-    <Compile Include="Models\DataNotation\ClientModel.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Models\ASISTENTES.cs">
       <DependentUpon>EDM.tt</DependentUpon>
     </Compile>
@@ -227,6 +223,11 @@
     </Compile>
     <Compile Include="Models\CONTRATOS.cs">
       <DependentUpon>EDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataNotation\AssistantModel.cs" />
+    <Compile Include="Models\DataNotation\ClientModel.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DETALLE_COSTOS.cs">
       <DependentUpon>EDM.tt</DependentUpon>
@@ -251,6 +252,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EDM.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ESTADO.cs">
+      <DependentUpon>EDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MENU.cs">
       <DependentUpon>EDM.tt</DependentUpon>
@@ -282,18 +286,73 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\build\css\custom.css" />
-    <Content Include="assets\build\css\custom.min.css" />
-    <Content Include="assets\build\css\prettify.min.css" />
-    <Content Include="assets\build\js\custom.js" />
-    <Content Include="assets\build\js\custom.min.js" />
-    <Content Include="assets\img\excel.png" />
-    <Content Include="assets\img\FotoCarne.jpg" />
-    <Content Include="assets\img\pdf.png" />
-    <Content Include="assets\img\perfilAbogado.jpg" />
-    <Content Include="assets\img\powerpoint.png" />
-    <Content Include="assets\img\user.png" />
-    <Content Include="assets\img\word.png" />
+    <Content Include="assets\build\css\custom.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\build\css\custom.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\build\css\jquery-ui.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\build\css\prettify.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\build\css\stylepicker.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\build\js\custom.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\build\js\custom.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\build\js\jquery-ui.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\build\js\raphael-min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\ajax-loader.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\load.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\pago\american-express.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\excel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\FotoCarne.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\pago\mastercard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\pago\paypal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\pdf.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\perfilAbogado.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\powerpoint.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\user.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\pago\visa.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\word.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\templates\MailConfirmaAsignacionTemplate.html" />
     <Content Include="assets\vendors\animate.css\animate.css" />
     <Content Include="assets\vendors\animate.css\animate.min.css" />
     <Content Include="assets\vendors\animate.css\gulpfile.js" />
@@ -2105,50 +2164,50 @@
     <Content Include="assets\vendors\gauge.js\dist\gauge.min.js" />
     <Content Include="assets\vendors\gauge.js\favicon.ico" />
     <Content Include="assets\vendors\gauge.js\index.html" />
-    <Content Include="assets\vendors\google-code-prettify\bin\prettify.min.css" />
-    <Content Include="assets\vendors\google-code-prettify\bin\prettify.min.js" />
-    <Content Include="assets\vendors\google-code-prettify\bin\run_prettify.min.js" />
-    <Content Include="assets\vendors\google-code-prettify\CHANGES.html" />
-    <Content Include="assets\vendors\google-code-prettify\examples\quine.html" />
-    <Content Include="assets\vendors\google-code-prettify\README-zh-Hans.html" />
-    <Content Include="assets\vendors\google-code-prettify\README.html" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-apollo.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-basic.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-clj.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-css.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-dart.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-erlang.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-go.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-hs.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-lisp.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-llvm.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-lua.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-matlab.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-ml.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-mumps.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-n.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-pascal.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-proto.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-r.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-rd.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-scala.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-sql.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-tcl.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-tex.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-vb.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-vhdl.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-wiki.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-xq.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\lang-yaml.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\prettify.css" />
-    <Content Include="assets\vendors\google-code-prettify\src\prettify.js" />
-    <Content Include="assets\vendors\google-code-prettify\src\run_prettify.js" />
-    <Content Include="assets\vendors\google-code-prettify\styles\demo.html" />
-    <Content Include="assets\vendors\google-code-prettify\styles\desert.css" />
-    <Content Include="assets\vendors\google-code-prettify\styles\doxy.css" />
-    <Content Include="assets\vendors\google-code-prettify\styles\index.html" />
-    <Content Include="assets\vendors\google-code-prettify\styles\sons-of-obsidian.css" />
-    <Content Include="assets\vendors\google-code-prettify\styles\sunburst.css" />
+    <Content Include="assets\vendors\googlecodeprettify\bin\prettify.min.css" />
+    <Content Include="assets\vendors\googlecodeprettify\bin\prettify.min.js" />
+    <Content Include="assets\vendors\googlecodeprettify\bin\run_prettify.min.js" />
+    <Content Include="assets\vendors\googlecodeprettify\CHANGES.html" />
+    <Content Include="assets\vendors\googlecodeprettify\examples\quine.html" />
+    <Content Include="assets\vendors\googlecodeprettify\README-zh-Hans.html" />
+    <Content Include="assets\vendors\googlecodeprettify\README.html" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-apollo.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-basic.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-clj.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-css.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-dart.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-erlang.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-go.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-hs.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-lisp.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-llvm.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-lua.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-matlab.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-ml.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-mumps.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-n.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-pascal.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-proto.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-r.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-rd.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-scala.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-sql.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-tcl.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-tex.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-vb.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-vhdl.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-wiki.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-xq.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\lang-yaml.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\prettify.css" />
+    <Content Include="assets\vendors\googlecodeprettify\src\prettify.js" />
+    <Content Include="assets\vendors\googlecodeprettify\src\run_prettify.js" />
+    <Content Include="assets\vendors\googlecodeprettify\styles\demo.html" />
+    <Content Include="assets\vendors\googlecodeprettify\styles\desert.css" />
+    <Content Include="assets\vendors\googlecodeprettify\styles\doxy.css" />
+    <Content Include="assets\vendors\googlecodeprettify\styles\index.html" />
+    <Content Include="assets\vendors\googlecodeprettify\styles\sons-of-obsidian.css" />
+    <Content Include="assets\vendors\googlecodeprettify\styles\sunburst.css" />
     <Content Include="assets\vendors\iCheck\icheck.js" />
     <Content Include="assets\vendors\iCheck\icheck.min.js" />
     <Content Include="assets\vendors\iCheck\skins\all.css" />
@@ -3643,6 +3702,11 @@
     <Content Include="assets\vendors\select2\tests\vendor\qunit-1.23.1.css" />
     <Content Include="assets\vendors\select2\tests\vendor\qunit-1.23.1.js" />
     <Content Include="assets\vendors\select2\vendor\jquery-2.1.0.js" />
+    <Content Include="assets\vendors\Simple-jQuery-Loading-Spinner-Overlay-Plugin-Loader\images\loading16x16.gif" />
+    <Content Include="assets\vendors\Simple-jQuery-Loading-Spinner-Overlay-Plugin-Loader\images\loading32x32.gif" />
+    <Content Include="assets\vendors\Simple-jQuery-Loading-Spinner-Overlay-Plugin-Loader\index.html" />
+    <Content Include="assets\vendors\Simple-jQuery-Loading-Spinner-Overlay-Plugin-Loader\jquery-loader.js" />
+    <Content Include="assets\vendors\Simple-jQuery-Loading-Spinner-Overlay-Plugin-Loader\style.css" />
     <Content Include="assets\vendors\skycons\.gitignore" />
     <Content Include="assets\vendors\skycons\index.html" />
     <Content Include="assets\vendors\skycons\skycons.js" />
@@ -3692,13 +3756,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
-    </Content>
-    <EntityDeploy Include="Models\EDM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EDM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\EDM.edmx.diagram">
-      <DependentUpon>EDM.edmx</DependentUpon>
     </Content>
     <Content Include="assets\vendors\animate.css\.bower.json" />
     <Content Include="assets\vendors\animate.css\animate-config.json" />
@@ -4038,7 +4095,9 @@
     <Content Include="assets\vendors\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="assets\vendors\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="assets\vendors\font-awesome\fonts\fontawesome-webfont.woff" />
-    <Content Include="assets\vendors\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assets\vendors\font-awesome\fonts\fontawesome-webfont.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\vendors\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="assets\vendors\font-awesome\less\animated.less" />
     <Content Include="assets\vendors\font-awesome\less\bordered-pulled.less" />
@@ -4112,10 +4171,10 @@
     <Content Include="assets\vendors\gauge.js\bower.json" />
     <Content Include="assets\vendors\gauge.js\dist\gauge.coffee" />
     <Content Include="assets\vendors\gauge.js\README.md" />
-    <Content Include="assets\vendors\google-code-prettify\.bower.json" />
-    <Content Include="assets\vendors\google-code-prettify\bower.json" />
-    <Content Include="assets\vendors\google-code-prettify\COPYING" />
-    <Content Include="assets\vendors\google-code-prettify\README.md" />
+    <Content Include="assets\vendors\googlecodeprettify\.bower.json" />
+    <Content Include="assets\vendors\googlecodeprettify\bower.json" />
+    <Content Include="assets\vendors\googlecodeprettify\COPYING" />
+    <Content Include="assets\vendors\googlecodeprettify\README.md" />
     <Content Include="assets\vendors\iCheck\.bower.json" />
     <Content Include="assets\vendors\iCheck\bower.json" />
     <Content Include="assets\vendors\iCheck\icheck.jquery.json" />
@@ -4529,6 +4588,16 @@
     <Content Include="assets\vendors\validator\.bower.json" />
     <Content Include="assets\vendors\validator\README.md" />
     <Content Include="assets\vendors\validator\validator.jquery.json" />
+    <EntityDeploy Include="Models\EDM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EDM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\EDM.edmx.diagram">
+      <DependentUpon>EDM.edmx</DependentUpon>
+    </Content>
+    <Content Include="assets\vendors\Simple-jQuery-Loading-Spinner-Overlay-Plugin-Loader\bower.json" />
+    <Content Include="assets\vendors\Simple-jQuery-Loading-Spinner-Overlay-Plugin-Loader\README.md" />
+    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -4541,6 +4610,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\ScriptPage\Donut.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -4645,6 +4715,8 @@
     <Content Include="Views\CLIENTES\CompletarPerfil.cshtml" />
     <Content Include="Views\CLIENTES\Perfil.cshtml" />
     <Content Include="Views\PRESUPUESTO\Asignaciones.cshtml" />
+    <Content Include="Views\CLIENTES\Landing.cshtml" />
+    <Content Include="Views\ASISTENTES\Landing.cshtml" />
     <None Include="Views\PRESUPUESTO\Contrato.cshtml" />
     <Content Include="Views\PRESUPUESTO\GEProcesos.cshtml" />
     <Content Include="Views\PRESUPUESTO\GestionAsistencia.cshtml" />
@@ -4658,6 +4730,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Rest\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

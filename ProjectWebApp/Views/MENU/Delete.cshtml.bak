@@ -1,0 +1,73 @@
+﻿@model ProjectWebApp.Models.MENU
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MENU</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TEXTO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEXTO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REFERENCIA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REFERENCIA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ORDEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ORDEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTROLLER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTROLLER)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ACTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TIPO_ROL.NOMBRE_ROL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TIPO_ROL.NOMBRE_ROL)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

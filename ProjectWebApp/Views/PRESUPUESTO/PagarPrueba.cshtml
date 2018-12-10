@@ -1,0 +1,339 @@
+﻿
+@{
+    ViewBag.Title = "PagarPrueba";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>PagarPrueba</h2>
+
+<div class="col-md-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h1>Pago</h1>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+        </div>
+        <!-- /.row -->
+        <!-- Table row -->
+        <div class="row">
+
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-xs-6">
+                <p class="lead">Metodos de pago:</p>
+                <span class="image"><img src="~/assets/img/visa.png" style="width:10%" alt="Profile Image" /></span>
+                <span class="image"><img src="~/assets/img/american-express.png" style="width:10%" alt="Profile Image" /></span>
+                <span class="image"><img src="~/assets/img/mastercard.png" style="width:10%" alt="Profile Image" /></span>
+                <span class="image"><img src="~/assets/img/paypal.png" style="width:10%" alt="Profile Image" /></span>
+                <div class="form-group" id="pago">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo Pago</label>
+                    <select id="tipoPago" class="form-control" onchange="Ocultar(this)" onload="Ocultar(this)">
+                        <option>Tipo pago</option>
+                        <option id="credito"> Tarjeta de crédito</option>
+                        <option id="debito"> Tarjeta de debito</option>
+
+                    </select>
+
+
+
+                </div>
+                <!--ALM - INICIO TARJETA DE CREDITO-->
+                <div id="tarjeta_credito" style="display:none">
+                    <div>
+                        <label for="MercadopagoApi_cc_number" class="inline strong fcdg">Número de la tarjeta de crédito</label><input type="text" id="numeroTarjeta" tabindex="9" class="Input" size="20" maxlength="9" value="" />
+                    </div>
+
+                    <div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12"> Cuotas</label>
+                            <select id="cuoNumber" name="cuotas" onChange="CalcularCuota(this)">
+                                <!--ALM - AQUI AGREGO METODO CALCULAR CUOTA HECHO EN JAVASCRIPT-->
+                                <option name="1">1</option>
+                                <option name="2">2</option>
+                                <option name="3">3</option>
+                                <option name="4">4</option>
+                                <option name="5">5</option>
+                                <option name="6">6</option>
+                                <option name="7">7</option>
+                                <option name="8">8</option>
+                                <option name="9">9</option>
+                                <option name="10">10</option>
+                                <option name="11">11</option>
+                                <option name="12">12</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-6">
+                        <p class="lead">Pagar </p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th style="width:50%">Total:</th>
+                                        <td>$<input type="text" id="total" tabindex="9" class="Input" size="20" maxlength="9" value="@ViewBag.ValorTotal" readonly="readonly" onload="Format(this)" /></td> <!--ALM - AQUI LO PASARE EN DURO MIENTRAS PARA HACER LA PRUEBA-->
+                                    </tr>
+                                    <tr>
+                                        <th>Cuotas</th>
+                                        <td><input type="text" id="nCuota" tabindex="9" class="Input" size="20" maxlength="9" value="" readonly="readonly" /></td> <!--ALM - ESTE VALOR DEBE VENIR DEL COMBOBOX-->
+                                    </tr>
+                                    <tr>
+                                        <th>Valor Cuotas</th>
+                                        <td><input type="text" id="valorCuota" tabindex="9" class="Input" size="20" maxlength="9" value="" onload="Format(this)" /></td> <!--ALM - ESTE VALOR SE DEBE CALCULAR A PARTIR DE LA CUOTA-->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row no-print">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-success pull-right" onclick="Pagar()"><i class="fa fa-credit-card"></i> Realizar Pago</button>                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--ALM - FIN TARJETA DE CREDITO-->
+                <!--ALM - INICIO TARJETA DE DEBITO-->
+                <div id="tarjeta_debito" style="display:none">
+                    <label for="MercadopagoApi_cc_number" class="inline strong fcdg">Rut</label><input type="text" id="rut" tabindex="9" class="Input" size="20" maxlength="9" value="" />
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th style="width:50%">Total: $</th>
+                                <td><input type="text" id="total" tabindex="9" class="Input" size="20" maxlength="9" value="@ViewBag.ValorTotal" readonly="readonly" onload="Format(this)" /></td> <!--ALM - AQUI LO PASARE EN DURO MIENTRAS PARA HACER LA PRUEBA-->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row no-print">
+                        <div class="col-xs-12">
+                            <button class="btn btn-success pull-right" onclick="Pagar()"><i class="fa fa-credit-card"></i> Realizar Pago</button>                        </div>
+                    </div>
+                </div>
+                <!--ALM - FIN TARJETA DE DEBITO-->
+            </div>
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            function Ocultar(valor) {
+                if (valor.selectedIndex == 0) {
+                    document.getElementById('tarjeta_credito').style.display = 'none';
+                    document.getElementById('tarjeta_debito').style.display = 'none';
+
+                }
+                else if (valor.selectedIndex == 1) {
+                    document.getElementById('tarjeta_credito').style.display = 'inline';
+                    document.getElementById('tarjeta_debito').style.display = 'none';
+                }
+                else if (valor.selectedIndex == 2) {
+                    document.getElementById('tarjeta_debito').style.display = 'inline';
+                    document.getElementById('tarjeta_credito').style.display = 'none';
+                }
+            }
+
+            function CalcularCuota(valor) {
+                var precio = parseFloat(document.getElementById("total").value);
+                document.getElementById("nCuota").value = valor.value;
+
+                var nCuota = parseFloat(valor.value);
+
+                var total = parseFloat(precio / nCuota);
+
+                document.getElementById("valorCuota").value = Math.round(total);
+            }
+
+            function Format(input) {
+                var num = input.value.replace(/\./g, '');
+                if (!isNaN(num)) {
+                    num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g, '$1.');
+                    num = num.split('').reverse().join('').replace(/^[\.]/, '');
+                    input.value = num;
+                }
+
+                else {
+                    alert('Solo se permiten numeros');
+                    input.value = input.value.replace(/[^\d\.]*/g, '');
+                }
+            }
+
+
+
+        </script>
+
+        <script>
+            function Pagar() {
+                //var total1 = $('#totalVal').text();
+                //var t2 = total1.toString().replace('$', "").replace('.', "");
+                //var url = "https://apinotaria.azurewebsites.net/api/MedioDePago/10?valor=" + t2 + "&transaccion=DF123";
+                var url = "/PRESUPUESTO/PagarFinal";
+
+                var valCuo = $('#valorCuota').val();
+                var montoTot = $('#total').val();
+                var tipoPago = $("#tipoPago option:selected").text();
+                var cuoNum = $("#cuoNumber option:selected").text();
+
+                var pago = {
+                    CUOTAS: cuoNum,
+                        MONTO_TOTAL: montoTot,
+                        TIPO_PAGO: tipoPago,
+                        VALOR_CUOTA: valCuo
+                };
+                debugger;
+                //$.ajax({
+                //    url: url,
+                //    type: 'POST',
+                //    contentType: "application/json",
+                //    data: JSON.stringify(pago)
+                //})
+                //.done(function (data, textStatus, jqXHR) {
+                //    alert(data);
+                //})
+                //.fail(function (jqXHR, textStatus, errorThrown) {
+                //    alert("BAD");
+                //});
+
+                $.ajax({
+                    type: "POST",
+                    data: pago,
+                    url: url,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.mensaje);
+                        } else {
+                            // DoSomethingElse()
+                            alert(response.mensaje);
+                        }
+                    },
+                    error: function (response) {
+                        alert("error!");  // 
+                    }
+
+                });
+            }
+        </script>
+
+        <html>
+        <head>
+
+            <title>Exporting table data to pdf Example</title>
+
+
+            <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.js"></script>
+            <script type="text/javascript" src="js/jspdf.js"></script>
+            <script type="text/javascript" src="js/from_html.js"></script>
+            <script type="text/javascript" src="js/split_text_to_size.js"></script>
+            <script type="text/javascript" src="js/standard_fonts_metrics.js"></script>
+            <script type="text/javascript" src="js/cell.js"></script>
+            <script type="text/javascript" src="js/FileSaver.js"></script>
+
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+                    $("#exportpdf").click(function () {
+                        var pdf = new jsPDF('p', 'pt', 'ledger');
+                        // source can be HTML-formatted string, or a reference
+                        // to an actual DOM element from which the text will be scraped.
+                        source = $('#yourTableIdName')[0];
+
+                        // we support special element handlers. Register them with jQuery-style
+                        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+                        // There is no support for any other type of selectors
+                        // (class, of compound) at this time.
+                        specialElementHandlers = {
+                            // element with id of "bypass" - jQuery style selector
+                            '#bypassme': function (element, renderer) {
+                                // true = "handled elsewhere, bypass text extraction"
+                                return true
+                            }
+                        };
+                        margins = {
+                            top: 80,
+                            bottom: 60,
+                            left: 60,
+                            width: 522
+                        };
+                        // all coords and widths are in jsPDF instance's declared units
+                        // 'inches' in this case
+                        pdf.fromHTML(source, // HTML string or DOM elem ref.
+                            margins.left, // x coord
+                            margins.top, { // y coord
+                                'width': margins.width, // max width of content on PDF
+                                'elementHandlers': specialElementHandlers
+                            },
+
+                            function (dispose) {
+                                // dispose: object with X, Y of the last line add to the PDF
+                                //   this allow the insertion of new lines after html
+                                pdf.save('fileNameOfGeneretedPdf.pdf');
+                            }, margins);
+                    });
+
+                });
+            </script>
+        </head>
+        <body>
+
+            <input type="button" id="exportpdf" value="Download PDF">
+
+
+        </body>
+
+    </html>
+
+    @*@section scripts{
+
+        <script>
+            $(document).ready(function () {
+
+                testfunction();
+                function testfunction() {
+
+                    $.ajax({
+                        url: "https://apinotaria.azurewebsites.net/api/MedioDePago/10?valor=10000&transaccion=DF123",
+                        type: "GET",
+                        dataType: "json",
+                        cache: false,
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert(" write json item, Ajax error! " + xhr.status + " error =" + thrownError + " xhr.responseText = " + xhr.responseText);
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            alert("write json item, Ajax  OK");
+
+                        }
+                    });
+                }
+            });
+
+        </script>
+
+    }*@

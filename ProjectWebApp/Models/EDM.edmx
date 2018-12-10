@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ORACLE_MODEL.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ORACLE_MODEL.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="12.1" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ASISTENTES">
           <Key>
             <PropertyRef Name="ID_ASISTENTE" />
@@ -18,6 +18,10 @@
           <Property Name="TITULO_ACADEMICO" Type="varchar2" MaxLength="250" Nullable="false" />
           <Property Name="TIMESTAMP" Type="timestamp" Precision="6" />
           <Property Name="ID_USUARIO" Type="number" Precision="19" Scale="0" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="150" />
+          <Property Name="DIRECCION" Type="varchar2" MaxLength="500" />
+          <Property Name="FONO" Type="varchar2" MaxLength="50" />
+          <Property Name="ID_COMUNA" Type="number" Precision="19" Scale="0" />
         </EntityType>
         <EntityType Name="CAUSALES">
           <Key>
@@ -88,14 +92,14 @@
             <PropertyRef Name="ID_TRAMITES" />
           </Key>
           <Property Name="ID_TRAMITES" Type="number" Precision="19" Scale="0" Nullable="false" />
-          <Property Name="ID_CONTRATO" Type="number" Precision="19" Scale="0" Nullable="false" />
-          <Property Name="ID_SOLICITUD" Type="number" Precision="19" Scale="0" Nullable="false" />
+          <Property Name="ID_CONTRATO" Type="number" Precision="19" Scale="0" />
           <Property Name="CODIGO_TRAMITE" Type="varchar2" MaxLength="20" />
           <Property Name="NOMBRE_TRAMITE" Type="varchar2" MaxLength="250" />
           <Property Name="COSTO" Type="number" Precision="19" Scale="0" />
           <Property Name="STATUS" Type="varchar2" MaxLength="15" />
           <Property Name="TIMESTAMP" Type="timestamp" Precision="6" />
           <Property Name="CREATED" Type="date" />
+          <Property Name="ID_PRESUPUESTO" Type="number" Precision="19" Scale="0" />
         </EntityType>
         <EntityType Name="DOCUMENTOS">
           <Key>
@@ -109,6 +113,13 @@
           <Property Name="PATH" Type="varchar2" MaxLength="1000" />
           <Property Name="MIME_TYPE" Type="varchar2" MaxLength="200" />
           <Property Name="NOMBRE_ARCHIVO" Type="varchar2" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="ID_ESTADO" />
+          </Key>
+          <Property Name="ID_ESTADO" Type="number" Precision="19" Scale="0" Nullable="false" />
+          <Property Name="ESTADO" Type="varchar2" MaxLength="15" />
         </EntityType>
         <EntityType Name="MENU">
           <Key>
@@ -225,6 +236,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ASISTENTES_FK2">
+          <End Role="COMUNAS" Type="Self.COMUNAS" Multiplicity="0..1" />
+          <End Role="ASISTENTES" Type="Self.ASISTENTES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COMUNAS">
+              <PropertyRef Name="ID_COMUNA" />
+            </Principal>
+            <Dependent Role="ASISTENTES">
+              <PropertyRef Name="ID_COMUNA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="CLIENTES_FK1">
           <End Role="COMUNAS" Type="Self.COMUNAS" Multiplicity="1" />
           <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="*" />
@@ -322,7 +345,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="DETALLE_TRAMITES_FK1">
-          <End Role="CONTRATOS" Type="Self.CONTRATOS" Multiplicity="1" />
+          <End Role="CONTRATOS" Type="Self.CONTRATOS" Multiplicity="0..1" />
           <End Role="DETALLE_TRAMITES" Type="Self.DETALLE_TRAMITES" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CONTRATOS">
@@ -405,6 +428,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="PK_PRESUPUESTO">
+          <End Role="PRESUPUESTO" Type="Self.PRESUPUESTO" Multiplicity="0..1" />
+          <End Role="DETALLE_TRAMITES" Type="Self.DETALLE_TRAMITES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRESUPUESTO">
+              <PropertyRef Name="ID_PRESUPUESTO" />
+            </Principal>
+            <Dependent Role="DETALLE_TRAMITES">
+              <PropertyRef Name="ID_PRESUPUESTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="PRESUPUESTO_FK1">
           <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="0..1" />
           <End Role="PRESUPUESTO" Type="Self.PRESUPUESTO" Multiplicity="*" />
@@ -454,25 +489,30 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ORACLE_MODELStoreContainer">
-          <EntitySet Name="ASISTENTES" EntityType="Self.ASISTENTES" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="CAUSALES" EntityType="Self.CAUSALES" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="COMUNAS" EntityType="Self.COMUNAS" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="CONTRATOS" EntityType="Self.CONTRATOS" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="DETALLE_COSTOS" EntityType="Self.DETALLE_COSTOS" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="DETALLE_TRAMITES" EntityType="Self.DETALLE_TRAMITES" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="DOCUMENTOS" EntityType="Self.DOCUMENTOS" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="MENU" EntityType="Self.MENU" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="MENU_SUB" EntityType="Self.MENU_SUB" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="ORDEN_PAGO" EntityType="Self.ORDEN_PAGO" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="PLAN_PAGO" EntityType="Self.PLAN_PAGO" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="PRESUPUESTO" EntityType="Self.PRESUPUESTO" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="REGIONES" EntityType="Self.REGIONES" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="TIPO_CLIENTE" EntityType="Self.TIPO_CLIENTE" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="TIPO_ROL" EntityType="Self.TIPO_ROL" Schema="DUOC_USER2" store:Type="Tables" />
-          <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" Schema="DUOC_USER2" store:Type="Tables" />
+          <EntitySet Name="ASISTENTES" EntityType="Self.ASISTENTES" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="CAUSALES" EntityType="Self.CAUSALES" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="COMUNAS" EntityType="Self.COMUNAS" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="CONTRATOS" EntityType="Self.CONTRATOS" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="DETALLE_COSTOS" EntityType="Self.DETALLE_COSTOS" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="DETALLE_TRAMITES" EntityType="Self.DETALLE_TRAMITES" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="DOCUMENTOS" EntityType="Self.DOCUMENTOS" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="ESTADO" EntityType="Self.ESTADO" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="MENU" EntityType="Self.MENU" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="MENU_SUB" EntityType="Self.MENU_SUB" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="ORDEN_PAGO" EntityType="Self.ORDEN_PAGO" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="PLAN_PAGO" EntityType="Self.PLAN_PAGO" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="PRESUPUESTO" EntityType="Self.PRESUPUESTO" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="REGIONES" EntityType="Self.REGIONES" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="TIPO_CLIENTE" EntityType="Self.TIPO_CLIENTE" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="TIPO_ROL" EntityType="Self.TIPO_ROL" Schema="DEVUSR" store:Type="Tables" />
+          <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" Schema="DEVUSR" store:Type="Tables" />
           <AssociationSet Name="ASISTENTES_FK1" Association="Self.ASISTENTES_FK1">
             <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="ASISTENTES" EntitySet="ASISTENTES" />
+          </AssociationSet>
+          <AssociationSet Name="ASISTENTES_FK2" Association="Self.ASISTENTES_FK2">
+            <End Role="COMUNAS" EntitySet="COMUNAS" />
             <End Role="ASISTENTES" EntitySet="ASISTENTES" />
           </AssociationSet>
           <AssociationSet Name="CLIENTES_FK1" Association="Self.CLIENTES_FK1">
@@ -535,6 +575,10 @@
             <End Role="CONTRATOS" EntitySet="CONTRATOS" />
             <End Role="ORDEN_PAGO" EntitySet="ORDEN_PAGO" />
           </AssociationSet>
+          <AssociationSet Name="PK_PRESUPUESTO" Association="Self.PK_PRESUPUESTO">
+            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
+            <End Role="DETALLE_TRAMITES" EntitySet="DETALLE_TRAMITES" />
+          </AssociationSet>
           <AssociationSet Name="PRESUPUESTO_FK1" Association="Self.PRESUPUESTO_FK1">
             <End Role="CLIENTES" EntitySet="CLIENTES" />
             <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
@@ -556,154 +600,60 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ORACLE_MODEL" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="ODAO" annotation:LazyLoadingEnabled="false">
-          <EntitySet Name="ASISTENTES" EntityType="ORACLE_MODEL.ASISTENTES" />
-          <EntitySet Name="CAUSALES" EntityType="ORACLE_MODEL.CAUSALES" />
-          <EntitySet Name="CLIENTES" EntityType="ORACLE_MODEL.CLIENTES" />
-          <EntitySet Name="COMUNAS" EntityType="ORACLE_MODEL.COMUNAS" />
-          <EntitySet Name="DETALLE_COSTOS" EntityType="ORACLE_MODEL.DETALLE_COSTOS" />
-          <EntitySet Name="DETALLE_TRAMITES" EntityType="ORACLE_MODEL.DETALLE_TRAMITES" />
-          <EntitySet Name="MENU" EntityType="ORACLE_MODEL.MENU" />
-          <EntitySet Name="MENU_SUB" EntityType="ORACLE_MODEL.MENU_SUB" />
-          <EntitySet Name="ORDEN_PAGO" EntityType="ORACLE_MODEL.ORDEN_PAGO" />
-          <EntitySet Name="PLAN_PAGO" EntityType="ORACLE_MODEL.PLAN_PAGO" />
-          <EntitySet Name="REGIONES" EntityType="ORACLE_MODEL.REGIONES" />
-          <EntitySet Name="TIPO_CLIENTE" EntityType="ORACLE_MODEL.TIPO_CLIENTE" />
-          <EntitySet Name="TIPO_ROL" EntityType="ORACLE_MODEL.TIPO_ROL" />
-          <EntitySet Name="USUARIOS" EntityType="ORACLE_MODEL.USUARIOS" />
-          <AssociationSet Name="ASISTENTES_FK1" Association="ORACLE_MODEL.ASISTENTES_FK1">
-            <End Role="USUARIOS" EntitySet="USUARIOS" />
-            <End Role="ASISTENTES" EntitySet="ASISTENTES" />
-          </AssociationSet>
-          <AssociationSet Name="CLIENTES_FK1" Association="ORACLE_MODEL.CLIENTES_FK1">
-            <End Role="COMUNAS" EntitySet="COMUNAS" />
-            <End Role="CLIENTES" EntitySet="CLIENTES" />
-          </AssociationSet>
-          <AssociationSet Name="CLIENTES_FK2" Association="ORACLE_MODEL.CLIENTES_FK2">
-            <End Role="TIPO_CLIENTE" EntitySet="TIPO_CLIENTE" />
-            <End Role="CLIENTES" EntitySet="CLIENTES" />
-          </AssociationSet>
-          <AssociationSet Name="CLIENTES_FK3" Association="ORACLE_MODEL.CLIENTES_FK3">
-            <End Role="PLAN_PAGO" EntitySet="PLAN_PAGO" />
-            <End Role="CLIENTES" EntitySet="CLIENTES" />
-          </AssociationSet>
-          <AssociationSet Name="CLIENTES_FK4" Association="ORACLE_MODEL.CLIENTES_FK4">
-            <End Role="USUARIOS" EntitySet="USUARIOS" />
-            <End Role="CLIENTES" EntitySet="CLIENTES" />
-          </AssociationSet>
-          <AssociationSet Name="COMUNAS_FK1" Association="ORACLE_MODEL.COMUNAS_FK1">
-            <End Role="REGIONES" EntitySet="REGIONES" />
-            <End Role="COMUNAS" EntitySet="COMUNAS" />
-          </AssociationSet>
-          <AssociationSet Name="MENU_FK1" Association="ORACLE_MODEL.MENU_FK1">
-            <End Role="TIPO_ROL" EntitySet="TIPO_ROL" />
-            <End Role="MENU" EntitySet="MENU" />
-          </AssociationSet>
-          <AssociationSet Name="MENU_SUB_FK1" Association="ORACLE_MODEL.MENU_SUB_FK1">
-            <End Role="MENU" EntitySet="MENU" />
-            <End Role="MENU_SUB" EntitySet="MENU_SUB" />
-          </AssociationSet>
-          <AssociationSet Name="MENU_SUB_FK2" Association="ORACLE_MODEL.MENU_SUB_FK2">
-            <End Role="TIPO_ROL" EntitySet="TIPO_ROL" />
-            <End Role="MENU_SUB" EntitySet="MENU_SUB" />
-          </AssociationSet>
-          <AssociationSet Name="USUARIOS_FK3" Association="ORACLE_MODEL.USUARIOS_FK3">
-            <End Role="TIPO_ROL" EntitySet="TIPO_ROL" />
-            <End Role="USUARIOS" EntitySet="USUARIOS" />
-          </AssociationSet>
-          <EntitySet Name="CONTRATOS" EntityType="ORACLE_MODEL.CONTRATOS" />
-          <EntitySet Name="DOCUMENTOS" EntityType="ORACLE_MODEL.DOCUMENTOS" />
-          <AssociationSet Name="CONTRATOS_FK2" Association="ORACLE_MODEL.CONTRATOS_FK2">
-            <End Role="ASISTENTES" EntitySet="ASISTENTES" />
-            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
-          </AssociationSet>
-          <AssociationSet Name="DETALLE_COSTOS_FK1" Association="ORACLE_MODEL.DETALLE_COSTOS_FK1">
-            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
-            <End Role="DETALLE_COSTOS" EntitySet="DETALLE_COSTOS" />
-          </AssociationSet>
-          <AssociationSet Name="DETALLE_TRAMITES_FK1" Association="ORACLE_MODEL.DETALLE_TRAMITES_FK1">
-            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
-            <End Role="DETALLE_TRAMITES" EntitySet="DETALLE_TRAMITES" />
-          </AssociationSet>
-          <AssociationSet Name="DOCUMENTOS_FK1" Association="ORACLE_MODEL.DOCUMENTOS_FK1">
-            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
-            <End Role="DOCUMENTOS" EntitySet="DOCUMENTOS" />
-          </AssociationSet>
-          <AssociationSet Name="ORDEN_PAGO_FK1" Association="ORACLE_MODEL.ORDEN_PAGO_FK1">
-            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
-            <End Role="ORDEN_PAGO" EntitySet="ORDEN_PAGO" />
-          </AssociationSet>
-          <EntitySet Name="PRESUPUESTO" EntityType="ORACLE_MODEL.PRESUPUESTO" />
-          <AssociationSet Name="PRESUPUESTO_FK2" Association="ORACLE_MODEL.PRESUPUESTO_FK2">
-            <End Role="CAUSALES" EntitySet="CAUSALES" />
-            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
-          </AssociationSet>
-          <AssociationSet Name="PRESUPUESTO_FK1" Association="ORACLE_MODEL.PRESUPUESTO_FK1">
-            <End Role="CLIENTES" EntitySet="CLIENTES" />
-            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
-          </AssociationSet>
-          <AssociationSet Name="CONTRATOS_FK1" Association="ORACLE_MODEL.CONTRATOS_FK1">
-            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
-            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
-          </AssociationSet>
-          <AssociationSet Name="DOCUMENTOS_FK2" Association="ORACLE_MODEL.DOCUMENTOS_FK2">
-            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
-            <End Role="DOCUMENTOS" EntitySet="DOCUMENTOS" />
-          </AssociationSet>
-          <AssociationSet Name="PRESUPUESTO_FK3" Association="ORACLE_MODEL.PRESUPUESTO_FK3">
-            <End Role="ASISTENTES" EntitySet="ASISTENTES" />
-            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
-          </AssociationSet>
-          </EntityContainer>
         <EntityType Name="ASISTENTES">
           <Key>
             <PropertyRef Name="ID_ASISTENTE" />
           </Key>
           <Property Name="ID_ASISTENTE" Type="Int64" Nullable="false" />
-          <Property Name="RUT" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="NOMBRES" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="APELLIDO_PATERNO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="APELLIDO_MATERNO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="CARGO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TITULO_ACADEMICO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="RUT" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRES" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDO_PATERNO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDO_MATERNO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CARGO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TITULO_ACADEMICO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TIMESTAMP" Type="DateTime" Precision="6" />
           <Property Name="ID_USUARIO" Type="Int64" />
-          <NavigationProperty Name="USUARIOS" Relationship="ORACLE_MODEL.ASISTENTES_FK1" FromRole="ASISTENTES" ToRole="USUARIOS" />
-          <NavigationProperty Name="CONTRATOS" Relationship="ORACLE_MODEL.CONTRATOS_FK2" FromRole="ASISTENTES" ToRole="CONTRATOS" />
-          <NavigationProperty Name="PRESUPUESTO" Relationship="ORACLE_MODEL.PRESUPUESTO_FK3" FromRole="ASISTENTES" ToRole="PRESUPUESTO" />
+          <Property Name="CORREO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DIRECCION" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FONO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_COMUNA" Type="Int64" />
+          <NavigationProperty Name="USUARIOS" Relationship="Self.ASISTENTES_FK1" FromRole="ASISTENTES" ToRole="USUARIOS" />
+          <NavigationProperty Name="COMUNAS" Relationship="Self.ASISTENTES_FK2" FromRole="ASISTENTES" ToRole="COMUNAS" />
+          <NavigationProperty Name="CONTRATOS" Relationship="Self.CONTRATOS_FK2" FromRole="ASISTENTES" ToRole="CONTRATOS" />
+          <NavigationProperty Name="PRESUPUESTO" Relationship="Self.PRESUPUESTO_FK3" FromRole="ASISTENTES" ToRole="PRESUPUESTO" />
         </EntityType>
         <EntityType Name="CAUSALES">
           <Key>
             <PropertyRef Name="ID_CAUSAL" />
           </Key>
           <Property Name="ID_CAUSAL" Type="Int64" Nullable="false" />
-          <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PRESUPUESTO" Relationship="ORACLE_MODEL.PRESUPUESTO_FK2" FromRole="CAUSALES" ToRole="PRESUPUESTO" />
+          <Property Name="NOMBRE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PRESUPUESTO" Relationship="Self.PRESUPUESTO_FK2" FromRole="CAUSALES" ToRole="PRESUPUESTO" />
         </EntityType>
         <EntityType Name="CLIENTES">
           <Key>
             <PropertyRef Name="ID_CLIENTE" />
           </Key>
           <Property Name="ID_CLIENTE" Type="Int64" Nullable="false" />
-          <Property Name="RUT" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="NOMBRE_RAZON_SOCIAL" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="RUT" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE_RAZON_SOCIAL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_TIPO" Type="Int64" Nullable="false" />
-          <Property Name="DIRECCION" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="CORREO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="CONTACTO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="FONO1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FONO2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DIRECCION" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CORREO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CONTACTO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FONO1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FONO2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_COMUNA" Type="Int64" Nullable="false" />
           <Property Name="OBSERVACIONES" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TIMESTAMP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="STATUS_ACTIVACION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ID_PLAN" Type="Int64" />
           <Property Name="ID_USUARIO" Type="Int64" />
-          <NavigationProperty Name="COMUNAS" Relationship="ORACLE_MODEL.CLIENTES_FK1" FromRole="CLIENTES" ToRole="COMUNAS" />
-          <NavigationProperty Name="TIPO_CLIENTE" Relationship="ORACLE_MODEL.CLIENTES_FK2" FromRole="CLIENTES" ToRole="TIPO_CLIENTE" />
-          <NavigationProperty Name="PLAN_PAGO" Relationship="ORACLE_MODEL.CLIENTES_FK3" FromRole="CLIENTES" ToRole="PLAN_PAGO" />
-          <NavigationProperty Name="USUARIOS" Relationship="ORACLE_MODEL.CLIENTES_FK4" FromRole="CLIENTES" ToRole="USUARIOS" />
-          <NavigationProperty Name="PRESUPUESTO" Relationship="ORACLE_MODEL.PRESUPUESTO_FK1" FromRole="CLIENTES" ToRole="PRESUPUESTO" />
+          <NavigationProperty Name="COMUNAS" Relationship="Self.CLIENTES_FK1" FromRole="CLIENTES" ToRole="COMUNAS" />
+          <NavigationProperty Name="TIPO_CLIENTE" Relationship="Self.CLIENTES_FK2" FromRole="CLIENTES" ToRole="TIPO_CLIENTE" />
+          <NavigationProperty Name="PLAN_PAGO" Relationship="Self.CLIENTES_FK3" FromRole="CLIENTES" ToRole="PLAN_PAGO" />
+          <NavigationProperty Name="USUARIOS" Relationship="Self.CLIENTES_FK4" FromRole="CLIENTES" ToRole="USUARIOS" />
+          <NavigationProperty Name="PRESUPUESTO" Relationship="Self.PRESUPUESTO_FK1" FromRole="CLIENTES" ToRole="PRESUPUESTO" />
         </EntityType>
         <EntityType Name="COMUNAS">
           <Key>
@@ -712,8 +662,29 @@
           <Property Name="ID_COMUNA" Type="Int64" Nullable="false" />
           <Property Name="COMUNA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="ID_REGION" Type="Int64" />
-          <NavigationProperty Name="CLIENTES" Relationship="ORACLE_MODEL.CLIENTES_FK1" FromRole="COMUNAS" ToRole="CLIENTES" />
-          <NavigationProperty Name="REGIONES" Relationship="ORACLE_MODEL.COMUNAS_FK1" FromRole="COMUNAS" ToRole="REGIONES" />
+          <NavigationProperty Name="ASISTENTES" Relationship="Self.ASISTENTES_FK2" FromRole="COMUNAS" ToRole="ASISTENTES" />
+          <NavigationProperty Name="CLIENTES" Relationship="Self.CLIENTES_FK1" FromRole="COMUNAS" ToRole="CLIENTES" />
+          <NavigationProperty Name="REGIONES" Relationship="Self.COMUNAS_FK1" FromRole="COMUNAS" ToRole="REGIONES" />
+        </EntityType>
+        <EntityType Name="CONTRATOS">
+          <Key>
+            <PropertyRef Name="ID_CONTRATO" />
+          </Key>
+          <Property Name="ID_CONTRATO" Type="Int64" Nullable="false" />
+          <Property Name="FECHA_INICIO" Type="DateTime" Nullable="false" />
+          <Property Name="FECHA_TERMINO" Type="DateTime" />
+          <Property Name="ID_PRESUPUESTO" Type="Int64" Nullable="false" />
+          <Property Name="COSTO_ESTIMADO" Type="Double" />
+          <Property Name="DOCUMENTO_GENERADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CORREO_ENVIADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="COMENTARIOS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_ASISTENTE" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ASISTENTES" Relationship="Self.CONTRATOS_FK2" FromRole="CONTRATOS" ToRole="ASISTENTES" />
+          <NavigationProperty Name="PRESUPUESTO" Relationship="Self.CONTRATOS_FK1" FromRole="CONTRATOS" ToRole="PRESUPUESTO" />
+          <NavigationProperty Name="DETALLE_COSTOS" Relationship="Self.DETALLE_COSTOS_FK1" FromRole="CONTRATOS" ToRole="DETALLE_COSTOS" />
+          <NavigationProperty Name="DOCUMENTOS" Relationship="Self.DOCUMENTOS_FK1" FromRole="CONTRATOS" ToRole="DOCUMENTOS" />
+          <NavigationProperty Name="ORDEN_PAGO" Relationship="Self.ORDEN_PAGO_FK1" FromRole="CONTRATOS" ToRole="ORDEN_PAGO" />
+          <NavigationProperty Name="DETALLE_TRAMITES" Relationship="ORACLE_MODEL.DETALLE_TRAMITES_FK1" FromRole="CONTRATOS" ToRole="DETALLE_TRAMITES" />
         </EntityType>
         <EntityType Name="DETALLE_COSTOS">
           <Key>
@@ -729,22 +700,29 @@
           <Property Name="ASISTENTE_RESPONZABLE" Type="Int64" />
           <Property Name="NOMBRE_NOTARIA" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DIRECCION_NOTARIA" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CONTRATOS" Relationship="ORACLE_MODEL.DETALLE_COSTOS_FK1" FromRole="DETALLE_COSTOS" ToRole="CONTRATOS" />
+          <NavigationProperty Name="CONTRATOS" Relationship="Self.DETALLE_COSTOS_FK1" FromRole="DETALLE_COSTOS" ToRole="CONTRATOS" />
         </EntityType>
-        <EntityType Name="DETALLE_TRAMITES">
+        <EntityType Name="DOCUMENTOS">
           <Key>
-            <PropertyRef Name="ID_TRAMITES" />
+            <PropertyRef Name="ID_DOCUMENTO" />
           </Key>
-          <Property Name="ID_TRAMITES" Type="Int64" Nullable="false" />
-          <Property Name="ID_CONTRATO" Type="Int64" Nullable="false" />
-          <Property Name="ID_SOLICITUD" Type="Int64" Nullable="false" />
-          <Property Name="CODIGO_TRAMITE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="NOMBRE_TRAMITE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="COSTO" Type="Int64" />
-          <Property Name="STATUS" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="TIMESTAMP" Type="DateTime" Precision="6" />
-          <Property Name="CREATED" Type="DateTime" />
-          <NavigationProperty Name="CONTRATOS" Relationship="ORACLE_MODEL.DETALLE_TRAMITES_FK1" FromRole="DETALLE_TRAMITES" ToRole="CONTRATOS" />
+          <Property Name="ID_DOCUMENTO" Type="Int64" Nullable="false" />
+          <Property Name="ID_CONTRATO" Type="Int64" />
+          <Property Name="ID_PRESUPUESTO" Type="Int64" />
+          <Property Name="FECHA_INGRESO" Type="DateTime" Nullable="false" />
+          <Property Name="DOCUMENTO_DIGITAL" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PATH" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="MIME_TYPE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBRE_ARCHIVO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CONTRATOS" Relationship="Self.DOCUMENTOS_FK1" FromRole="DOCUMENTOS" ToRole="CONTRATOS" />
+          <NavigationProperty Name="PRESUPUESTO" Relationship="Self.DOCUMENTOS_FK2" FromRole="DOCUMENTOS" ToRole="PRESUPUESTO" />
+        </EntityType>
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="ID_ESTADO" />
+          </Key>
+          <Property Name="ID_ESTADO" Type="Int64" Nullable="false" />
+          <Property Name="ESTADO1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MENU">
           <Key>
@@ -757,8 +735,8 @@
           <Property Name="ORDEN" Type="Int64" />
           <Property Name="CONTROLLER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="ACTION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TIPO_ROL" Relationship="ORACLE_MODEL.MENU_FK1" FromRole="MENU" ToRole="TIPO_ROL" />
-          <NavigationProperty Name="MENU_SUB" Relationship="ORACLE_MODEL.MENU_SUB_FK1" FromRole="MENU" ToRole="MENU_SUB" />
+          <NavigationProperty Name="TIPO_ROL" Relationship="Self.MENU_FK1" FromRole="MENU" ToRole="TIPO_ROL" />
+          <NavigationProperty Name="MENU_SUB" Relationship="Self.MENU_SUB_FK1" FromRole="MENU" ToRole="MENU_SUB" />
         </EntityType>
         <EntityType Name="MENU_SUB">
           <Key>
@@ -769,12 +747,12 @@
           <Property Name="REFERENCIA" Type="String" MaxLength="550" FixedLength="false" Unicode="false" />
           <Property Name="ID_ROL" Type="Int64" Nullable="false" />
           <Property Name="MENU_ID_P" Type="Int64" Nullable="false" />
-          <Property Name="CRUD" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CRUD" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CONTROLLER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="ACTION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="MENU" Relationship="ORACLE_MODEL.MENU_SUB_FK1" FromRole="MENU_SUB" ToRole="MENU" />
-          <NavigationProperty Name="TIPO_ROL" Relationship="ORACLE_MODEL.MENU_SUB_FK2" FromRole="MENU_SUB" ToRole="TIPO_ROL" />
           <Property Name="ORDEN" Type="Int64" />
+          <NavigationProperty Name="MENU" Relationship="Self.MENU_SUB_FK1" FromRole="MENU_SUB" ToRole="MENU" />
+          <NavigationProperty Name="TIPO_ROL" Relationship="Self.MENU_SUB_FK2" FromRole="MENU_SUB" ToRole="TIPO_ROL" />
         </EntityType>
         <EntityType Name="ORDEN_PAGO">
           <Key>
@@ -788,26 +766,48 @@
           <Property Name="IP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CREATED" Type="DateTime" />
           <Property Name="NUMERO_TRANSACCION" Type="Int64" />
-          <NavigationProperty Name="CONTRATOS" Relationship="ORACLE_MODEL.ORDEN_PAGO_FK1" FromRole="ORDEN_PAGO" ToRole="CONTRATOS" />
           <Property Name="CUOTAS" Type="Int64" />
           <Property Name="VALOR_CUOTA" Type="Int64" />
+          <NavigationProperty Name="CONTRATOS" Relationship="Self.ORDEN_PAGO_FK1" FromRole="ORDEN_PAGO" ToRole="CONTRATOS" />
         </EntityType>
         <EntityType Name="PLAN_PAGO">
           <Key>
             <PropertyRef Name="ID_PAGO" />
           </Key>
           <Property Name="ID_PAGO" Type="Int64" Nullable="false" />
-          <Property Name="PLAN" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PLAN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="VALOR" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CLIENTES" Relationship="ORACLE_MODEL.CLIENTES_FK3" FromRole="PLAN_PAGO" ToRole="CLIENTES" />
+          <NavigationProperty Name="CLIENTES" Relationship="Self.CLIENTES_FK3" FromRole="PLAN_PAGO" ToRole="CLIENTES" />
+        </EntityType>
+        <EntityType Name="PRESUPUESTO">
+          <Key>
+            <PropertyRef Name="ID_PRESUPUESTO" />
+          </Key>
+          <Property Name="ID_PRESUPUESTO" Type="Int64" Nullable="false" />
+          <Property Name="COD_SOLICITUD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" />
+          <Property Name="ESTADO_AVANCE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CONTRATADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="OBSERVACIONES" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ID_ASISTENTE" Type="Int64" />
+          <Property Name="ID_CAUSAL" Type="Int64" Nullable="false" />
+          <Property Name="ID_CLIENTE" Type="Int64" />
+          <Property Name="NOTA" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_NOTIFICA" Type="DateTime" />
+          <NavigationProperty Name="ASISTENTES" Relationship="Self.PRESUPUESTO_FK3" FromRole="PRESUPUESTO" ToRole="ASISTENTES" />
+          <NavigationProperty Name="CAUSALES" Relationship="Self.PRESUPUESTO_FK2" FromRole="PRESUPUESTO" ToRole="CAUSALES" />
+          <NavigationProperty Name="CLIENTES" Relationship="Self.PRESUPUESTO_FK1" FromRole="PRESUPUESTO" ToRole="CLIENTES" />
+          <NavigationProperty Name="CONTRATOS" Relationship="Self.CONTRATOS_FK1" FromRole="PRESUPUESTO" ToRole="CONTRATOS" />
+          <NavigationProperty Name="DOCUMENTOS" Relationship="Self.DOCUMENTOS_FK2" FromRole="PRESUPUESTO" ToRole="DOCUMENTOS" />
+          <NavigationProperty Name="DETALLE_TRAMITES" Relationship="ORACLE_MODEL.PK_PRESUPUESTO" FromRole="PRESUPUESTO" ToRole="DETALLE_TRAMITES" />
         </EntityType>
         <EntityType Name="REGIONES">
           <Key>
             <PropertyRef Name="ID_REGION" />
           </Key>
           <Property Name="ID_REGION" Type="Int64" Nullable="false" />
-          <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="COMUNAS" Relationship="ORACLE_MODEL.COMUNAS_FK1" FromRole="REGIONES" ToRole="COMUNAS" />
+          <Property Name="NOMBRE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="COMUNAS" Relationship="Self.COMUNAS_FK1" FromRole="REGIONES" ToRole="COMUNAS" />
         </EntityType>
         <EntityType Name="TIPO_CLIENTE">
           <Key>
@@ -816,40 +816,40 @@
           <Property Name="ID_TIPO_CLIENTE" Type="Int64" Nullable="false" />
           <Property Name="NOMBRE_TIPO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TIMESTAMP" Type="DateTime" Precision="6" />
-          <NavigationProperty Name="CLIENTES" Relationship="ORACLE_MODEL.CLIENTES_FK2" FromRole="TIPO_CLIENTE" ToRole="CLIENTES" />
+          <NavigationProperty Name="CLIENTES" Relationship="Self.CLIENTES_FK2" FromRole="TIPO_CLIENTE" ToRole="CLIENTES" />
         </EntityType>
         <EntityType Name="TIPO_ROL">
           <Key>
             <PropertyRef Name="ID_ROL" />
           </Key>
           <Property Name="ID_ROL" Type="Int64" Nullable="false" />
-          <Property Name="NOMBRE_ROL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="MENU" Relationship="ORACLE_MODEL.MENU_FK1" FromRole="TIPO_ROL" ToRole="MENU" />
-          <NavigationProperty Name="MENU_SUB" Relationship="ORACLE_MODEL.MENU_SUB_FK2" FromRole="TIPO_ROL" ToRole="MENU_SUB" />
-          <NavigationProperty Name="USUARIOS" Relationship="ORACLE_MODEL.USUARIOS_FK3" FromRole="TIPO_ROL" ToRole="USUARIOS" />
+          <Property Name="NOMBRE_ROL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CATEGORIA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MENU" Relationship="Self.MENU_FK1" FromRole="TIPO_ROL" ToRole="MENU" />
+          <NavigationProperty Name="MENU_SUB" Relationship="Self.MENU_SUB_FK2" FromRole="TIPO_ROL" ToRole="MENU_SUB" />
+          <NavigationProperty Name="USUARIOS" Relationship="Self.USUARIOS_FK3" FromRole="TIPO_ROL" ToRole="USUARIOS" />
         </EntityType>
         <EntityType Name="USUARIOS">
           <Key>
             <PropertyRef Name="ID_USUARIO" />
           </Key>
-          <Property Name="USER" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PASS" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TIMESTAMP" Type="DateTime" Precision="6" />
           <Property Name="ID_ROL" Type="Int64" Nullable="false" />
           <Property Name="ID_USUARIO" Type="Int64" Nullable="false" />
-          <Property Name="CORREO" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CORREO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CORREO_SEC" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ASISTENTES" Relationship="ORACLE_MODEL.ASISTENTES_FK1" FromRole="USUARIOS" ToRole="ASISTENTES" />
-          <NavigationProperty Name="CLIENTES" Relationship="ORACLE_MODEL.CLIENTES_FK4" FromRole="USUARIOS" ToRole="CLIENTES" />
-          <NavigationProperty Name="TIPO_ROL" Relationship="ORACLE_MODEL.USUARIOS_FK3" FromRole="USUARIOS" ToRole="TIPO_ROL" />
           <Property Name="IMG_PROFILE" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="BINARY_IMAGE" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="ASISTENTES" Relationship="Self.ASISTENTES_FK1" FromRole="USUARIOS" ToRole="ASISTENTES" />
+          <NavigationProperty Name="CLIENTES" Relationship="Self.CLIENTES_FK4" FromRole="USUARIOS" ToRole="CLIENTES" />
+          <NavigationProperty Name="TIPO_ROL" Relationship="Self.USUARIOS_FK3" FromRole="USUARIOS" ToRole="TIPO_ROL" />
         </EntityType>
         <Association Name="ASISTENTES_FK1">
-          <End Type="ORACLE_MODEL.USUARIOS" Role="USUARIOS" Multiplicity="0..1" />
-          <End Type="ORACLE_MODEL.ASISTENTES" Role="ASISTENTES" Multiplicity="*" />
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="0..1" />
+          <End Role="ASISTENTES" Type="Self.ASISTENTES" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USUARIOS">
               <PropertyRef Name="ID_USUARIO" />
@@ -859,9 +859,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ASISTENTES_FK2">
+          <End Role="COMUNAS" Type="Self.COMUNAS" Multiplicity="0..1" />
+          <End Role="ASISTENTES" Type="Self.ASISTENTES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COMUNAS">
+              <PropertyRef Name="ID_COMUNA" />
+            </Principal>
+            <Dependent Role="ASISTENTES">
+              <PropertyRef Name="ID_COMUNA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CONTRATOS_FK2">
+          <End Role="ASISTENTES" Type="Self.ASISTENTES" Multiplicity="1" />
+          <End Role="CONTRATOS" Type="Self.CONTRATOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASISTENTES">
+              <PropertyRef Name="ID_ASISTENTE" />
+            </Principal>
+            <Dependent Role="CONTRATOS">
+              <PropertyRef Name="ID_ASISTENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PRESUPUESTO_FK3">
+          <End Role="ASISTENTES" Type="Self.ASISTENTES" Multiplicity="0..1" />
+          <End Role="PRESUPUESTO" Type="Self.PRESUPUESTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASISTENTES">
+              <PropertyRef Name="ID_ASISTENTE" />
+            </Principal>
+            <Dependent Role="PRESUPUESTO">
+              <PropertyRef Name="ID_ASISTENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PRESUPUESTO_FK2">
+          <End Role="CAUSALES" Type="Self.CAUSALES" Multiplicity="1" />
+          <End Role="PRESUPUESTO" Type="Self.PRESUPUESTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAUSALES">
+              <PropertyRef Name="ID_CAUSAL" />
+            </Principal>
+            <Dependent Role="PRESUPUESTO">
+              <PropertyRef Name="ID_CAUSAL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="CLIENTES_FK1">
-          <End Type="ORACLE_MODEL.COMUNAS" Role="COMUNAS" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.CLIENTES" Role="CLIENTES" Multiplicity="*" />
+          <End Role="COMUNAS" Type="Self.COMUNAS" Multiplicity="1" />
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="COMUNAS">
               <PropertyRef Name="ID_COMUNA" />
@@ -872,8 +920,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="CLIENTES_FK2">
-          <End Type="ORACLE_MODEL.TIPO_CLIENTE" Role="TIPO_CLIENTE" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.CLIENTES" Role="CLIENTES" Multiplicity="*" />
+          <End Role="TIPO_CLIENTE" Type="Self.TIPO_CLIENTE" Multiplicity="1" />
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TIPO_CLIENTE">
               <PropertyRef Name="ID_TIPO_CLIENTE" />
@@ -884,8 +932,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="CLIENTES_FK3">
-          <End Type="ORACLE_MODEL.PLAN_PAGO" Role="PLAN_PAGO" Multiplicity="0..1" />
-          <End Type="ORACLE_MODEL.CLIENTES" Role="CLIENTES" Multiplicity="*" />
+          <End Role="PLAN_PAGO" Type="Self.PLAN_PAGO" Multiplicity="0..1" />
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PLAN_PAGO">
               <PropertyRef Name="ID_PAGO" />
@@ -896,8 +944,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="CLIENTES_FK4">
-          <End Type="ORACLE_MODEL.USUARIOS" Role="USUARIOS" Multiplicity="0..1" />
-          <End Type="ORACLE_MODEL.CLIENTES" Role="CLIENTES" Multiplicity="*" />
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="0..1" />
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USUARIOS">
               <PropertyRef Name="ID_USUARIO" />
@@ -907,9 +955,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="PRESUPUESTO_FK1">
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="0..1" />
+          <End Role="PRESUPUESTO" Type="Self.PRESUPUESTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTES">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Principal>
+            <Dependent Role="PRESUPUESTO">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="COMUNAS_FK1">
-          <End Type="ORACLE_MODEL.REGIONES" Role="REGIONES" Multiplicity="0..1" />
-          <End Type="ORACLE_MODEL.COMUNAS" Role="COMUNAS" Multiplicity="*" />
+          <End Role="REGIONES" Type="Self.REGIONES" Multiplicity="0..1" />
+          <End Role="COMUNAS" Type="Self.COMUNAS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REGIONES">
               <PropertyRef Name="ID_REGION" />
@@ -919,104 +979,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="MENU_FK1">
-          <End Type="ORACLE_MODEL.TIPO_ROL" Role="TIPO_ROL" Multiplicity="0..1" />
-          <End Type="ORACLE_MODEL.MENU" Role="MENU" Multiplicity="*" />
+        <Association Name="CONTRATOS_FK1">
+          <End Role="PRESUPUESTO" Type="Self.PRESUPUESTO" Multiplicity="1" />
+          <End Role="CONTRATOS" Type="Self.CONTRATOS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TIPO_ROL">
-              <PropertyRef Name="ID_ROL" />
-            </Principal>
-            <Dependent Role="MENU">
-              <PropertyRef Name="ID_ROL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="MENU_SUB_FK1">
-          <End Type="ORACLE_MODEL.MENU" Role="MENU" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.MENU_SUB" Role="MENU_SUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MENU">
-              <PropertyRef Name="MENU_ID" />
-            </Principal>
-            <Dependent Role="MENU_SUB">
-              <PropertyRef Name="MENU_ID_P" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="MENU_SUB_FK2">
-          <End Type="ORACLE_MODEL.TIPO_ROL" Role="TIPO_ROL" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.MENU_SUB" Role="MENU_SUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TIPO_ROL">
-              <PropertyRef Name="ID_ROL" />
-            </Principal>
-            <Dependent Role="MENU_SUB">
-              <PropertyRef Name="ID_ROL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="USUARIOS_FK3">
-          <End Type="ORACLE_MODEL.TIPO_ROL" Role="TIPO_ROL" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.USUARIOS" Role="USUARIOS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TIPO_ROL">
-              <PropertyRef Name="ID_ROL" />
-            </Principal>
-            <Dependent Role="USUARIOS">
-              <PropertyRef Name="ID_ROL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CONTRATOS">
-          <Key>
-            <PropertyRef Name="ID_CONTRATO" />
-          </Key>
-          <Property Name="ID_CONTRATO" Type="Int64" Nullable="false" />
-          <Property Name="FECHA_INICIO" Type="DateTime" Nullable="false" />
-          <Property Name="FECHA_TERMINO" Type="DateTime" />
-          <Property Name="ID_PRESUPUESTO" Type="Int64" Nullable="false" />
-          <Property Name="COSTO_ESTIMADO" Type="Double" />
-          <Property Name="DOCUMENTO_GENERADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="CORREO_ENVIADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="COMENTARIOS" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ID_ASISTENTE" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="ASISTENTES" Relationship="ORACLE_MODEL.CONTRATOS_FK2" FromRole="CONTRATOS" ToRole="ASISTENTES" />
-          <NavigationProperty Name="DETALLE_COSTOS" Relationship="ORACLE_MODEL.DETALLE_COSTOS_FK1" FromRole="CONTRATOS" ToRole="DETALLE_COSTOS" />
-          <NavigationProperty Name="DETALLE_TRAMITES" Relationship="ORACLE_MODEL.DETALLE_TRAMITES_FK1" FromRole="CONTRATOS" ToRole="DETALLE_TRAMITES" />
-          <NavigationProperty Name="DOCUMENTOS" Relationship="ORACLE_MODEL.DOCUMENTOS_FK1" FromRole="CONTRATOS" ToRole="DOCUMENTOS" />
-          <NavigationProperty Name="ORDEN_PAGO" Relationship="ORACLE_MODEL.ORDEN_PAGO_FK1" FromRole="CONTRATOS" ToRole="ORDEN_PAGO" />
-          <NavigationProperty Name="PRESUPUESTO" Relationship="ORACLE_MODEL.CONTRATOS_FK1" FromRole="CONTRATOS" ToRole="PRESUPUESTO" />
-        </EntityType>
-        <EntityType Name="DOCUMENTOS">
-          <Key>
-            <PropertyRef Name="ID_DOCUMENTO" />
-          </Key>
-          <Property Name="ID_DOCUMENTO" Type="Int64" Nullable="false" />
-          <Property Name="ID_CONTRATO" Type="Int64" />
-          <Property Name="ID_PRESUPUESTO" Type="Int64" />
-          <Property Name="FECHA_INGRESO" Type="DateTime" Nullable="false" />
-          <Property Name="DOCUMENTO_DIGITAL" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="PATH" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CONTRATOS" Relationship="ORACLE_MODEL.DOCUMENTOS_FK1" FromRole="DOCUMENTOS" ToRole="CONTRATOS" />
-          <Property Name="MIME_TYPE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="NOMBRE_ARCHIVO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PRESUPUESTO" Relationship="ORACLE_MODEL.DOCUMENTOS_FK2" FromRole="DOCUMENTOS" ToRole="PRESUPUESTO" />
-        </EntityType>
-        <Association Name="CONTRATOS_FK2">
-          <End Type="ORACLE_MODEL.ASISTENTES" Role="ASISTENTES" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.CONTRATOS" Role="CONTRATOS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ASISTENTES">
-              <PropertyRef Name="ID_ASISTENTE" />
+            <Principal Role="PRESUPUESTO">
+              <PropertyRef Name="ID_PRESUPUESTO" />
             </Principal>
             <Dependent Role="CONTRATOS">
-              <PropertyRef Name="ID_ASISTENTE" />
+              <PropertyRef Name="ID_PRESUPUESTO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="DETALLE_COSTOS_FK1">
-          <End Type="ORACLE_MODEL.CONTRATOS" Role="CONTRATOS" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.DETALLE_COSTOS" Role="DETALLE_COSTOS" Multiplicity="*" />
+          <End Role="CONTRATOS" Type="Self.CONTRATOS" Multiplicity="1" />
+          <End Role="DETALLE_COSTOS" Type="Self.DETALLE_COSTOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CONTRATOS">
               <PropertyRef Name="ID_CONTRATO" />
@@ -1026,21 +1003,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="DETALLE_TRAMITES_FK1">
-          <End Type="ORACLE_MODEL.CONTRATOS" Role="CONTRATOS" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.DETALLE_TRAMITES" Role="DETALLE_TRAMITES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CONTRATOS">
-              <PropertyRef Name="ID_CONTRATO" />
-            </Principal>
-            <Dependent Role="DETALLE_TRAMITES">
-              <PropertyRef Name="ID_CONTRATO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="DOCUMENTOS_FK1">
-          <End Type="ORACLE_MODEL.CONTRATOS" Role="CONTRATOS" Multiplicity="0..1" />
-          <End Type="ORACLE_MODEL.DOCUMENTOS" Role="DOCUMENTOS" Multiplicity="*" />
+          <End Role="CONTRATOS" Type="Self.CONTRATOS" Multiplicity="0..1" />
+          <End Role="DOCUMENTOS" Type="Self.DOCUMENTOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CONTRATOS">
               <PropertyRef Name="ID_CONTRATO" />
@@ -1051,8 +1016,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ORDEN_PAGO_FK1">
-          <End Type="ORACLE_MODEL.CONTRATOS" Role="CONTRATOS" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.ORDEN_PAGO" Role="ORDEN_PAGO" Multiplicity="*" />
+          <End Role="CONTRATOS" Type="Self.CONTRATOS" Multiplicity="1" />
+          <End Role="ORDEN_PAGO" Type="Self.ORDEN_PAGO" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CONTRATOS">
               <PropertyRef Name="ID_CONTRATO" />
@@ -1062,66 +1027,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="PRESUPUESTO">
-          <Key>
-            <PropertyRef Name="ID_PRESUPUESTO" />
-          </Key>
-          <Property Name="ID_PRESUPUESTO" Type="Int64" Nullable="false" />
-          <Property Name="COD_SOLICITUD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="FECHA" Type="DateTime" Nullable="false" />
-          <Property Name="ESTADO_AVANCE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CONTRATADO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="OBSERVACIONES" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ID_ASISTENTE" Type="Int64" />
-          <Property Name="ID_CAUSAL" Type="Int64" Nullable="false" />
-          <Property Name="ID_CLIENTE" Type="Int64" />
-          <NavigationProperty Name="CAUSALES" Relationship="ORACLE_MODEL.PRESUPUESTO_FK2" FromRole="PRESUPUESTO" ToRole="CAUSALES" />
-          <NavigationProperty Name="CLIENTES" Relationship="ORACLE_MODEL.PRESUPUESTO_FK1" FromRole="PRESUPUESTO" ToRole="CLIENTES" />
-          <NavigationProperty Name="CONTRATOS" Relationship="ORACLE_MODEL.CONTRATOS_FK1" FromRole="PRESUPUESTO" ToRole="CONTRATOS" />
-          <NavigationProperty Name="DOCUMENTOS" Relationship="ORACLE_MODEL.DOCUMENTOS_FK2" FromRole="PRESUPUESTO" ToRole="DOCUMENTOS" />
-          <NavigationProperty Name="ASISTENTES" Relationship="ORACLE_MODEL.PRESUPUESTO_FK3" FromRole="PRESUPUESTO" ToRole="ASISTENTES" />
-          <Property Name="NOTA" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
-          <Property Name="FECHA_NOTIFICA" Type="DateTime" />
-        </EntityType>
-        <Association Name="PRESUPUESTO_FK2">
-          <End Type="ORACLE_MODEL.CAUSALES" Role="CAUSALES" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.PRESUPUESTO" Role="PRESUPUESTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CAUSALES">
-              <PropertyRef Name="ID_CAUSAL" />
-            </Principal>
-            <Dependent Role="PRESUPUESTO">
-              <PropertyRef Name="ID_CAUSAL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="PRESUPUESTO_FK1">
-          <End Type="ORACLE_MODEL.CLIENTES" Role="CLIENTES" Multiplicity="0..1" />
-          <End Type="ORACLE_MODEL.PRESUPUESTO" Role="PRESUPUESTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CLIENTES">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Principal>
-            <Dependent Role="PRESUPUESTO">
-              <PropertyRef Name="ID_CLIENTE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CONTRATOS_FK1">
-          <End Type="ORACLE_MODEL.PRESUPUESTO" Role="PRESUPUESTO" Multiplicity="1" />
-          <End Type="ORACLE_MODEL.CONTRATOS" Role="CONTRATOS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRESUPUESTO">
-              <PropertyRef Name="ID_PRESUPUESTO" />
-            </Principal>
-            <Dependent Role="CONTRATOS">
-              <PropertyRef Name="ID_PRESUPUESTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="DOCUMENTOS_FK2">
-          <End Type="ORACLE_MODEL.PRESUPUESTO" Role="PRESUPUESTO" Multiplicity="0..1" />
-          <End Type="ORACLE_MODEL.DOCUMENTOS" Role="DOCUMENTOS" Multiplicity="*" />
+          <End Role="PRESUPUESTO" Type="Self.PRESUPUESTO" Multiplicity="0..1" />
+          <End Role="DOCUMENTOS" Type="Self.DOCUMENTOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PRESUPUESTO">
               <PropertyRef Name="ID_PRESUPUESTO" />
@@ -1131,19 +1039,203 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PRESUPUESTO_FK3">
-          <End Type="ORACLE_MODEL.ASISTENTES" Role="ASISTENTES" Multiplicity="0..1" />
-          <End Type="ORACLE_MODEL.PRESUPUESTO" Role="PRESUPUESTO" Multiplicity="*" />
+        <Association Name="MENU_FK1">
+          <End Role="TIPO_ROL" Type="Self.TIPO_ROL" Multiplicity="0..1" />
+          <End Role="MENU" Type="Self.MENU" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ASISTENTES">
-              <PropertyRef Name="ID_ASISTENTE" />
+            <Principal Role="TIPO_ROL">
+              <PropertyRef Name="ID_ROL" />
             </Principal>
-            <Dependent Role="PRESUPUESTO">
-              <PropertyRef Name="ID_ASISTENTE" />
+            <Dependent Role="MENU">
+              <PropertyRef Name="ID_ROL" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <Association Name="MENU_SUB_FK1">
+          <End Role="MENU" Type="Self.MENU" Multiplicity="1" />
+          <End Role="MENU_SUB" Type="Self.MENU_SUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MENU">
+              <PropertyRef Name="MENU_ID" />
+            </Principal>
+            <Dependent Role="MENU_SUB">
+              <PropertyRef Name="MENU_ID_P" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MENU_SUB_FK2">
+          <End Role="TIPO_ROL" Type="Self.TIPO_ROL" Multiplicity="1" />
+          <End Role="MENU_SUB" Type="Self.MENU_SUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_ROL">
+              <PropertyRef Name="ID_ROL" />
+            </Principal>
+            <Dependent Role="MENU_SUB">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="USUARIOS_FK3">
+          <End Role="TIPO_ROL" Type="Self.TIPO_ROL" Multiplicity="1" />
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_ROL">
+              <PropertyRef Name="ID_ROL" />
+            </Principal>
+            <Dependent Role="USUARIOS">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ODAO" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ASISTENTES" EntityType="Self.ASISTENTES" />
+          <EntitySet Name="CAUSALES" EntityType="Self.CAUSALES" />
+          <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" />
+          <EntitySet Name="COMUNAS" EntityType="Self.COMUNAS" />
+          <EntitySet Name="CONTRATOS" EntityType="Self.CONTRATOS" />
+          <EntitySet Name="DETALLE_COSTOS" EntityType="Self.DETALLE_COSTOS" />
+          <EntitySet Name="DOCUMENTOS" EntityType="Self.DOCUMENTOS" />
+          <EntitySet Name="ESTADO" EntityType="Self.ESTADO" />
+          <EntitySet Name="MENU" EntityType="Self.MENU" />
+          <EntitySet Name="MENU_SUB" EntityType="Self.MENU_SUB" />
+          <EntitySet Name="ORDEN_PAGO" EntityType="Self.ORDEN_PAGO" />
+          <EntitySet Name="PLAN_PAGO" EntityType="Self.PLAN_PAGO" />
+          <EntitySet Name="PRESUPUESTO" EntityType="Self.PRESUPUESTO" />
+          <EntitySet Name="REGIONES" EntityType="Self.REGIONES" />
+          <EntitySet Name="TIPO_CLIENTE" EntityType="Self.TIPO_CLIENTE" />
+          <EntitySet Name="TIPO_ROL" EntityType="Self.TIPO_ROL" />
+          <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" />
+          <AssociationSet Name="ASISTENTES_FK1" Association="Self.ASISTENTES_FK1">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="ASISTENTES" EntitySet="ASISTENTES" />
+          </AssociationSet>
+          <AssociationSet Name="ASISTENTES_FK2" Association="Self.ASISTENTES_FK2">
+            <End Role="COMUNAS" EntitySet="COMUNAS" />
+            <End Role="ASISTENTES" EntitySet="ASISTENTES" />
+          </AssociationSet>
+          <AssociationSet Name="CONTRATOS_FK2" Association="Self.CONTRATOS_FK2">
+            <End Role="ASISTENTES" EntitySet="ASISTENTES" />
+            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
+          </AssociationSet>
+          <AssociationSet Name="PRESUPUESTO_FK3" Association="Self.PRESUPUESTO_FK3">
+            <End Role="ASISTENTES" EntitySet="ASISTENTES" />
+            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
+          </AssociationSet>
+          <AssociationSet Name="PRESUPUESTO_FK2" Association="Self.PRESUPUESTO_FK2">
+            <End Role="CAUSALES" EntitySet="CAUSALES" />
+            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
+          </AssociationSet>
+          <AssociationSet Name="CLIENTES_FK1" Association="Self.CLIENTES_FK1">
+            <End Role="COMUNAS" EntitySet="COMUNAS" />
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+          </AssociationSet>
+          <AssociationSet Name="CLIENTES_FK2" Association="Self.CLIENTES_FK2">
+            <End Role="TIPO_CLIENTE" EntitySet="TIPO_CLIENTE" />
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+          </AssociationSet>
+          <AssociationSet Name="CLIENTES_FK3" Association="Self.CLIENTES_FK3">
+            <End Role="PLAN_PAGO" EntitySet="PLAN_PAGO" />
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+          </AssociationSet>
+          <AssociationSet Name="CLIENTES_FK4" Association="Self.CLIENTES_FK4">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+          </AssociationSet>
+          <AssociationSet Name="PRESUPUESTO_FK1" Association="Self.PRESUPUESTO_FK1">
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
+          </AssociationSet>
+          <AssociationSet Name="COMUNAS_FK1" Association="Self.COMUNAS_FK1">
+            <End Role="REGIONES" EntitySet="REGIONES" />
+            <End Role="COMUNAS" EntitySet="COMUNAS" />
+          </AssociationSet>
+          <AssociationSet Name="CONTRATOS_FK1" Association="Self.CONTRATOS_FK1">
+            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
+            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
+          </AssociationSet>
+          <AssociationSet Name="DETALLE_COSTOS_FK1" Association="Self.DETALLE_COSTOS_FK1">
+            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
+            <End Role="DETALLE_COSTOS" EntitySet="DETALLE_COSTOS" />
+          </AssociationSet>
+          <AssociationSet Name="DOCUMENTOS_FK1" Association="Self.DOCUMENTOS_FK1">
+            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
+            <End Role="DOCUMENTOS" EntitySet="DOCUMENTOS" />
+          </AssociationSet>
+          <AssociationSet Name="ORDEN_PAGO_FK1" Association="Self.ORDEN_PAGO_FK1">
+            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
+            <End Role="ORDEN_PAGO" EntitySet="ORDEN_PAGO" />
+          </AssociationSet>
+          <AssociationSet Name="DOCUMENTOS_FK2" Association="Self.DOCUMENTOS_FK2">
+            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
+            <End Role="DOCUMENTOS" EntitySet="DOCUMENTOS" />
+          </AssociationSet>
+          <AssociationSet Name="MENU_FK1" Association="Self.MENU_FK1">
+            <End Role="TIPO_ROL" EntitySet="TIPO_ROL" />
+            <End Role="MENU" EntitySet="MENU" />
+          </AssociationSet>
+          <AssociationSet Name="MENU_SUB_FK1" Association="Self.MENU_SUB_FK1">
+            <End Role="MENU" EntitySet="MENU" />
+            <End Role="MENU_SUB" EntitySet="MENU_SUB" />
+          </AssociationSet>
+          <AssociationSet Name="MENU_SUB_FK2" Association="Self.MENU_SUB_FK2">
+            <End Role="TIPO_ROL" EntitySet="TIPO_ROL" />
+            <End Role="MENU_SUB" EntitySet="MENU_SUB" />
+          </AssociationSet>
+          <AssociationSet Name="USUARIOS_FK3" Association="Self.USUARIOS_FK3">
+            <End Role="TIPO_ROL" EntitySet="TIPO_ROL" />
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+          </AssociationSet>
+          <EntitySet Name="DETALLE_TRAMITES" EntityType="ORACLE_MODEL.DETALLE_TRAMITES" />
+          <AssociationSet Name="DETALLE_TRAMITES_FK1" Association="ORACLE_MODEL.DETALLE_TRAMITES_FK1">
+            <End Role="CONTRATOS" EntitySet="CONTRATOS" />
+            <End Role="DETALLE_TRAMITES" EntitySet="DETALLE_TRAMITES" />
+          </AssociationSet>
+          <AssociationSet Name="PK_PRESUPUESTO" Association="ORACLE_MODEL.PK_PRESUPUESTO">
+            <End Role="PRESUPUESTO" EntitySet="PRESUPUESTO" />
+            <End Role="DETALLE_TRAMITES" EntitySet="DETALLE_TRAMITES" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DETALLE_TRAMITES">
+          <Key>
+            <PropertyRef Name="ID_TRAMITES" />
+          </Key>
+          <Property Name="ID_TRAMITES" Type="Int64" Nullable="false" />
+          <Property Name="ID_CONTRATO" Type="Int64" />
+          <Property Name="CODIGO_TRAMITE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBRE_TRAMITE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="COSTO" Type="Int64" />
+          <Property Name="STATUS" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="TIMESTAMP" Type="DateTime" Precision="6" />
+          <Property Name="CREATED" Type="DateTime" />
+          <Property Name="ID_PRESUPUESTO" Type="Int64" />
+          <NavigationProperty Name="CONTRATOS" Relationship="ORACLE_MODEL.DETALLE_TRAMITES_FK1" FromRole="DETALLE_TRAMITES" ToRole="CONTRATOS" />
+          <NavigationProperty Name="PRESUPUESTO" Relationship="ORACLE_MODEL.PK_PRESUPUESTO" FromRole="DETALLE_TRAMITES" ToRole="PRESUPUESTO" />
+        </EntityType>
+        <Association Name="DETALLE_TRAMITES_FK1">
+          <End Type="ORACLE_MODEL.CONTRATOS" Role="CONTRATOS" Multiplicity="0..1" />
+          <End Type="ORACLE_MODEL.DETALLE_TRAMITES" Role="DETALLE_TRAMITES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTRATOS">
+              <PropertyRef Name="ID_CONTRATO" />
+            </Principal>
+            <Dependent Role="DETALLE_TRAMITES">
+              <PropertyRef Name="ID_CONTRATO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_PRESUPUESTO">
+          <End Type="ORACLE_MODEL.PRESUPUESTO" Role="PRESUPUESTO" Multiplicity="0..1" />
+          <End Type="ORACLE_MODEL.DETALLE_TRAMITES" Role="DETALLE_TRAMITES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRESUPUESTO">
+              <PropertyRef Name="ID_PRESUPUESTO" />
+            </Principal>
+            <Dependent Role="DETALLE_TRAMITES">
+              <PropertyRef Name="ID_PRESUPUESTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1152,229 +1244,241 @@
           <EntitySetMapping Name="ASISTENTES">
             <EntityTypeMapping TypeName="ORACLE_MODEL.ASISTENTES">
               <MappingFragment StoreEntitySet="ASISTENTES">
-                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
-                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
-                <ScalarProperty Name="TITULO_ACADEMICO" ColumnName="TITULO_ACADEMICO" />
-                <ScalarProperty Name="CARGO" ColumnName="CARGO" />
-                <ScalarProperty Name="APELLIDO_MATERNO" ColumnName="APELLIDO_MATERNO" />
-                <ScalarProperty Name="APELLIDO_PATERNO" ColumnName="APELLIDO_PATERNO" />
-                <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
-                <ScalarProperty Name="RUT" ColumnName="RUT" />
                 <ScalarProperty Name="ID_ASISTENTE" ColumnName="ID_ASISTENTE" />
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+                <ScalarProperty Name="APELLIDO_PATERNO" ColumnName="APELLIDO_PATERNO" />
+                <ScalarProperty Name="APELLIDO_MATERNO" ColumnName="APELLIDO_MATERNO" />
+                <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+                <ScalarProperty Name="TITULO_ACADEMICO" ColumnName="TITULO_ACADEMICO" />
+                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
+                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="FONO" ColumnName="FONO" />
+                <ScalarProperty Name="ID_COMUNA" ColumnName="ID_COMUNA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CAUSALES">
             <EntityTypeMapping TypeName="ORACLE_MODEL.CAUSALES">
               <MappingFragment StoreEntitySet="CAUSALES">
-                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
                 <ScalarProperty Name="ID_CAUSAL" ColumnName="ID_CAUSAL" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CLIENTES">
             <EntityTypeMapping TypeName="ORACLE_MODEL.CLIENTES">
               <MappingFragment StoreEntitySet="CLIENTES">
-                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
-                <ScalarProperty Name="ID_PLAN" ColumnName="ID_PLAN" />
-                <ScalarProperty Name="STATUS_ACTIVACION" ColumnName="STATUS_ACTIVACION" />
-                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
-                <ScalarProperty Name="OBSERVACIONES" ColumnName="OBSERVACIONES" />
-                <ScalarProperty Name="ID_COMUNA" ColumnName="ID_COMUNA" />
-                <ScalarProperty Name="FONO2" ColumnName="FONO2" />
-                <ScalarProperty Name="FONO1" ColumnName="FONO1" />
-                <ScalarProperty Name="CONTACTO" ColumnName="CONTACTO" />
-                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
-                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
-                <ScalarProperty Name="ID_TIPO" ColumnName="ID_TIPO" />
-                <ScalarProperty Name="NOMBRE_RAZON_SOCIAL" ColumnName="NOMBRE_RAZON_SOCIAL" />
-                <ScalarProperty Name="RUT" ColumnName="RUT" />
                 <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
+                <ScalarProperty Name="NOMBRE_RAZON_SOCIAL" ColumnName="NOMBRE_RAZON_SOCIAL" />
+                <ScalarProperty Name="ID_TIPO" ColumnName="ID_TIPO" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="CONTACTO" ColumnName="CONTACTO" />
+                <ScalarProperty Name="FONO1" ColumnName="FONO1" />
+                <ScalarProperty Name="FONO2" ColumnName="FONO2" />
+                <ScalarProperty Name="ID_COMUNA" ColumnName="ID_COMUNA" />
+                <ScalarProperty Name="OBSERVACIONES" ColumnName="OBSERVACIONES" />
+                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
+                <ScalarProperty Name="STATUS_ACTIVACION" ColumnName="STATUS_ACTIVACION" />
+                <ScalarProperty Name="ID_PLAN" ColumnName="ID_PLAN" />
+                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="COMUNAS">
             <EntityTypeMapping TypeName="ORACLE_MODEL.COMUNAS">
               <MappingFragment StoreEntitySet="COMUNAS">
-                <ScalarProperty Name="ID_REGION" ColumnName="ID_REGION" />
-                <ScalarProperty Name="COMUNA" ColumnName="COMUNA" />
                 <ScalarProperty Name="ID_COMUNA" ColumnName="ID_COMUNA" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DETALLE_COSTOS">
-            <EntityTypeMapping TypeName="ORACLE_MODEL.DETALLE_COSTOS">
-              <MappingFragment StoreEntitySet="DETALLE_COSTOS">
-                <ScalarProperty Name="DIRECCION_NOTARIA" ColumnName="DIRECCION_NOTARIA" />
-                <ScalarProperty Name="NOMBRE_NOTARIA" ColumnName="NOMBRE_NOTARIA" />
-                <ScalarProperty Name="ASISTENTE_RESPONZABLE" ColumnName="ASISTENTE_RESPONZABLE" />
-                <ScalarProperty Name="AUTORIZADA_REEMBOLZO" ColumnName="AUTORIZADA_REEMBOLZO" />
-                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
-                <ScalarProperty Name="BOLETA_DIGITALIZADA" ColumnName="BOLETA_DIGITALIZADA" />
-                <ScalarProperty Name="MONTO" ColumnName="MONTO" />
-                <ScalarProperty Name="TIPO_GASTO" ColumnName="TIPO_GASTO" />
-                <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
-                <ScalarProperty Name="ID_DETALLE_COSTO" ColumnName="ID_DETALLE_COSTO" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DETALLE_TRAMITES">
-            <EntityTypeMapping TypeName="ORACLE_MODEL.DETALLE_TRAMITES">
-              <MappingFragment StoreEntitySet="DETALLE_TRAMITES">
-                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
-                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="COSTO" ColumnName="COSTO" />
-                <ScalarProperty Name="NOMBRE_TRAMITE" ColumnName="NOMBRE_TRAMITE" />
-                <ScalarProperty Name="CODIGO_TRAMITE" ColumnName="CODIGO_TRAMITE" />
-                <ScalarProperty Name="ID_SOLICITUD" ColumnName="ID_SOLICITUD" />
-                <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
-                <ScalarProperty Name="ID_TRAMITES" ColumnName="ID_TRAMITES" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MENU">
-            <EntityTypeMapping TypeName="ORACLE_MODEL.MENU">
-              <MappingFragment StoreEntitySet="MENU">
-                <ScalarProperty Name="ACTION" ColumnName="ACTION" />
-                <ScalarProperty Name="CONTROLLER" ColumnName="CONTROLLER" />
-                <ScalarProperty Name="ORDEN" ColumnName="ORDEN" />
-                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
-                <ScalarProperty Name="REFERENCIA" ColumnName="REFERENCIA" />
-                <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
-                <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MENU_SUB">
-            <EntityTypeMapping TypeName="ORACLE_MODEL.MENU_SUB">
-              <MappingFragment StoreEntitySet="MENU_SUB">
-                <ScalarProperty Name="ORDEN" ColumnName="ORDEN" />
-                <ScalarProperty Name="ACTION" ColumnName="ACTION" />
-                <ScalarProperty Name="CONTROLLER" ColumnName="CONTROLLER" />
-                <ScalarProperty Name="CRUD" ColumnName="CRUD" />
-                <ScalarProperty Name="MENU_ID_P" ColumnName="MENU_ID_P" />
-                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
-                <ScalarProperty Name="REFERENCIA" ColumnName="REFERENCIA" />
-                <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
-                <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ORDEN_PAGO">
-            <EntityTypeMapping TypeName="ORACLE_MODEL.ORDEN_PAGO">
-              <MappingFragment StoreEntitySet="ORDEN_PAGO">
-                <ScalarProperty Name="VALOR_CUOTA" ColumnName="VALOR_CUOTA" />
-                <ScalarProperty Name="CUOTAS" ColumnName="CUOTAS" />
-                <ScalarProperty Name="NUMERO_TRANSACCION" ColumnName="NUMERO_TRANSACCION" />
-                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
-                <ScalarProperty Name="IP" ColumnName="IP" />
-                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
-                <ScalarProperty Name="MONTO_TOTAL" ColumnName="MONTO_TOTAL" />
-                <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
-                <ScalarProperty Name="TIPO_PAGO" ColumnName="TIPO_PAGO" />
-                <ScalarProperty Name="ID_ORDEN_PAGO" ColumnName="ID_ORDEN_PAGO" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PLAN_PAGO">
-            <EntityTypeMapping TypeName="ORACLE_MODEL.PLAN_PAGO">
-              <MappingFragment StoreEntitySet="PLAN_PAGO">
-                <ScalarProperty Name="VALOR" ColumnName="VALOR" />
-                <ScalarProperty Name="PLAN" ColumnName="PLAN" />
-                <ScalarProperty Name="ID_PAGO" ColumnName="ID_PAGO" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="REGIONES">
-            <EntityTypeMapping TypeName="ORACLE_MODEL.REGIONES">
-              <MappingFragment StoreEntitySet="REGIONES">
-                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="COMUNA" ColumnName="COMUNA" />
                 <ScalarProperty Name="ID_REGION" ColumnName="ID_REGION" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TIPO_CLIENTE">
-            <EntityTypeMapping TypeName="ORACLE_MODEL.TIPO_CLIENTE">
-              <MappingFragment StoreEntitySet="TIPO_CLIENTE">
-                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
-                <ScalarProperty Name="NOMBRE_TIPO" ColumnName="NOMBRE_TIPO" />
-                <ScalarProperty Name="ID_TIPO_CLIENTE" ColumnName="ID_TIPO_CLIENTE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TIPO_ROL">
-            <EntityTypeMapping TypeName="ORACLE_MODEL.TIPO_ROL">
-              <MappingFragment StoreEntitySet="TIPO_ROL">
-                <ScalarProperty Name="CATEGORIA" ColumnName="CATEGORIA" />
-                <ScalarProperty Name="NOMBRE_ROL" ColumnName="NOMBRE_ROL" />
-                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="USUARIOS">
-            <EntityTypeMapping TypeName="ORACLE_MODEL.USUARIOS">
-              <MappingFragment StoreEntitySet="USUARIOS">
-                <ScalarProperty Name="BINARY_IMAGE" ColumnName="BINARY_IMAGE" />
-                <ScalarProperty Name="IMG_PROFILE" ColumnName="IMG_PROFILE" />
-                <ScalarProperty Name="IP" ColumnName="IP" />
-                <ScalarProperty Name="CORREO_SEC" ColumnName="CORREO_SEC" />
-                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
-                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
-                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
-                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
-                <ScalarProperty Name="PASS" ColumnName="PASS" />
-                <ScalarProperty Name="USER" ColumnName="USER" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONTRATOS">
             <EntityTypeMapping TypeName="ORACLE_MODEL.CONTRATOS">
               <MappingFragment StoreEntitySet="CONTRATOS">
-                <ScalarProperty Name="ID_ASISTENTE" ColumnName="ID_ASISTENTE" />
-                <ScalarProperty Name="COMENTARIOS" ColumnName="COMENTARIOS" />
-                <ScalarProperty Name="CORREO_ENVIADO" ColumnName="CORREO_ENVIADO" />
-                <ScalarProperty Name="DOCUMENTO_GENERADO" ColumnName="DOCUMENTO_GENERADO" />
-                <ScalarProperty Name="COSTO_ESTIMADO" ColumnName="COSTO_ESTIMADO" />
-                <ScalarProperty Name="ID_PRESUPUESTO" ColumnName="ID_PRESUPUESTO" />
-                <ScalarProperty Name="FECHA_TERMINO" ColumnName="FECHA_TERMINO" />
-                <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
                 <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
+                <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
+                <ScalarProperty Name="FECHA_TERMINO" ColumnName="FECHA_TERMINO" />
+                <ScalarProperty Name="ID_PRESUPUESTO" ColumnName="ID_PRESUPUESTO" />
+                <ScalarProperty Name="COSTO_ESTIMADO" ColumnName="COSTO_ESTIMADO" />
+                <ScalarProperty Name="DOCUMENTO_GENERADO" ColumnName="DOCUMENTO_GENERADO" />
+                <ScalarProperty Name="CORREO_ENVIADO" ColumnName="CORREO_ENVIADO" />
+                <ScalarProperty Name="COMENTARIOS" ColumnName="COMENTARIOS" />
+                <ScalarProperty Name="ID_ASISTENTE" ColumnName="ID_ASISTENTE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLE_COSTOS">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.DETALLE_COSTOS">
+              <MappingFragment StoreEntitySet="DETALLE_COSTOS">
+                <ScalarProperty Name="ID_DETALLE_COSTO" ColumnName="ID_DETALLE_COSTO" />
+                <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
+                <ScalarProperty Name="TIPO_GASTO" ColumnName="TIPO_GASTO" />
+                <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+                <ScalarProperty Name="BOLETA_DIGITALIZADA" ColumnName="BOLETA_DIGITALIZADA" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="AUTORIZADA_REEMBOLZO" ColumnName="AUTORIZADA_REEMBOLZO" />
+                <ScalarProperty Name="ASISTENTE_RESPONZABLE" ColumnName="ASISTENTE_RESPONZABLE" />
+                <ScalarProperty Name="NOMBRE_NOTARIA" ColumnName="NOMBRE_NOTARIA" />
+                <ScalarProperty Name="DIRECCION_NOTARIA" ColumnName="DIRECCION_NOTARIA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DOCUMENTOS">
             <EntityTypeMapping TypeName="ORACLE_MODEL.DOCUMENTOS">
               <MappingFragment StoreEntitySet="DOCUMENTOS">
-                <ScalarProperty Name="NOMBRE_ARCHIVO" ColumnName="NOMBRE_ARCHIVO" />
-                <ScalarProperty Name="MIME_TYPE" ColumnName="MIME_TYPE" />
-                <ScalarProperty Name="PATH" ColumnName="PATH" />
-                <ScalarProperty Name="DOCUMENTO_DIGITAL" ColumnName="DOCUMENTO_DIGITAL" />
-                <ScalarProperty Name="FECHA_INGRESO" ColumnName="FECHA_INGRESO" />
-                <ScalarProperty Name="ID_PRESUPUESTO" ColumnName="ID_PRESUPUESTO" />
-                <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
                 <ScalarProperty Name="ID_DOCUMENTO" ColumnName="ID_DOCUMENTO" />
+                <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
+                <ScalarProperty Name="ID_PRESUPUESTO" ColumnName="ID_PRESUPUESTO" />
+                <ScalarProperty Name="FECHA_INGRESO" ColumnName="FECHA_INGRESO" />
+                <ScalarProperty Name="DOCUMENTO_DIGITAL" ColumnName="DOCUMENTO_DIGITAL" />
+                <ScalarProperty Name="PATH" ColumnName="PATH" />
+                <ScalarProperty Name="MIME_TYPE" ColumnName="MIME_TYPE" />
+                <ScalarProperty Name="NOMBRE_ARCHIVO" ColumnName="NOMBRE_ARCHIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESTADO">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.ESTADO">
+              <MappingFragment StoreEntitySet="ESTADO">
+                <ScalarProperty Name="ID_ESTADO" ColumnName="ID_ESTADO" />
+                <ScalarProperty Name="ESTADO1" ColumnName="ESTADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MENU">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.MENU">
+              <MappingFragment StoreEntitySet="MENU">
+                <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
+                <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
+                <ScalarProperty Name="REFERENCIA" ColumnName="REFERENCIA" />
+                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+                <ScalarProperty Name="ORDEN" ColumnName="ORDEN" />
+                <ScalarProperty Name="CONTROLLER" ColumnName="CONTROLLER" />
+                <ScalarProperty Name="ACTION" ColumnName="ACTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MENU_SUB">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.MENU_SUB">
+              <MappingFragment StoreEntitySet="MENU_SUB">
+                <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
+                <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
+                <ScalarProperty Name="REFERENCIA" ColumnName="REFERENCIA" />
+                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+                <ScalarProperty Name="MENU_ID_P" ColumnName="MENU_ID_P" />
+                <ScalarProperty Name="CRUD" ColumnName="CRUD" />
+                <ScalarProperty Name="CONTROLLER" ColumnName="CONTROLLER" />
+                <ScalarProperty Name="ACTION" ColumnName="ACTION" />
+                <ScalarProperty Name="ORDEN" ColumnName="ORDEN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDEN_PAGO">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.ORDEN_PAGO">
+              <MappingFragment StoreEntitySet="ORDEN_PAGO">
+                <ScalarProperty Name="ID_ORDEN_PAGO" ColumnName="ID_ORDEN_PAGO" />
+                <ScalarProperty Name="TIPO_PAGO" ColumnName="TIPO_PAGO" />
+                <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
+                <ScalarProperty Name="MONTO_TOTAL" ColumnName="MONTO_TOTAL" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="NUMERO_TRANSACCION" ColumnName="NUMERO_TRANSACCION" />
+                <ScalarProperty Name="CUOTAS" ColumnName="CUOTAS" />
+                <ScalarProperty Name="VALOR_CUOTA" ColumnName="VALOR_CUOTA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLAN_PAGO">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.PLAN_PAGO">
+              <MappingFragment StoreEntitySet="PLAN_PAGO">
+                <ScalarProperty Name="ID_PAGO" ColumnName="ID_PAGO" />
+                <ScalarProperty Name="PLAN" ColumnName="PLAN" />
+                <ScalarProperty Name="VALOR" ColumnName="VALOR" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PRESUPUESTO">
             <EntityTypeMapping TypeName="ORACLE_MODEL.PRESUPUESTO">
               <MappingFragment StoreEntitySet="PRESUPUESTO">
-                <ScalarProperty Name="FECHA_NOTIFICA" ColumnName="FECHA_NOTIFICA" />
-                <ScalarProperty Name="NOTA" ColumnName="NOTA" />
-                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
-                <ScalarProperty Name="ID_CAUSAL" ColumnName="ID_CAUSAL" />
-                <ScalarProperty Name="ID_ASISTENTE" ColumnName="ID_ASISTENTE" />
-                <ScalarProperty Name="OBSERVACIONES" ColumnName="OBSERVACIONES" />
-                <ScalarProperty Name="CONTRATADO" ColumnName="CONTRATADO" />
-                <ScalarProperty Name="ESTADO_AVANCE" ColumnName="ESTADO_AVANCE" />
-                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
-                <ScalarProperty Name="COD_SOLICITUD" ColumnName="COD_SOLICITUD" />
                 <ScalarProperty Name="ID_PRESUPUESTO" ColumnName="ID_PRESUPUESTO" />
+                <ScalarProperty Name="COD_SOLICITUD" ColumnName="COD_SOLICITUD" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="ESTADO_AVANCE" ColumnName="ESTADO_AVANCE" />
+                <ScalarProperty Name="CONTRATADO" ColumnName="CONTRATADO" />
+                <ScalarProperty Name="OBSERVACIONES" ColumnName="OBSERVACIONES" />
+                <ScalarProperty Name="ID_ASISTENTE" ColumnName="ID_ASISTENTE" />
+                <ScalarProperty Name="ID_CAUSAL" ColumnName="ID_CAUSAL" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+                <ScalarProperty Name="NOTA" ColumnName="NOTA" />
+                <ScalarProperty Name="FECHA_NOTIFICA" ColumnName="FECHA_NOTIFICA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="REGIONES">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.REGIONES">
+              <MappingFragment StoreEntitySet="REGIONES">
+                <ScalarProperty Name="ID_REGION" ColumnName="ID_REGION" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_CLIENTE">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.TIPO_CLIENTE">
+              <MappingFragment StoreEntitySet="TIPO_CLIENTE">
+                <ScalarProperty Name="ID_TIPO_CLIENTE" ColumnName="ID_TIPO_CLIENTE" />
+                <ScalarProperty Name="NOMBRE_TIPO" ColumnName="NOMBRE_TIPO" />
+                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_ROL">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.TIPO_ROL">
+              <MappingFragment StoreEntitySet="TIPO_ROL">
+                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+                <ScalarProperty Name="NOMBRE_ROL" ColumnName="NOMBRE_ROL" />
+                <ScalarProperty Name="CATEGORIA" ColumnName="CATEGORIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIOS">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.USUARIOS">
+              <MappingFragment StoreEntitySet="USUARIOS">
+                <ScalarProperty Name="USER" ColumnName="USER" />
+                <ScalarProperty Name="PASS" ColumnName="PASS" />
+                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
+                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="CORREO_SEC" ColumnName="CORREO_SEC" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="IMG_PROFILE" ColumnName="IMG_PROFILE" />
+                <ScalarProperty Name="BINARY_IMAGE" ColumnName="BINARY_IMAGE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLE_TRAMITES">
+            <EntityTypeMapping TypeName="ORACLE_MODEL.DETALLE_TRAMITES">
+              <MappingFragment StoreEntitySet="DETALLE_TRAMITES">
+                <ScalarProperty Name="ID_PRESUPUESTO" ColumnName="ID_PRESUPUESTO" />
+                <ScalarProperty Name="CREATED" ColumnName="CREATED" />
+                <ScalarProperty Name="TIMESTAMP" ColumnName="TIMESTAMP" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="COSTO" ColumnName="COSTO" />
+                <ScalarProperty Name="NOMBRE_TRAMITE" ColumnName="NOMBRE_TRAMITE" />
+                <ScalarProperty Name="CODIGO_TRAMITE" ColumnName="CODIGO_TRAMITE" />
+                <ScalarProperty Name="ID_CONTRATO" ColumnName="ID_CONTRATO" />
+                <ScalarProperty Name="ID_TRAMITES" ColumnName="ID_TRAMITES" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -1390,7 +1494,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
